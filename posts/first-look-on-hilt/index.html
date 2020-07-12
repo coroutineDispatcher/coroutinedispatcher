@@ -147,129 +147,156 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
 <p>Long story short, Android is hard, and <code>@ContributesAndroidInjector</code> made things harder. That, in my own humble opinion was a strong reason, for Dagger-Android to be abandoned. Forgetting to add a dependency there and having a runtime crash as well as trying to fix build issues, brought a lot of headache to those who tried using it.</p>
 <h2 id="what-changes-the-game-with-hilt">What changes the game with Hilt?</h2>
 <p>If I would try to phrase it, I would say that it treats Android classes like they deserve to be treated, <strong>as normal classes</strong>. While in Dagger-Android, Activities, Fragments, WorkManager were classes, but also mysterious objects, which were very scary to work with.</p>
-<p><em>Note: this post assumes the reader knows Dagger</em></p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">This post assumes the reader knows Dagger</div>
+        </div>
+    </div>
 <h1 id="quick-start-on-hilt">Quick start on Hilt</h1>
 <p>Let&rsquo;s just start with modules. Since it is built on top of Dagger, there are some things which remain. Let&rsquo;s suppose we have this example:</p>
-<pre><code>@Module  
-object MyAppScopeDependenciesModule{  
-  @Provides  
-  @Singleton  
-  fun provideDependency1() : Dep1 = Dep1.builder().build()  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Module</span>  
+<span class="k">object</span> <span class="nc">MyAppScopeDependenciesModule</span><span class="p">{</span>  
+  <span class="n">@Provides</span>  
+  <span class="n">@Singleton</span>  
+  <span class="k">fun</span> <span class="nf">provideDependency1</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep1</span> <span class="p">=</span> <span class="n">Dep1</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
    
-  @Provides  
-  @Singleton  
-  fun provideDependency2() : Dep2 = Dep2.builder().build()  
-}
-</code></pre><p>And let&rsquo;s create a component just for the sake of the example (App level scope):</p>
-<pre><code>@Singleton  
-@Component(modules = [MyAppScopeDependenciesModule::class])  
-interface MyApplicationComponent{  
-  val dependency1: Dep1  
-  val dependency2: Dep2  
+  <span class="n">@Provides</span>  
+  <span class="n">@Singleton</span>  
+  <span class="k">fun</span> <span class="nf">provideDependency2</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep2</span> <span class="p">=</span> <span class="n">Dep2</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
+<span class="p">}</span>
+</code></pre></div><p>And let&rsquo;s create a component just for the sake of the example (App level scope):</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Singleton</span>  
+<span class="n">@Component</span><span class="p">(</span><span class="n">modules</span> <span class="p">=</span> <span class="p">[</span><span class="n">MyAppScopeDependenciesModule</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>  
+<span class="k">interface</span> <span class="nc">MyApplicationComponent</span><span class="p">{</span>  
+  <span class="k">val</span> <span class="py">dependency1</span><span class="p">:</span> <span class="n">Dep1</span>  
+  <span class="k">val</span> <span class="py">dependency2</span><span class="p">:</span> <span class="n">Dep2</span>  
    
-  @Component.Factory  
-  interface Factory{  
-   fun create(application: Application): MyApplicationComponent  
-  }  
-}
-</code></pre><p>And let&rsquo;s hit the Build button and then let&rsquo;s start importing dependencies:</p>
-<pre><code>class MyApplication : Application(){  
+  <span class="n">@Component</span><span class="p">.</span><span class="n">Factory</span>  
+  <span class="k">interface</span> <span class="nc">Factory</span><span class="p">{</span>  
+   <span class="k">fun</span> <span class="nf">create</span><span class="p">(</span><span class="n">application</span><span class="p">:</span> <span class="n">Application</span><span class="p">):</span> <span class="n">MyApplicationComponent</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>
+</code></pre></div><p>And let&rsquo;s hit the Build button and then let&rsquo;s start importing dependencies:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MyApplication</span> <span class="p">:</span> <span class="n">Application</span><span class="p">(){</span>  
    
-  @Inject lateinit var dep1: Dep1  
+  <span class="n">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span>  
    
-  override fun onCreate(){  
-    super.onCreate()  
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(){</span>  
+    <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">()</span>  
    
-    DaggerMyApplicationComponent.factory().create(this)  
-  }  
-}  
-
-</code></pre><p>The relation between scopes and modules was always mysterious by them who never cared to check what the Dagger&rsquo;s annotation processor generated. Therefore, I must say that this was pretty well spotted by those who built Hilt. In Dagger, scoped modules were connected with scoped components by a stand-alone annotation, which provided nearly 0 information if these two (or more modules) were related.</p>
+    <span class="n">DaggerMyApplicationComponent</span><span class="p">.</span><span class="n">factory</span><span class="p">().</span><span class="n">create</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>  
+</code></pre></div><p>The relation between scopes and modules was always mysterious by them who never cared to check what the Dagger&rsquo;s annotation processor generated. Therefore, I must say that this was pretty well spotted by those who built Hilt. In Dagger, scoped modules were connected with scoped components by a stand-alone annotation, which provided nearly 0 information if these two (or more modules) were related.</p>
 <p>Now, let&rsquo;s try to build the above example with hilt:</p>
-<pre><code>@Module  
-@InstallIn(ApplicationComponent::class)  
-object MyAppScopeDependenciesModule{  
-  @Provides  
-  fun provideDependency1() : Dep1 = Dep1.builder().build()  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Module</span>  
+<span class="n">@InstallIn</span><span class="p">(</span><span class="n">ApplicationComponent</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>  
+<span class="k">object</span> <span class="nc">MyAppScopeDependenciesModule</span><span class="p">{</span>  
+  <span class="n">@Provides</span>  
+  <span class="k">fun</span> <span class="nf">provideDependency1</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep1</span> <span class="p">=</span> <span class="n">Dep1</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
    
-  @Provides  
-  fun provideDependency2() : Dep2 = Dep2.builder().build()  
-}
-</code></pre><p>Before you hit Build button, that&rsquo;s all you need with Hilt.</p>
+  <span class="n">@Provides</span>  
+  <span class="k">fun</span> <span class="nf">provideDependency2</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep2</span> <span class="p">=</span> <span class="n">Dep2</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
+<span class="p">}</span>
+</code></pre></div><p>Before you hit Build button, that&rsquo;s all you need with Hilt.</p>
 <h3 id="where-is-my-component">Where is my component?</h3>
 <p>Hilt provides the component for you. No need there for creating a component or a scope. Think of components and scopes as they were merged together. And actually, this is why Hilt is a game changer. <a href="https://dagger.dev/hilt/component-hierarchy.svg" target="_blank" rel="noopener noreffer">Here</a>is the component hierarchy needed to be used in Android apps, coming from <code>dagger.hilt.android.components.*</code>. Basically, you know your dependencies life length, and now you know where to install it. One last step, let&rsquo;s perform Dependency Injection:</p>
-<pre><code>@HiltAndroidApp  
-class MyApplication : Application(){  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@HiltAndroidApp</span>  
+<span class="k">class</span> <span class="nc">MyApplication</span> <span class="p">:</span> <span class="n">Application</span><span class="p">(){</span>  
    
-  @Inject lateinit var dep1: Dep1  
+  <span class="n">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span>  
    
-  override fun onCreate(){  
-    super.onCreate()  
-    ...  
-  }  
-}
-</code></pre><p>Also, if you want to perform DI in Activities, Fragments, Views, Services or Broadcast receivers, there is no need anymore for <code>AndroidInjection.inject(this)</code>. Instead just mark them with <code>@AndroidEntryPoint</code> at the top of the class:</p>
-<pre><code>@AndroidEntryPoint  
-class MainActivity : AppCompatActivity() {  
-  // either comming from an ActivityComponent or ApplicationComponent  
-  @Inject lateinit var dependency: Dependency  
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(){</span>  
+    <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">()</span>  
+    <span class="p">...</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>
+</code></pre></div><p>Also, if you want to perform DI in Activities, Fragments, Views, Services or Broadcast receivers, there is no need anymore for <code>AndroidInjection.inject(this)</code>. Instead just mark them with <code>@AndroidEntryPoint</code> at the top of the class:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@AndroidEntryPoint</span>  
+<span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="n">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>  
+  <span class="c1">// either comming from an ActivityComponent or ApplicationComponent  
+</span><span class="c1"></span>  <span class="n">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dependency</span><span class="p">:</span> <span class="n">Dependency</span>  
    
-  override fun onCreate() {  
-    super.onCreate()  
-    ...  
-  }  
-}
-</code></pre><p><em>Note: The injection happens in <code>onCreate()</code></em></p>
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">()</span> <span class="p">{</span>  
+    <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">()</span>  
+    <span class="p">...</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>
+</code></pre></div><div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">The injection happens in <code>onCreate()</code></div>
+        </div>
+    </div>
 <h3 id="is-that-the-best-it-can-do">Is that the best it can do?</h3>
 <p>Nope, Hilt has also finally solved the problem of <code>ViewModel</code>s instantiate process and in general, having runtime and build time dependencies in the constructor at once. Before Hilt, I used to install <a href="https://github.com/square/AssistedInject" target="_blank" rel="noopener noreffer">AssistedInject</a>to manage creating <code>saveStateHandle</code> properly and there is a <a href="https://www.coroutinedispatcher.com/2019/08/how-to-produce-savedstatehandle-in-your.html" target="_blank" rel="noopener noreffer">full tutorial</a> on how to do that. But let&rsquo;s also do something simple as a short presentation:</p>
-<pre><code>class MyViewModel @AssistedInject constructor(  
-  private val dep1: Dep1,  
-  @Assisted private val saveStateHandle: SaveStateHandle  
-){  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MyViewModel</span> <span class="n">@AssistedInject</span> <span class="k">constructor</span><span class="p">(</span>  
+  <span class="k">private</span> <span class="k">val</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span><span class="p">,</span>  
+  <span class="n">@Assisted</span> <span class="k">private</span> <span class="k">val</span> <span class="py">saveStateHandle</span><span class="p">:</span> <span class="n">SaveStateHandle</span>  
+<span class="p">){</span>  
    
-  @AssistedInject.Factory  
-  interface Factory{  
-    fun create(saveStateHandle: SaveStateHandle) : MyViewModel  
-  }  
-}
-</code></pre><p>And then install a module for it:</p>
-<pre><code>@AssistedModule  
-@Module(includes = [AssistedInject_ViewModelModule::class])  
-abstract class ViewModelModule
-</code></pre><p>And then expose the ViewModel in the <code>AppComponent</code>:</p>
-<pre><code>@Component(...)  
-interface AppComponent{  
-  ...  
-  val vmFactory: MyViewModel.Factory  
-  ...  
-}
-</code></pre><p>And after that I could have a ViewModel happily ever after in my Fragment:</p>
-<pre><code>inline fun  Fragment.viewModelFactory(  
-    crossinline provider: (SavedStateHandle) -&gt; T  
-) = viewModels {  
-    object : AbstractSavedStateViewModelFactory(this, fragment.arguments ?: Bundle()) {  
-        override fun  create(key: String, modelClass: Class, handle: SavedStateHandle): T =  
-            provider(handle) as T  
-    }  
-}  
+  <span class="n">@AssistedInject</span><span class="p">.</span><span class="n">Factory</span>  
+  <span class="k">interface</span> <span class="nc">Factory</span><span class="p">{</span>  
+    <span class="k">fun</span> <span class="nf">create</span><span class="p">(</span><span class="n">saveStateHandle</span><span class="p">:</span> <span class="n">SaveStateHandle</span><span class="p">)</span> <span class="p">:</span> <span class="n">MyViewModel</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>
+</code></pre></div><p>And then install a module for it:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@AssistedModule</span>  
+<span class="n">@Module</span><span class="p">(</span><span class="n">includes</span> <span class="p">=</span> <span class="p">[</span><span class="n">AssistedInject_ViewModelModule</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>  
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">ViewModelModule</span>
+</code></pre></div><p>And then expose the ViewModel in the <code>AppComponent</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Component</span><span class="p">(...)</span>  
+<span class="k">interface</span> <span class="nc">AppComponent</span><span class="p">{</span>  
+  <span class="p">...</span>  
+  <span class="k">val</span> <span class="py">vmFactory</span><span class="p">:</span> <span class="n">MyViewModel</span><span class="p">.</span><span class="n">Factory</span>  
+  <span class="p">...</span>  
+<span class="p">}</span>
+</code></pre></div><p>And after that I could have a ViewModel happily ever after in my Fragment:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">inline</span> <span class="k">fun</span>  <span class="nf">Fragment</span><span class="p">.</span><span class="n">viewModelFactory</span><span class="p">(</span>  
+    <span class="k">crossinline</span> <span class="n">provider</span><span class="p">:</span> <span class="p">(</span><span class="n">SavedStateHandle</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">T</span>  
+<span class="p">)</span> <span class="p">=</span> <span class="n">viewModels</span> <span class="p">{</span>  
+    <span class="k">object</span> <span class="err">: </span><span class="nc">AbstractSavedStateViewModelFactory</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">fragment</span><span class="p">.</span><span class="n">arguments</span> <span class="o">?:</span> <span class="n">Bundle</span><span class="p">())</span> <span class="p">{</span>  
+        <span class="k">override</span> <span class="k">fun</span>  <span class="nf">create</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">,</span> <span class="n">handle</span><span class="p">:</span> <span class="n">SavedStateHandle</span><span class="p">):</span> <span class="n">T</span> <span class="p">=</span>  
+            <span class="n">provider</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span> <span class="k">as</span> <span class="n">T</span>  
+    <span class="p">}</span>  
+<span class="p">}</span>  
    
-class HomeFragment : Fragment() {  
+<span class="k">class</span> <span class="nc">HomeFragment</span> <span class="p">:</span> <span class="n">Fragment</span><span class="p">()</span> <span class="p">{</span>  
    
-    private val myViewModel by viewModelFactory { Application.component().vmFactory.create(it) }  
+    <span class="k">private</span> <span class="k">val</span> <span class="py">myViewModel</span> <span class="k">by</span> <span class="n">viewModelFactory</span> <span class="p">{</span> <span class="n">Application</span><span class="p">.</span><span class="n">component</span><span class="p">().</span><span class="n">vmFactory</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>  
    
-    ...  
- }
-</code></pre><p><em>Note: For more details on this solution check the link provided above.</em></p>
+    <span class="p">...</span>  
+ <span class="p">}</span>
+</code></pre></div><div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">For more details on this solution check the link provided above.</div>
+        </div>
+    </div>
 <p>Having to do all this steps for just a ViewModel was painful, not to mention that <code>AssistedInject</code> still had a lot to do (Or I could use Koin, but that is not the topic at the moment).</p>
 <p>While with Hilt, it is pretty simple:</p>
-<pre><code>class EditorViewModel @ViewModelInject constructor(  
-    private val playgroundRepository: PlaygroundRepository,  
-    @Assisted private val savedStateHandle: SavedStateHandle  
-) : ViewModel() {}
-</code></pre><p>After that, nothing else is needed. Just import the ViewModel as you normally do:</p>
-<pre><code>//inside Fragment  
-private val editorViewModel by viewModels()
-</code></pre><p><em>Note: Please check Hilt&rsquo;s documentation for correct dependencies to import. The <code>ViewModel</code> and <code>WorkManager</code> solution come as separated dependencies. For more, check <a href="https://developer.android.com/training/dependency-injection/hilt-jetpack" target="_blank" rel="noopener noreffer">here</a></em></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">EditorViewModel</span> <span class="n">@ViewModelInject</span> <span class="k">constructor</span><span class="p">(</span>  
+    <span class="k">private</span> <span class="k">val</span> <span class="py">playgroundRepository</span><span class="p">:</span> <span class="n">PlaygroundRepository</span><span class="p">,</span>  
+    <span class="n">@Assisted</span> <span class="k">private</span> <span class="k">val</span> <span class="py">savedStateHandle</span><span class="p">:</span> <span class="n">SavedStateHandle</span>  
+<span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{}</span>
+</code></pre></div><p>After that, nothing else is needed. Just import the ViewModel as you normally do:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//inside Fragment  
+</span><span class="c1"></span><span class="k">private</span> <span class="k">val</span> <span class="py">editorViewModel</span> <span class="k">by</span> <span class="n">viewModels</span><span class="p">()</span>
+</code></pre></div><div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Please check Hilt&rsquo;s documentation for correct dependencies to import. The <code>ViewModel</code> and <code>WorkManager</code> solution come as separated dependencies. For more, check <a href="https://developer.android.com/training/dependency-injection/hilt-jetpack" target="_blank" rel="noopener noreffer">here</a></div>
+        </div>
+    </div>
 <h2 id="ondestroyview">onDestroyView</h2>
 <p>Personally, I would be a very happy developer by using Hilt as a Dependency Injection tool for Android. It makes it easy to track dependencies, easy to start with and less boilerplate than Dagger.</p>
 <p>However, one of the cons I noticed when using Hilt, was that it adds even more abstraction over your project and you either need to know a little more about code generation or better not use it by heart. Also, forgetting to perform DI as <code>AndroidInjection.inject(this)</code> or <code>DaggerMComponent.builder().build().inject(this)</code> and annotating the class with <code>@AndroidEntryPoint</code>is still tricky, you forget either way. But there is no problem with that since the error would be generated at build time.</p>
