@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Math - Tag - Coroutinedispatchers&#39; blog</title>
-        <link>https://coroutinedispatcher.github.io/coroutinedispatcher/tags/math/</link>
+        <link>https://coroutinedispatcher.github.io/tags/math/</link>
         <description>Math - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 03 Sep 2019 10:47:00 &#43;0200</lastBuildDate><atom:link href="https://coroutinedispatcher.github.io/coroutinedispatcher/tags/math/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 03 Sep 2019 10:47:00 &#43;0200</lastBuildDate><atom:link href="https://coroutinedispatcher.github.io/tags/math/" rel="self" type="application/rss+xml" /><item>
     <title>A small comparison between 3 essential algorithms in Kotlin</title>
-    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/a-small-comparison-between-3-essential/</link>
+    <link>https://coroutinedispatcher.github.io/posts/a-small-comparison-between-3-essential/</link>
     <pubDate>Tue, 03 Sep 2019 10:47:00 &#43;0200</pubDate>
     <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/a-small-comparison-between-3-essential/</guid>
+    <guid>https://coroutinedispatcher.github.io/posts/a-small-comparison-between-3-essential/</guid>
     <description><![CDATA[There is no doubt that sorting is still one of the most essential and important part in computer science. Everyone who knows a little about algorithms has already proven today&rsquo;s data to be true, but I would give a hand to everyone who hasn&rsquo;t tried the results by themselves yet.
 There are different sorting algorithms, but there are many factors to differentiate them from one another. And the focus today will be in the execution time, which comes as a result of each algorithms time complexity.]]></description>
 </item></channel>

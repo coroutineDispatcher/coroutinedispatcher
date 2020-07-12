@@ -8,7 +8,7 @@
         <title>Room and coroutines testing - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Room and coroutines testing" />
 <meta property="og:description" content="My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-coroutines-testing/" />
+<meta property="og:url" content="https://coroutinedispatcher.github.io/posts/room-and-coroutines-testing/" />
 <meta property="article:published_time" content="2019-10-14T10:00:00+02:00" />
 <meta property="article:modified_time" content="2019-10-14T10:00:00+02:00" />
 <meta name="twitter:card" content="summary"/>
@@ -17,7 +17,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-coroutines-testing/" /><link rel="prev" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-rxjava-testing/" /><link rel="next" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/unit-testing-with-coroutines/" /><link rel="stylesheet" href="/coroutinedispatcher/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/posts/room-and-coroutines-testing/" /><link rel="prev" href="https://coroutinedispatcher.github.io/posts/room-and-rxjava-testing/" /><link rel="next" href="https://coroutinedispatcher.github.io/posts/unit-testing-with-coroutines/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -25,9 +25,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/room-and-coroutines-testing\/"
+            "@id": "https:\/\/coroutinedispatcher.github.io\/posts\/room-and-coroutines-testing\/"
         },"genre": "posts","keywords": "Coroutines, Android Room, Kotlin Coroutines, Concurrency, Coroutines Testing, RxJava, Kotlin, Suspending Methods, Room Persistence","wordcount":  405 ,
-        "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/room-and-coroutines-testing\/","datePublished": "2019-10-14T10:00:00+02:00","dateModified": "2019-10-14T10:00:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/coroutinedispatcher.github.io\/posts\/room-and-coroutines-testing\/","datePublished": "2019-10-14T10:00:00+02:00","dateModified": "2019-10-14T10:00:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
                 "@type": "Person",
@@ -40,10 +40,10 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/coroutinedispatcher/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher/coroutinedispatcher/"> Home </a><a class="menu-item" href="/coroutinedispatcher/coroutinedispatcher/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher/coroutinedispatcher/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
                             <i class="fas fa-search fa-fw"></i>
@@ -64,7 +64,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/coroutinedispatcher/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+                <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -86,7 +86,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/coroutinedispatcher/coroutinedispatcher/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher/coroutinedispatcher/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher/coroutinedispatcher/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                </div><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -113,7 +113,7 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
             </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
-        src="/coroutinedispatcher/svg/loading.min.svg"
+        src="/svg/loading.min.svg"
         data-src="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg"
         data-srcset="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg, https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg 1.5x, https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg 2x"
         data-sizes="auto"
@@ -151,14 +151,14 @@ Let&rsquo;s start testing:</p>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/coroutinedispatcher/tags/coroutines/">Coroutines</a>,&nbsp;<a href="/coroutinedispatcher/tags/android-room/">Android Room</a>,&nbsp;<a href="/coroutinedispatcher/tags/kotlin-coroutines/">Kotlin Coroutines</a>,&nbsp;<a href="/coroutinedispatcher/tags/concurrency/">Concurrency</a>,&nbsp;<a href="/coroutinedispatcher/tags/coroutines-testing/">Coroutines Testing</a>,&nbsp;<a href="/coroutinedispatcher/tags/rxjava/">RxJava</a>,&nbsp;<a href="/coroutinedispatcher/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/coroutinedispatcher/tags/suspending-methods/">Suspending Methods</a>,&nbsp;<a href="/coroutinedispatcher/tags/room-persistence/">Room Persistence</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/coroutines/">Coroutines</a>,&nbsp;<a href="/tags/android-room/">Android Room</a>,&nbsp;<a href="/tags/kotlin-coroutines/">Kotlin Coroutines</a>,&nbsp;<a href="/tags/concurrency/">Concurrency</a>,&nbsp;<a href="/tags/coroutines-testing/">Coroutines Testing</a>,&nbsp;<a href="/tags/rxjava/">RxJava</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/suspending-methods/">Suspending Methods</a>,&nbsp;<a href="/tags/room-persistence/">Room Persistence</a></section>
         <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/coroutinedispatcher/">Home</a></span>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/coroutinedispatcher/posts/room-and-rxjava-testing/" class="prev" rel="prev" title="Room and RxJava testing"><i class="fas fa-angle-left fa-fw"></i>Room and RxJava testing</a>
-            <a href="/coroutinedispatcher/posts/unit-testing-with-coroutines/" class="next" rel="next" title="Unit testing with coroutines">Unit testing with coroutines<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/room-and-rxjava-testing/" class="prev" rel="prev" title="Room and RxJava testing"><i class="fas fa-angle-left fa-fw"></i>Room and RxJava testing</a>
+            <a href="/posts/unit-testing-with-coroutines/" class="next" rel="next" title="Unit testing with coroutines">Unit testing with coroutines<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
@@ -172,5 +172,5 @@ Let&rsquo;s start testing:</p>
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
