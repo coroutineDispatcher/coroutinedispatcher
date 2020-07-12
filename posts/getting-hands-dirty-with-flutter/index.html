@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Getting hands dirty with Flutter - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Getting hands dirty with Flutter" />
+<meta property="og:description" content="An Android Developer point of view.
+
+I have never been a fan of cross-platforms until Flutter came by. Actually, it was my first experience with cross-platforms. Never have I ever tried React Native, Ionic or whatever. But what was intriguing about Flutter? Well, since I am a Google fan and a Native Android Developer, i thought I should give it a try.
+Jumping into Flutter was pretty easy. They have simple documentation comparing to the Android Developers documentation, and I think it has a lot more details and better best-practices." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="coroutinedispatcher.github.io/posts/getting-hands-dirty-with-flutter/" />
+<meta property="article:published_time" content="2019-09-23T09:00:00+02:00" />
+<meta property="article:modified_time" content="2019-09-23T09:00:00+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Getting hands dirty with Flutter"/>
+<meta name="twitter:description" content="An Android Developer point of view.
+
+I have never been a fan of cross-platforms until Flutter came by. Actually, it was my first experience with cross-platforms. Never have I ever tried React Native, Ionic or whatever. But what was intriguing about Flutter? Well, since I am a Google fan and a Native Android Developer, i thought I should give it a try.
+Jumping into Flutter was pretty easy. They have simple documentation comparing to the Android Developers documentation, and I think it has a lot more details and better best-practices."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="coroutinedispatcher.github.io/posts/getting-hands-dirty-with-flutter/" /><link rel="prev" href="coroutinedispatcher.github.io/posts/publish-your-library-to-jitpack/" /><link rel="next" href="coroutinedispatcher.github.io/posts/an-early-look-at-dagger-reflect/" /><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Getting hands dirty with Flutter",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "coroutinedispatcher.github.io\/posts\/getting-hands-dirty-with-flutter\/"
+        },"genre": "posts","keywords": "Swift, Flutter Development, iOS, Cross-Platform, Javascript, Kotlin, Native vs Cross-Platform, Flutter for web., Dart, Android Development, Flutter","wordcount":  700 ,
+        "url": "coroutinedispatcher.github.io\/posts\/getting-hands-dirty-with-flutter\/","datePublished": "2019-09-23T09:00:00+02:00","dateModified": "2019-09-23T09:00:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher.github.io/"> Home </a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher.github.io/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/coroutinedispatcher.github.io/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher.github.io/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Getting hands dirty with Flutter</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-09-23">2019-09-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;700 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><em>An Android Developer point of view.</em></p>
+<p><a href="https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg"
+        data-srcset="https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg, https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg 1.5x, https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg"
+        title="https://1.bp.blogspot.com/-4o0osNnBTQM/XYeAmuWNzPI/AAAAAAAAPZM/u2BLbDoj8r8gWxdOUWFMEkqlImgaeBj5gCLcBGAsYHQ/s1600/flutter_app_design.jpg" /></a></p>
+<p>I have never been a fan of cross-platforms until Flutter came by. Actually, it was my first experience with cross-platforms. Never have I ever tried React Native, Ionic or whatever. But what was intriguing about Flutter? Well, since I am a Google fan and a Native Android Developer, i thought I should give it a try.</p>
+<p>Jumping into Flutter was pretty easy. They have simple documentation comparing to the <a href="https://developer.android.com/guide" target="_blank" rel="noopener noreffer">Android Developers documentation</a>, and I think it has a lot more details and better best-practices. Also, Android Studio supports flutter development by just installing <a href="https://flutter.dev/docs/get-started/editor" target="_blank" rel="noopener noreffer">Dart and Flutter plugins</a>. So the only real configuration I made was telling Android Studio where my <a href="https://flutter.dev/docs/get-started/install" target="_blank" rel="noopener noreffer">Flutter SDK</a> location was.</p>
+<p>In order not to transfer this article to a tutorial, I&rsquo;m just going to point out, what I think Flutter development is comparing to Android.</p>
+<p><strong>Honestly, Flutter is simpler.</strong><br>
+Even though I was an inexperienced programmer when I started Android, I remember a lot of struggles when having to face a bug or implement something new in Android. I expected to face more trouble with the State, since should have been a new concept but I got into it pretty quick.</p>
+<p><strong>Dart &gt; XML for design</strong><br>
+The easiest thing I&rsquo;m going to point out here, is a BottomNavigationView, or a BottomNavigationBar (flutterly speaking)<strong>.</strong> While in native code you have to care a lot about what happens when you press one element of the Navigation, in Flutter it&rsquo;s pretty simple:</p>
+<p>However, I still think as a Flutter beginner that the syntax is pretty strange comparing to the heavy Java and Kotlin structure (and Java&rsquo;s verbosity of course).</p>
+<p><strong>There are a lot of Widgets</strong><br>
+Looks like I had to google a lot about implementing the right widget. I admit that I should have read the docs more, but still, widgets in Flutter are too many comparing to the Android Development views.<br>
+ <br>
+<strong>I loved lists.</strong><br>
+A pain in the Android world is RecyclerViews and Adapters. They are not hard, but every time I have to create a list and display some data, I have this immediate reactions: &ldquo;Oh great. Another adapter&rdquo;. In Flutter ListViews or GridViews were just too good.</p>
+<p><strong>Futures were great.</strong><br>
+While Android has made a lot of improvements in Futures (or Deferred responses to be exact), still, I loved the way dart manages asynchronous methods:</p>
+<p>Adding some <a href="https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html" target="_blank" rel="noopener noreffer">FutureBuilder</a> support, Flutter Futures are just sweet.</p>
+<p><em>Note, one thing I learned in Flutter, is that if I&rsquo;m overthinking how to solve the case, perhaps I&rsquo;m doing it all wrong or know nothing about the problem.</em></p>
+<p><strong>Kotlin &gt; Dart</strong><br>
+Yea, Kotlin is a better language to program comparing to dart. They do look the same in some cases but my experience with Kotlin has always been very easy.</p>
+<p><strong>Flutter lags a little</strong><br>
+Perhaps I didn&rsquo;t google enough, and my loading images had a high quality, but I did experienced lags and shakes especially on the web (even though we know web build it&rsquo;s still not ready for production yet).<br>
+<strong>I still don&rsquo;t know why can&rsquo;t I build a debug version for the web</strong><br>
+The localhost:WHATEVER doesn&rsquo;t load a thing (The page was always blank. I didn&rsquo;t find much in Google, if you can help please share.), while building a release was pretty easy_**.**_ One thing to keep in mind is that you must prepare the project to support web. <a href="https://flutter.dev/docs/get-started/web" target="_blank" rel="noopener noreffer">Overall it&rsquo;s just 4 commands on the terminal</a>.</p>
+<p><strong>TypeScript &gt; KotlinJS &gt; Dart.js on the web-perspective.</strong><br>
+Well, even though I&rsquo;m not experienced in the web development at all, I have tried Angular and I still think that no language is able to compile to JavaScript better then TypeScript.</p>
+<p><em>Project overview: Just retreive some data from some API and make some List Rendering, usual things</em></p>
+<p><strong><a href="https://coroutinedispatcher.github.io/seivom_web/#/" target="_blank" rel="noopener noreffer">The web version</a>: (recently changed to new design)</strong></p>
+<p><a href="https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png"
+        data-srcset="https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png, https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png 1.5x, https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png"
+        title="https://1.bp.blogspot.com/-AhNpnrw3KM4/XYeQXXity-I/AAAAAAAAPZY/Xt8mCw1eFOoGKh82WeJ_Kjj5dh0SCNmcQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B17.15.55.png" /></a></p>
+<p><strong>IOS:</strong></p>
+<p><a href="https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png"
+        data-srcset="https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png, https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png 1.5x, https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png"
+        title="https://1.bp.blogspot.com/-HuiY-8ejZOY/XYeQhojytSI/AAAAAAAAPZc/rHO_4TzIcj0RSKONyaG9zcppo8UDvYzdQCLcBGAsYHQ/s1600/Screenshot%2B2019-09-22%2Bat%2B15.52.37.png" /></a></p>
+<p>Since I own an Android device, I&rsquo;m using XCode&rsquo;s Emulator</p>
+<p><strong>Android:</strong></p>
+<p><a href="https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s1600/viber_image_2019-09-22_17-17-42.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s400/viber_image_2019-09-22_17-17-42.jpg"
+        data-srcset="https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s400/viber_image_2019-09-22_17-17-42.jpg, https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s400/viber_image_2019-09-22_17-17-42.jpg 1.5x, https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s400/viber_image_2019-09-22_17-17-42.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s400/viber_image_2019-09-22_17-17-42.jpg"
+        title="https://1.bp.blogspot.com/-geLDxokSo64/XYeQ1IVHqyI/AAAAAAAAPZo/iKHj2aFgh3Q-hkIli0kEOJMgqDKOokaggCLcBGAsYHQ/s400/viber_image_2019-09-22_17-17-42.jpg" /></a></p>
+<p>Since I own an Android device, this is just a screenshot from it.</p>
+<p>The performance is nearly the same.</p>
+<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } Best of luck.<br>
+@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; }</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-09-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="coroutinedispatcher.github.io/tags/swift/">Swift</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/flutter-development/">Flutter Development</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/ios/">iOS</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/cross-platform/">Cross-Platform</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/javascript/">Javascript</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin/">Kotlin</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/native-vs-cross-platform/">Native vs Cross-Platform</a>,&nbsp;<a href=""></a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/dart/">Dart</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/android-development/">Android Development</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/flutter/">Flutter</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="coroutinedispatcher.github.io/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="coroutinedispatcher.github.io/posts/publish-your-library-to-jitpack/" class="prev" rel="prev" title="Publish your library to JitPack "><i class="fas fa-angle-left fa-fw"></i>Publish your library to JitPack </a>
+            <a href="coroutinedispatcher.github.io/posts/an-early-look-at-dagger-reflect/" class="next" rel="next" title="An early look at Dagger Reflect">An early look at Dagger Reflect<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher.github.io/js/theme.min.js"></script></body>
+</html>

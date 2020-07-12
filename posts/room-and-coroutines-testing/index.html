@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Room and coroutines testing - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Room and coroutines testing" />
+<meta property="og:description" content="My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="coroutinedispatcher.github.io/posts/room-and-coroutines-testing/" />
+<meta property="article:published_time" content="2019-10-14T10:00:00+02:00" />
+<meta property="article:modified_time" content="2019-10-14T10:00:00+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Room and coroutines testing"/>
+<meta name="twitter:description" content="My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="coroutinedispatcher.github.io/posts/room-and-coroutines-testing/" /><link rel="prev" href="coroutinedispatcher.github.io/posts/room-and-rxjava-testing/" /><link rel="next" href="coroutinedispatcher.github.io/posts/unit-testing-with-coroutines/" /><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Room and coroutines testing",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "coroutinedispatcher.github.io\/posts\/room-and-coroutines-testing\/"
+        },"genre": "posts","keywords": "Coroutines, Android Room, Kotlin Coroutines, Concurrency, Coroutines Testing, RxJava, Kotlin, Suspending Methods, Room Persistence","wordcount":  405 ,
+        "url": "coroutinedispatcher.github.io\/posts\/room-and-coroutines-testing\/","datePublished": "2019-10-14T10:00:00+02:00","dateModified": "2019-10-14T10:00:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher.github.io/"> Home </a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher.github.io/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/coroutinedispatcher.github.io/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher.github.io/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Room and coroutines testing</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-10-14">2019-10-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;405 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg"
+        data-srcset="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg, https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg 1.5x, https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg"
+        title="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg" /></a></p>
+<p>My <a href="https://www.coroutinedispatcher.com/2019/10/room-and-rxjava-testing.html" target="_blank" rel="noopener noreffer">last article</a> covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have <a href="https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-test" target="_blank" rel="noopener noreffer">great support</a> in <em>unit testing</em> even though todays topic has nothing to do with it.  What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited. You can also check <a href="https://www.droidcon.com/media-detail?video=352671106" target="_blank" rel="noopener noreffer">this awesome talk</a> from Sean McQuillan, which I found pretty helpful.</p>
+<p>Comparing to the last gists, we will try to jump from Rx to coroutines (without implementation) and write test class about it.  Instead of RxJava components, we can just mark methods as suspended:</p>
+<p>This looks easier (or better say less confusing).</p>
+<p>_Two small notes that might be needed: _<br>
+_Looking the code in the previous article, notice that you won&rsquo;t be needing the <em>InstantTaskExecutorRule() <em>and</em> <strong>suddenly</strong> <em>we won&rsquo;t be running the queries on the Main thread. That&rsquo;s because we can&rsquo;t do that if methods are marked as</em> suspend_ed.</em><br>
+Let&rsquo;s start testing:</p>
+<p>Notice that we dropped the allowMainThreadQueries().</p>
+<p>And now the queries:</p>
+<p>Something too familiar? The key ingredient here is just a runBlocking keyword, which makes sure to run your suspending methods. I guess there is no need to add code for the update or delete part of testing. It&rsquo;s just super imperative and there is no secret here which could make you lose your mind (referring to the Rx-Javas blockingawait()) because a coroutine makes sure that the insertion is executed before the code below.</p>
+<p><strong>Not a small comparison:</strong></p>
+<p>I love both. But I think that Rx is really redundant when we are inside the Kotlin (especially coroutines) context.</p>
+<p><strong>Conclusion</strong></p>
+<p>Coroutines are being every day more supported by Google Android team and that&rsquo;s really great. New libraries are being written in Kotlin and coroutines are part of them. What I really like about Room and coroutines in testing is that I never <em>deliberately</em> forget to test Daos on my project, I&rsquo;m always ready to write tests (even though I haven&rsquo;t been around testing in more than 8 months).</p>
+<p>Note: If you want to know more about Room + coroutines, <a href="https://medium.com/androiddevelopers/room-coroutines-422b786dc4c5" target="_blank" rel="noopener noreffer">here</a> is a nice article from Florina Muntenescu also covering some deep dive and behind the scenes on how Room Coroutine support has been build.</p>
+<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } Stavro Xhardha</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-10-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="coroutinedispatcher.github.io/tags/coroutines/">Coroutines</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/android-room/">Android Room</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin-coroutines/">Kotlin Coroutines</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/concurrency/">Concurrency</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/coroutines-testing/">Coroutines Testing</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/rxjava/">RxJava</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin/">Kotlin</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/suspending-methods/">Suspending Methods</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/room-persistence/">Room Persistence</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="coroutinedispatcher.github.io/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="coroutinedispatcher.github.io/posts/room-and-rxjava-testing/" class="prev" rel="prev" title="Room and RxJava testing"><i class="fas fa-angle-left fa-fw"></i>Room and RxJava testing</a>
+            <a href="coroutinedispatcher.github.io/posts/unit-testing-with-coroutines/" class="next" rel="next" title="Unit testing with coroutines">Unit testing with coroutines<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher.github.io/js/theme.min.js"></script></body>
+</html>

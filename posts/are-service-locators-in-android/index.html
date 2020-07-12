@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Are service locators in Android actually simple? - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Are service locators in Android actually simple?" />
+<meta property="og:description" content="This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
+The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:
+hljs.initHighlightingOnLoad();
+
+The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="coroutinedispatcher.github.io/posts/are-service-locators-in-android/" />
+<meta property="article:published_time" content="2019-12-02T09:06:00+01:00" />
+<meta property="article:modified_time" content="2019-12-02T09:06:00+01:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Are service locators in Android actually simple?"/>
+<meta name="twitter:description" content="This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
+The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:
+hljs.initHighlightingOnLoad();
+
+The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="coroutinedispatcher.github.io/posts/are-service-locators-in-android/" /><link rel="prev" href="coroutinedispatcher.github.io/posts/modularizing-your-android-app-some/" /><link rel="next" href="coroutinedispatcher.github.io/posts/conditional-navigation-and-single-event/" /><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Are service locators in Android actually simple?",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "coroutinedispatcher.github.io\/posts\/are-service-locators-in-android\/"
+        },"genre": "posts","keywords": "Dependency Injection, Dagger 2, Service Locator, Android, KodeIn, Koin","wordcount":  883 ,
+        "url": "coroutinedispatcher.github.io\/posts\/are-service-locators-in-android\/","datePublished": "2019-12-02T09:06:00+01:00","dateModified": "2019-12-02T09:06:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher.github.io/"> Home </a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher.github.io/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/coroutinedispatcher.github.io/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher.github.io/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Are service locators in Android actually simple?</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-12-02">2019-12-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;883 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg"
+        data-srcset="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg, https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg 1.5x, https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg"
+        title="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg" /></a></p>
+<p>This week, I&rsquo;ve been playing with service locators in Android. I made <a href="https://github.com/coroutineDispatcher/service_locator_demo" target="_blank" rel="noopener noreffer">this</a> repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.</p>
+<p>The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:</p>
+<p>hljs.initHighlightingOnLoad();</p>
+<p><a href="https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg"
+        data-srcset="https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg, https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg 1.5x, https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg"
+        title="https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg" /></a></p>
+<p>The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API. So let us list our dependencies:</p>
+<p>1 - First I&rsquo;m using Retrofit, to fetch the data (and the interface which implements the server request methods)<br>
+2- Second I need a database (I always use Room, but in my early beginning of Android development, I remember using Realm and it was awesome too)<br>
+3- Since I&rsquo;m using coroutines, I always keep a data class with coroutine dispatchers to be used in the ViewModel.<br>
+4- The famous ViewModelFactory (for simplicity I&rsquo;m not handling the savedStateHandle in this article)<br>
+5-  Picasso, to render the images.</p>
+<p>I&rsquo;m comparing these  tools in verbosity, simplicity and time to set up.</p>
+<p><strong><a href="https://insert-koin.io/" target="_blank" rel="noopener noreffer">Koin</a>.</strong><br>
+Koin as a service locator is the easiest to get in with. The docs are pretty simple and it provides a lot of features, making it the perfect tool for Android in particular. However, it has some things I don&rsquo;t really like. Something I like to call the <em>pre-declaration of the constructor</em>. Notice this code here:</p>
+<pre><code>val myModule = module{  
+      ...  
+      single {  
+            CoroutineDispatchers(  
+                Dispatchers.Main,  
+                Dispatchers.IO  
+            )  
+        }  
+  
+        factory {  
+            EntranceRepository(get(), get())  
+        }  
+  
+        viewModel {  
+            EntranceFragmentViewModel(get(), get())  
+        }  
+      ...  
+    }
+```These lines are what I love and what I hate about Koin. First of all, I really love that it provides it's own feature about the ViewModel factory. But it has some perks, IMO:  
+  
+1- First of all when it comes to naming, if you think about it, one keyword is single (so it's a scope), and the other is a factory (doesn't give a message about the scope, but it's a factory), and the other is a viewmodel (definitely not a scope). This makes it a little bit chaotic, mixing the concept of scopes with factory patterns.  
+  
+2- The second thing is declaration of the EntranceRepository(get(), get()) which is basically definition of a constructor. This is boilerplate IMO. And correct me if I'm wrong, but I assume it uses some kind of reflection (in which I don't know much), in order to invoke constructor in runtime. If you don't provide the EntranceRepository like that, you are most likely to break the app in runtime.  
+  
+_I'm not handling the part of field injection, because it looks the same in all DI tools. The constructor injection in Android is a little bit more tricky than the other parts._  
+  
+**[KodeIn](https://kodein.org/Kodein-DI/)**  
+  
+The same thing applies to KodeIn when it comes to speed of set up. It's fantastic. Furthermore, the lazy initialisation of dependencies looks really great to me.  
+  
+1- However, this is what I found suspicious in KodeIn [docs](https://kodein.org/Kodein-DI/?6.5/android#_view_models):  
+  
+ _ To use Kodein, you need an Android context. For that, View Models need to implement AndroidViewModel._  
+I'm pretty sure not many would agree to do that, and [here](https://medium.com/androiddevelopers/locale-changes-and-the-androidviewmodel-antipattern-84eb677660d9) are some good reasons about it.  
+  
+Otherwise, you would need to keep your ViewModelFactory pattern, and KodeIn hasn't a pre-built feature for that, you have to do it manually. The pre declaration of constructor problem, does apply for KodeIn too.  
+  
+2- Another thing I noticed in KodeIn field injection, was the by kodein() delegation which does create a little bit of confusion because the kodein() method is a different extension method for Activities, Fragments etc.  
+  
+**My own idea of a service locator in Android:**  
+Must note that this is only an idea and it's totally immature, but I find compile time safer than runtime. Therefore, annotations are perfectly solving a case of DI in the JVM world. If we forget Dagger for a moment, the next best example would be Spring framework with its' @Autowire injection keyword.  
+Anyways, there could be library which could be a mix between Dagger and other service locators. I still imagine something like this:  
+  
+</code></pre><p>@Holder<br>
+class MyApplication: Application(){</p>
+<p>override fun onCreate(){<br>
+..<br>
+MyApplicationHolder.init(this) //after compilation<br>
+}</p>
+<p>@Single<br>
+fun provideDependency1() : Dependency1{<br>
+return Dependency1.builder().setItsThings(things).build()<br>
+}</p>
+<p>@SomeScoped<br>
+fun provideDependency3(): Dependency3{<br>
+return Dependency3.builder().setItsThings3(things3).build()<br>
+}</p>
+<p>@Single<br>
+@ByFactory<br>
+fun provideViewModel() : MyViewModel{<br>
+return MyViewModel(dependency1, dependency2)<br>
+}<br>
+}</p>
+<p>@Single //which would be just a @Inject + @Singleton equivalent<br>
+class Dependency2(){<br>
+}</p>
+<p>//ViewModels</p>
+<p>@Single //A ViewModel factory would be generated for you by the &ldquo;framework&rdquo;<br>
+class MyViewModel(d1: D1, d2: D2) : ViewModel(){</p>
+<p>}</p>
+<pre><code class="language-This" data-lang="This">  
+**Conclusion:**  
+Using KodeIn or Koin in your codebase is pretty reasonable thing to do, if it solves your problem. But this article was more about to state that _they are not as simple as developer state_ they are. Furthermore, I still think that Dagger takes a little more time to implement (and hopefully that's the hardest thing in Dagger, trust me) , but the generation of boilerplate comes from the framework and giving less work to the developer. @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css'); @import url('https://fonts.googleapis.com/css?family=Open+Sans'); body { margin: 20px; font: 16px 'Open Sans', sans-serif; }  
+  
+If you want to know more about service locators, dependency injection and IoC in particular, please refer [here](https://martinfowler.com/articles/injection.html).  
+  
+Full repository [here](https://github.com/coroutineDispatcher/service_locator_demo).  
+  
+Stavro Xhardha</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-12-02</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="coroutinedispatcher.github.io/tags/dependency-injection/">Dependency Injection</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/dagger-2/">Dagger 2</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/service-locator/">Service Locator</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/android/">Android</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kodein/">KodeIn</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/koin/">Koin</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="coroutinedispatcher.github.io/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="coroutinedispatcher.github.io/posts/modularizing-your-android-app-some/" class="prev" rel="prev" title="Modularizing your Android app, some quick notes (Part 4)"><i class="fas fa-angle-left fa-fw"></i>Modularizing your Android app, some quick notes (Part 4)</a>
+            <a href="coroutinedispatcher.github.io/posts/conditional-navigation-and-single-event/" class="next" rel="next" title="Conditional navigation and single event LiveData">Conditional navigation and single event LiveData<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher.github.io/js/theme.min.js"></script></body>
+</html>

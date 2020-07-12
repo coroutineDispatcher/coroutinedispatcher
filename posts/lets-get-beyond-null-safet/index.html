@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Let&#39;s get beyond null safety - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Let&#39;s get beyond null safety" />
+<meta property="og:description" content="_Inspired by myself and perhaps some other people, who coded Java style in Kotlin. I have seen tones of articles which (mostly) highlight Kotlins null safety and nothing more. So that&rsquo;s it? If it was only for that I swear I would be still using Java with some null checks. Therefore, this article suggest what to use best in Kotlin as well as droping some everyday Java habits. _" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="coroutinedispatcher.github.io/posts/lets-get-beyond-null-safet/" />
+<meta property="article:published_time" content="2019-08-15T15:25:00+02:00" />
+<meta property="article:modified_time" content="2019-08-15T15:25:00+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Let&#39;s get beyond null safety"/>
+<meta name="twitter:description" content="_Inspired by myself and perhaps some other people, who coded Java style in Kotlin. I have seen tones of articles which (mostly) highlight Kotlins null safety and nothing more. So that&rsquo;s it? If it was only for that I swear I would be still using Java with some null checks. Therefore, this article suggest what to use best in Kotlin as well as droping some everyday Java habits. _"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="coroutinedispatcher.github.io/posts/lets-get-beyond-null-safet/" /><link rel="prev" href="coroutinedispatcher.github.io/posts/dagger-multibindings-saved-my-time/" /><link rel="next" href="coroutinedispatcher.github.io/posts/solving-room-cannot-find-setter-for/" /><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Let's get beyond null safety",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "coroutinedispatcher.github.io\/posts\/lets-get-beyond-null-safet\/"
+        },"genre": "posts","keywords": "Java, Kotlin, Kotlin programming","wordcount":  1298 ,
+        "url": "coroutinedispatcher.github.io\/posts\/lets-get-beyond-null-safet\/","datePublished": "2019-08-15T15:25:00+02:00","dateModified": "2019-08-15T15:25:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher.github.io/"> Home </a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher.github.io/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/coroutinedispatcher.github.io/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher.github.io/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Let&#39;s get beyond null safety</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-08-15">2019-08-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1298 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg"
+        data-srcset="https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg, https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg 1.5x, https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg"
+        title="https://1.bp.blogspot.com/-fXvegi7BBgU/XVVT-wWTTUI/AAAAAAAAO2k/dhfSDOdQiJYkiKlCXraN_Bkowgyis2DIgCLcBGAs/s1600/annie-spratt-5w1VDSTXvaE-unsplash.jpg" /></a></p>
+<p>_Inspired by myself and perhaps some other people, who coded Java style in Kotlin. I have seen tones of articles which (mostly) highlight Kotlins null safety and nothing more. So that&rsquo;s it? If it was only for that I swear I would be still using Java with some null checks. Therefore, this article suggest what to use best in Kotlin as well as droping some everyday Java habits. _<br>
+_What this article is <strong>not</strong>: A comparison between Java and Kotlin.  _<br>
+<strong>Variables:</strong><br>
+There is a lot of new things obviously but sharing what is important for me in variables is the lateinit and lazy implementation.</p>
+<p>In case you never initialize the variable and use it, Kotlin will throw an exception indicating that the variable has never been initialized:</p>
+<p>Let&rsquo;s jump into something fun, the lazy initialization, which basically throws us into one of the super powers of Kotlin: <a href="https://kotlinlang.org/docs/reference/delegated-properties.html" target="_blank" rel="noopener noreffer"><em>Delegated Properties</em></a>. Delegated Properties is just a way of programming in Kotlin which must (or at least has to) be used. Think of delegation as the operator which gives &ldquo;authority&rdquo; to a variable to use interfaces and implementations. What does this bring into benefit? Of course, you don&rsquo;t have to implement interfaces all the time in your classes to perform observation, or give values to a map etc. The simplest example is the lazy()function, which takes a lambda and returns a Lazy<!-- raw HTML omitted --> which is the delegate that &ldquo;magically&rdquo; remembers your variable value but the memory is still not allocated. How great is that? I use lazy wherever I can:</p>
+<p>I suggest checking Delegation not only for this case, but even your personal use cases, it&rsquo;s pretty powerful. Delegation is achieved using the keyword by.</p>
+<p><strong>Functions:</strong></p>
+<p>I personally believe methods is the most innovative way in Kotlin. Honestly, one could write books only with Kotlin methods and it would be a thick one. Therefore, a single article wouldn&rsquo;t be enough for methods, but I would state what is more important:</p>
+<p><strong>Extension functions:</strong><br>
+Extension functions is a way to apply methods to already made classes as part of them. For example, if your whole project needs a method which returns the number of characters in a Stringtimes 2 (don&rsquo;t judge my examples 😂)  you can create a method as part of the String class without creating a whole new class which extends String. </p>
+<p>After that, you are free to apply this method in every possible String inside you module.</p>
+<p>**Lambdas, inline, noiline, crossinline functions: **</p>
+<p>Many programming languages including Java, Python or Javascript take functions as parameters. So does Kotlin. But since Kotlin translates to Java, it might have some possible problems on the process. Since lambdas are not such new to programming by now, i wont stop at them but I suggest using them the best way that solves your problem.</p>
+<p>Let&rsquo;s jump to inline functions with lambda implementation:</p>
+<p>In kotlin perspective, there is nothing wrong with that. But Java disagrees:</p>
+<p>There is an instance of the Function() every time I use my executeMyLambda() method. So what does the inline keyword bring? It precisely prevents that from happening:</p>
+<p>And in the Java part:</p>
+<p>That&rsquo;s a really powerful tool. While sometimes you might need the oposite of the above case, to prevent inline function for happening, so you may provide noinline keyword before the lambda and you are good to go.</p>
+<p>On the other hand, there might be some small problems during implementing those cases. For example, when you use the return statement inside the lambda which will break our execution of the higher method. So to prevent this we need to use the crossinline keyword before lambda. After that, even deliberately, you can&rsquo;t make a return statement inside it:</p>
+<p><strong><a href="https://kotlinlang.org/docs/reference/inline-functions.html#reified-type-parameters" target="_blank" rel="noopener noreffer">Reified, a small bonus for syntactic sugar and rutime generics control.</a></strong></p>
+<p>Reified gives the ability to have control over generic types at runtime. I&rsquo;m going to stick to the example from the official doc, with some small modifications.</p>
+<p>Let&rsquo;s see how reified gives a hand to us:</p>
+<p>So we lost a parameter, and now we can check in runtime which is the paret type of the given generic.</p>
+<p>**Default parameters: **<br>
+You are free to provide default parameters on Kotlin  for functions that not always will require some parameter:</p>
+<p>Notice we are not providing a value for the pageSize on the first case, but we are providing another one in the next case.<br>
+ <strong>Infix and Operator Overloading</strong><br>
+Kotlin methods marked as infix basically allow you to create your own keyword which on background is a method. It has strict rules, but it&rsquo;s a cool feature. For example, if you need a third instance of the object that holds only one String type variable inside, which is formed by concatinating names of 2 other users, you can do this:</p>
+<p>So how this is solved? You can directly apply the infix keyword on that plus method:</p>
+<p>But what if we want to go further than that? The plus keyword looks nice, but not so elegant, and since we know we can concatenate two strings with the + operator, why not do it with these objects?</p>
+<p>So all we need to do is just add the operator keyword to that plus() method and the error will leave:</p>
+<p>Notice we must apply the <a href="https://kotlinlang.org/docs/reference/operator-overloading.html" target="_blank" rel="noopener noreffer">right spelling for this to happen</a>.</p>
+<p>**Scope functions: **<br>
+<em>Note: Cases provided below, are not the only ones that can be applied to, please refer to the <a href="https://kotlinlang.org/docs/reference/scope-functions.html" target="_blank" rel="noopener noreffer">docs</a> for more info.</em></p>
+<p>Kotlin has a sweet way of avoiding boilerplate or builders. It has some operators which can be applied to objects directly. Notice that operations are methods by themselves, but they apply to objects. I am taking the same example for all operations below:</p>
+<p>So instead of doing:</p>
+<p>We can do:</p>
+<p>I stared with let operator since I find it more useful. The lambda method inside it is of type Calendar and the method returns the lambda result, in our case Unit. Current case does not fit well with let but the message is given.</p>
+<p><strong>run</strong></p>
+<p>What run does, is &ldquo;creating a small class environment&rdquo; inside our other classes. So basically the lambda that run returns, is the context of the Calendar.getInstance() , while the return type in this case is also Unit. </p>
+<p><strong>with</strong><br>
+with operator is very similar with run operator, but the only difference is that you provide the context as a parameter and not after the instantiation. Example:</p>
+<p><strong>apply</strong><br>
+Apply perhaps is the best solution for our Calendar instantiation. In order to store the calendar value in a variable, apply comes a lot in handy if I want to reuse that instance. The lambda here returns the same as it does in run, the context, with a small difference: apply method returns a value which can be stored: </p>
+<p>And last but not least, the also operator. This little guy here, comes in handy when we already have some data initialized and we want to apply extra operations on them:</p>
+<p>Our also here, has a lambda of type Calendar! which returns Unit, but the method here returns the Calendar type, making also and apply a perfect match.</p>
+<p><strong>Data classes</strong><br>
+Data classes are the sweet thing. So this is how you create a model in java:</p>
+<p>And this is all we have to do in Kotlin:</p>
+<p>Getters and setters included.</p>
+<p><strong>Conclusion</strong></p>
+<p>These were some of the many things you can do to think in Kotlin style instead of Java. This will help you clear a lot of boilerplate code as well as removing Java style of programming.  Even though Kotlin does translate to Java and is very similar, they are not the same thing. Therefore, applying these rules will come in handy in your career as a Kotlin developer.</p>
+<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; }</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-08-15</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="coroutinedispatcher.github.io/tags/java/">Java</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin/">Kotlin</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin-programming/">Kotlin programming</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="coroutinedispatcher.github.io/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="coroutinedispatcher.github.io/posts/dagger-multibindings-saved-my-time/" class="prev" rel="prev" title="Dagger Multibindings saved my time"><i class="fas fa-angle-left fa-fw"></i>Dagger Multibindings saved my time</a>
+            <a href="coroutinedispatcher.github.io/posts/solving-room-cannot-find-setter-for/" class="next" rel="next" title="Solving Room &#34;cannot find setter for field&#34; error in build time">Solving Room &#34;cannot find setter for field&#34; error in build time<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher.github.io/js/theme.min.js"></script></body>
+</html>

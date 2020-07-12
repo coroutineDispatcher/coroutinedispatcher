@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Prepopulate Room with data. - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Prepopulate Room with data." />
+<meta property="og:description" content="There are times, when we just need the data when the app starts, and all the functionality is just a matter of work. Or we just need the app to be independent from the network and we have the data. A simple dog-race database or cat-race database doesn&rsquo;t actually need online interaction at all (if there are not too many data of course). So, Room comes with a nice solution about this." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="coroutinedispatcher.github.io/posts/prepopulate-room-with-data/" />
+<meta property="article:published_time" content="2020-01-06T09:04:00+01:00" />
+<meta property="article:modified_time" content="2020-01-06T09:04:00+01:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Prepopulate Room with data."/>
+<meta name="twitter:description" content="There are times, when we just need the data when the app starts, and all the functionality is just a matter of work. Or we just need the app to be independent from the network and we have the data. A simple dog-race database or cat-race database doesn&rsquo;t actually need online interaction at all (if there are not too many data of course). So, Room comes with a nice solution about this."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="coroutinedispatcher.github.io/posts/prepopulate-room-with-data/" /><link rel="prev" href="coroutinedispatcher.github.io/posts/fragments-viewpager2/" /><link rel="next" href="coroutinedispatcher.github.io/posts/searchable-fragments-with-paging-library/" /><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Prepopulate Room with data.",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "coroutinedispatcher.github.io\/posts\/prepopulate-room-with-data\/"
+        },"genre": "posts","keywords": "Java, PrePopulate Room, Android Room, Kotlin, Android, Room Persistence, Sqlite","wordcount":  500 ,
+        "url": "coroutinedispatcher.github.io\/posts\/prepopulate-room-with-data\/","datePublished": "2020-01-06T09:04:00+01:00","dateModified": "2020-01-06T09:04:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher.github.io/"> Home </a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher.github.io/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/coroutinedispatcher.github.io/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher.github.io/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Prepopulate Room with data.</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-01-06">2020-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;500 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg"
+        data-srcset="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg, https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg 1.5x, https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg 2x"
+        data-sizes="auto"
+        alt="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg"
+        title="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg" /></a></p>
+<p>There are times, when we just need the data when the app starts, and all the functionality is just a matter of work. Or we just need the app to be independent from the network and we have the data. A simple dog-race database or cat-race database doesn&rsquo;t actually need online interaction at all (if there are not too many data of course). So, Room comes with a nice solution about this. The <a href="https://developer.android.com/training/data-storage/room/prepopulate" target="_blank" rel="noopener noreffer">docs</a> are pretty clear and short when it comes to this topic.<br>
+We just write:</p>
+<pre><code>Room.databaseBuilder(appContext, AppDatabase.class, &quot;Sample.db&quot;)  
+    .createFromAsset(&quot;database/myapp.db&quot;)  
+    .build()  
+
+```And our data are ready to be instantiated when the app starts. One more thing to note is that its extremely fast to do it this way. However, here are some problems that the docs don't even bother to mention (which I think are important for some).  
+
+1 - A .db file, is not a .sql file.
+-----------------------------------
+
+The file we are supposed to hold in assets folder which contains a query like: CREATE TABLE IF NOT EXISTS  has nothing to do with the file in the code above, that we are supposed to import. We need to create a database like this. I actually used [SqliteBrowser](https://sqlitebrowser.org/), to execute the query, but there should be other ways too.  
+
+2 - Null values and naming
+--------------------------
+
+Our data model needs to be precisely as the data we are supposed to prepopulate. For example if we have a \[name\] TEXT NULL we should make sure that the representation of it must meet the same conditions, including nullability and naming (this also includes table names):  
+</code></pre><p>@ColumnInfo(name = &ldquo;name&rdquo;)<br>
+val name: String? = &ldquo;&rdquo;,</p>
+<pre><code class="language-Otherwise," data-lang="Otherwise,">
+3- Must have incremental processor enabled:
+-------------------------------------------
+
+Don't forget to have the correct setup in build.gradle (or in my case build.gradle.kts), because this feature is only available after Room 2.2.0:  
+</code></pre><p>javaCompileOptions {<br>
+annotationProcessorOptions {<br>
+arguments = mapOf(<br>
+&ldquo;room.schemaLocation&rdquo; to &ldquo;$projectDir/schemas&rdquo;,<br>
+&ldquo;room.incremental&rdquo; to &ldquo;true&rdquo;,<br>
+&ldquo;room.expandProjection&rdquo; to &ldquo;true&rdquo;<br>
+)<br>
+}<br>
+}</p>
+<pre><code>
+How to know if we are doing it correctly?
+-----------------------------------------
+
+There are two cases to spot here:  
+
+1 - We have the incorrect file
+------------------------------
+
+In this case Room would automatically throw a RuntimeException yelling: &quot;Cannot copy database file&quot;.  
+
+2 - The file is correct but the table in SQL has nothing to do with our model representation
+--------------------------------------------------------------------------------------------
+
+In this case Room would throw a SqliteException with some error like: &quot;Database file is corrupt&quot;. Trust me whatever you google on this case, cannot help 😅.  
+  
+_Note: This article is just about importing a .db file from assets folder. You can also import a db file from the device after download. Please check the docs for more._  
+
+A wish I made.
+--------------
+
+Well, I would like to see an option from Room to import a JSON as a file. Should be cool to have it as a feature.  
+  
+
+Conclusion:
+-----------
+
+I hope I helped anyone who is willing to write an app with totally offline data. It's pretty good solution, when we don't have too much.  
+  
+Stavro Xhardha</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-01-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="coroutinedispatcher.github.io/tags/java/">Java</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/prepopulate-room/">PrePopulate Room</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/android-room/">Android Room</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin/">Kotlin</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/android/">Android</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/room-persistence/">Room Persistence</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/sqlite/">Sqlite</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="coroutinedispatcher.github.io/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="coroutinedispatcher.github.io/posts/fragments-viewpager2/" class="prev" rel="prev" title="Fragments ❤  ViewPager2"><i class="fas fa-angle-left fa-fw"></i>Fragments ❤  ViewPager2</a>
+            <a href="coroutinedispatcher.github.io/posts/searchable-fragments-with-paging-library/" class="next" rel="next" title="Searchable Fragments with the Paging Library">Searchable Fragments with the Paging Library<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher.github.io/js/theme.min.js"></script></body>
+</html>

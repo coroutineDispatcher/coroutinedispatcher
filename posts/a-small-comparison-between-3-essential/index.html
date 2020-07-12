@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>A small comparison between 3 essential algorithms in Kotlin - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="A small comparison between 3 essential algorithms in Kotlin" />
+<meta property="og:description" content="There is no doubt that sorting is still one of the most essential and important part in computer science. Everyone who knows a little about algorithms has already proven today&rsquo;s data to be true, but I would give a hand to everyone who hasn&rsquo;t tried the results by themselves yet.
+There are different sorting algorithms, but there are many factors to differentiate them from one another. And the focus today will be in the execution time, which comes as a result of each algorithms time complexity." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="coroutinedispatcher.github.io/posts/a-small-comparison-between-3-essential/" />
+<meta property="article:published_time" content="2019-09-03T10:47:00+02:00" />
+<meta property="article:modified_time" content="2019-09-03T10:47:00+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A small comparison between 3 essential algorithms in Kotlin"/>
+<meta name="twitter:description" content="There is no doubt that sorting is still one of the most essential and important part in computer science. Everyone who knows a little about algorithms has already proven today&rsquo;s data to be true, but I would give a hand to everyone who hasn&rsquo;t tried the results by themselves yet.
+There are different sorting algorithms, but there are many factors to differentiate them from one another. And the focus today will be in the execution time, which comes as a result of each algorithms time complexity."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="coroutinedispatcher.github.io/posts/a-small-comparison-between-3-essential/" /><link rel="prev" href="coroutinedispatcher.github.io/posts/how-to-produce-savedstatehandle-in-your/" /><link rel="next" href="coroutinedispatcher.github.io/posts/some-quick-notes-on-dark-mode/" /><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher.github.io/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "A small comparison between 3 essential algorithms in Kotlin",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "coroutinedispatcher.github.io\/posts\/a-small-comparison-between-3-essential\/"
+        },"genre": "posts","keywords": "Algorithms, Insertion Sort, Math, Kotlin, Big O notation, Merge Sort, Quick Sort","wordcount":  465 ,
+        "url": "coroutinedispatcher.github.io\/posts\/a-small-comparison-between-3-essential\/","datePublished": "2019-09-03T10:47:00+02:00","dateModified": "2019-09-03T10:47:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher.github.io/"> Home </a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher.github.io/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="coroutinedispatcher.github.io/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/coroutinedispatcher.github.io/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher.github.io/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher.github.io/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">A small comparison between 3 essential algorithms in Kotlin</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-09-03">2019-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;465 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg"
+        data-srcset="https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg, https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg 1.5x, https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg"
+        title="https://1.bp.blogspot.com/-yNEhnV7kQ0k/XW4pDHoZewI/AAAAAAAAPHY/BIDZeldy9lECb0UiO92OU6PbLj1WX20fQCLcBGAs/s1600/antoine-dautry-05A-kdOH6Hw-unsplash.jpg" /></a></p>
+<p>There is no doubt that sorting is still one of the most essential and important part in computer science. Everyone who knows a little about algorithms has already proven today&rsquo;s data to  be true, but I would give a hand to everyone who hasn&rsquo;t tried the results by themselves yet.</p>
+<p>There are different sorting algorithms, but there are many factors to differentiate them from one another. And the focus today will be in the execution time, which comes as a result of each algorithms time complexity.</p>
+<p>Let&rsquo;s jump to the algorithms first, starting with <strong>Insertion Sort</strong>:</p>
+<p>This is the code for <strong>Merge Sort</strong>:</p>
+<p>And this is the code for Quick Sort:</p>
+<p>The only thing that will be changing here is the size of the elements that Utils.someArrayOfInts() will return.</p>
+<p>In the first case, let&rsquo;s try our algorithms  with just an array of 7 integers:</p>
+<p><a href="https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png"
+        data-srcset="https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png, https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png 1.5x, https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png"
+        title="https://1.bp.blogspot.com/-mD5v2EWV510/XW4gijSa0NI/AAAAAAAAPGs/_cqipJvU3koAbDQVKQyyaWo0-VeK9RJCQCLcBGAs/s1600/Chartfor7.png" /></a></p>
+<p>Insertion sort is pretty quick comparing to other algorithms in this case. Now let&rsquo;s run the same algorithms, with one thousand (1000) integers. Check out my result:</p>
+<p><a href="https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png"
+        data-srcset="https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png, https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png 1.5x, https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png"
+        title="https://1.bp.blogspot.com/-vgpsnNOLasc/XW4iM_shK8I/AAAAAAAAPHA/fmUmDSDA8Og06HfXE8TH7smWEpA5AMkzQCLcBGAs/s1600/Chartfor1k.png" /></a></p>
+<p> When having to sort 1000 items, looks like merge sort wins. And this is because insertions sort time complexity is O(n^2) (n square) while the others have an O(log(n)) time complexity (Quick sort has O(n^2) in worst case), which respectively means: For insertion sort, if the number of input items increases, so does the execution time, while the other 2 algorithms execute in lower time while the input increases. Mathematically the logn graph is quite the opposite of exponential graph which is the exact case illustrated here.</p>
+<p>And now let&rsquo;s check the same algorithms, with 1 million elements to sort:</p>
+<p><a href="https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png" target="_blank" rel="noopener noreffer"><img
+        class="lazyload"
+        src="/coroutinedispatcher.github.io/svg/loading.min.svg"
+        data-src="https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png"
+        data-srcset="https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png, https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png 1.5x, https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png 2x"
+        data-sizes="auto"
+        alt="https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png"
+        title="https://1.bp.blogspot.com/-cmjXvtvSnqk/XW4lfnAAoXI/AAAAAAAAPHM/tbggyfij2ik7y1KQVba86Dz6qUn95Mq0QCLcBGAs/s1600/Chartfor1m.png" /></a></p>
+<p><strong>Conclusion</strong></p>
+<p>Looks like you should avoid using Insertion sort for a large input array and stick to Merge Sort or Quick Sort. Even though Merge Sort or Quick Sort run recursively (and recursion does slow down the program), the best algorithm for less than 30 inputs should be Insertion sort.</p>
+<p><strong>Some things to note:</strong></p>
+<p><em>The array elements are not guaranteed that will be the same for each time an algorithm executes. They are generated randomly and placed in a position by a for loop. So we cannot tell exactly in this case which from Merge sort or Quick sort is better. We are focusing only in execution time, but the way the elements are at first state in the array, does matter also.</em><br>
+_Another thing to keep in mind is to forget using sorting algorithms to real life projects. Keep in mind that Java/Kotlin has already implemented the best solution for sorting arrays which is called DualPivotQuicksort that is an improvement of the basic Quick sort above. _</p>
+<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } I also have more algorithms in Kotlin. You can check them <a href="https://github.com/coroutineDispatcher/algorithms_course/tree/master/src/kotlin_version/arrays" target="_blank" rel="noopener noreffer">here</a>.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-09-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="coroutinedispatcher.github.io/tags/algorithms/">Algorithms</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/insertion-sort/">Insertion Sort</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/math/">Math</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/kotlin/">Kotlin</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/big-o-notation/">Big O notation</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/merge-sort/">Merge Sort</a>,&nbsp;<a href="coroutinedispatcher.github.io/tags/quick-sort/">Quick Sort</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="coroutinedispatcher.github.io/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="coroutinedispatcher.github.io/posts/how-to-produce-savedstatehandle-in-your/" class="prev" rel="prev" title="How to produce the SavedStateHandle in your ViewModel using AssistedInject"><i class="fas fa-angle-left fa-fw"></i>How to produce the SavedStateHandle in your ViewModel using AssistedInject</a>
+            <a href="coroutinedispatcher.github.io/posts/some-quick-notes-on-dark-mode/" class="next" rel="next" title="Some quick notes on Dark Mode">Some quick notes on Dark Mode<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher.github.io/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher.github.io/js/theme.min.js"></script></body>
+</html>
