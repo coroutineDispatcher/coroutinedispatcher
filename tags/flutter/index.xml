@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Flutter - Tag - Coroutinedispatchers&#39; blog</title>
-        <link>https://coroutinedispatcher.github.io/tags/flutter/</link>
+        <link>https://coroutinedispatcher.github.io/coroutinedispatcher/tags/flutter/</link>
         <description>Flutter - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 23 Sep 2019 09:00:00 &#43;0200</lastBuildDate><atom:link href="https://coroutinedispatcher.github.io/tags/flutter/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 23 Sep 2019 09:00:00 &#43;0200</lastBuildDate><atom:link href="https://coroutinedispatcher.github.io/coroutinedispatcher/tags/flutter/" rel="self" type="application/rss+xml" /><item>
     <title>Getting hands dirty with Flutter</title>
-    <link>https://coroutinedispatcher.github.io/posts/getting-hands-dirty-with-flutter/</link>
+    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/getting-hands-dirty-with-flutter/</link>
     <pubDate>Mon, 23 Sep 2019 09:00:00 &#43;0200</pubDate>
     <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/posts/getting-hands-dirty-with-flutter/</guid>
+    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/getting-hands-dirty-with-flutter/</guid>
     <description><![CDATA[An Android Developer point of view.
 
 I have never been a fan of cross-platforms until Flutter came by. Actually, it was my first experience with cross-platforms. Never have I ever tried React Native, Ionic or whatever. But what was intriguing about Flutter? Well, since I am a Google fan and a Native Android Developer, i thought I should give it a try.
