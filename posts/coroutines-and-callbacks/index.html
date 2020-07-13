@@ -30,7 +30,7 @@ Let&rsquo;s think of a very simple use case:"/>
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/coroutines-and-callbacks\/"
-        },"genre": "posts","keywords": "Kotlin Flows, Kotlin Coroutines, Kotlin, Callbacks, Android, Kotlin programming","wordcount":  549 ,
+        },"genre": "posts","keywords": "Kotlin Flows, Kotlin Coroutines, Kotlin, Callbacks, Android, Kotlin programming","wordcount":  548 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/coroutines-and-callbacks\/","datePublished": "2020-04-05T14:30:00+02:00","dateModified": "2020-04-05T14:30:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -107,7 +107,7 @@ Let&rsquo;s think of a very simple use case:"/>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Coroutines and callbacks</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-04-05">2020-04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;549 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-04-05">2020-04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;548 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -126,67 +126,81 @@ Let&rsquo;s think of a very simple use case:"/>
 <p>Callbacks in Java are probably the most basic way to perform executions/send actions between classes. If you have chosen to use coroutines in a project, you want to keep the same style everywhere. But what if some of the libraries you use, are still using callbacks?</p>
 <p>No worries, Kotlin coroutines are easily integrated with callbacks. It&rsquo;s just a small workaround to make.</p>
 <p>Let&rsquo;s think of a very simple use case:</p>
-<pre><code>interface MyAwesomeInterface&lt;T&gt; {  
-    fun executeAsync(callback: (T?, Throwable?) -&gt; Unit)  
-}  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">interface</span> <span class="nc">MyAwesomeInterface</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>  
+    <span class="k">fun</span> <span class="nf">executeAsync</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">?,</span> <span class="n">Throwable</span><span class="p">?)</span> <span class="p">-&gt;</span> <span class="n">Unit</span><span class="p">)</span>  
+<span class="p">}</span>  
 
-</code></pre><p>In this case, what can be done, is to wrap it in a suspendCoroutine. So, le&rsquo;ts build an extension function for it:</p>
-<pre><code>suspend fun &lt;T&gt; MyAwesomeInterface&lt;T&gt;.execute(): T =  
-    suspendCoroutine { continuation -&gt; //notice the continuation that you get  
-        executeAsync { value, exception -&gt;  
-            if(exception != null)  
-                continuation.resumeWithException(exception)  
-            else  
-                continuation.resume(value as T)  
-        }  
-    }
-</code></pre><p>The continuation that you get from the suspendCoroutine is nothing else than just a representation of the value returned by your own interface implementation.</p>
+</code></pre></div><p>In this case, what can be done, is to wrap it in a suspendCoroutine. So, le&rsquo;ts build an extension function for it:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">suspend</span> <span class="k">fun</span> &lt;T&gt; <span class="nf">MyAwesomeInterface</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">execute</span><span class="p">():</span> <span class="n">T</span> <span class="p">=</span>  
+    <span class="n">suspendCoroutine</span> <span class="p">{</span> <span class="n">continuation</span> <span class="p">-&gt;</span> <span class="c1">//notice the continuation that you get  
+</span><span class="c1"></span>        <span class="n">executeAsync</span> <span class="p">{</span> <span class="n">value</span><span class="p">,</span> <span class="n">exception</span> <span class="p">-&gt;</span>  
+            <span class="k">if</span><span class="p">(</span><span class="n">exception</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>  
+                <span class="n">continuation</span><span class="p">.</span><span class="n">resumeWithException</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>  
+            <span class="k">else</span>  
+                <span class="n">continuation</span><span class="p">.</span><span class="n">resume</span><span class="p">(</span><span class="n">value</span> <span class="k">as</span> <span class="n">T</span><span class="p">)</span>  
+        <span class="p">}</span>  
+    <span class="p">}</span>
+</code></pre></div><p>The continuation that you get from the suspendCoroutine is nothing else than just a representation of the value returned by your own interface implementation.</p>
 <p>But what if our MyAwesomeInterface has a cancel operation? Consider the example below:</p>
-<pre><code>interface MyAwesomeInterface&lt;T&gt; {  
-    fun executeAsync(callback: (T?, Throwable?) -&gt; Unit)  
-    fun cancel()  
-}
-</code></pre><p>In this case, what comes in handy is the suspendCancellableCoroutine. It is nearly the same as the suspendCoroutine but it offers a new aditional operation:</p>
-<pre><code>suspend fun &lt;T&gt; MyAwesomeInterface&lt;T&gt;.execute(): T =  
-    suspendCancellableCoroutine { continuation -&gt;  
-        executeAsync { value, exception -&gt;  
-            if(exception != null)  
-                continuation.resumeWithException(exception)  
-            else  
-                continuation.resume(value as T)  
-        }  
-       continuation.invokeOnCancellation { cancel() }  
-    }
-</code></pre><p><em>Note: These implementations are single-shot operation.</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">interface</span> <span class="nc">MyAwesomeInterface</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>  
+    <span class="k">fun</span> <span class="nf">executeAsync</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">?,</span> <span class="n">Throwable</span><span class="p">?)</span> <span class="p">-&gt;</span> <span class="n">Unit</span><span class="p">)</span>  
+    <span class="k">fun</span> <span class="nf">cancel</span><span class="p">()</span>  
+<span class="p">}</span>
+</code></pre></div><p>In this case, what comes in handy is the suspendCancellableCoroutine. It is nearly the same as the suspendCoroutine but it offers a new aditional operation:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">suspend</span> <span class="k">fun</span> &lt;T&gt; <span class="nf">MyAwesomeInterface</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">execute</span><span class="p">():</span> <span class="n">T</span> <span class="p">=</span>  
+    <span class="n">suspendCancellableCoroutine</span> <span class="p">{</span> <span class="n">continuation</span> <span class="p">-&gt;</span>  
+        <span class="n">executeAsync</span> <span class="p">{</span> <span class="n">value</span><span class="p">,</span> <span class="n">exception</span> <span class="p">-&gt;</span>  
+            <span class="k">if</span><span class="p">(</span><span class="n">exception</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>  
+                <span class="n">continuation</span><span class="p">.</span><span class="n">resumeWithException</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>  
+            <span class="k">else</span>  
+                <span class="n">continuation</span><span class="p">.</span><span class="n">resume</span><span class="p">(</span><span class="n">value</span> <span class="k">as</span> <span class="n">T</span><span class="p">)</span>  
+        <span class="p">}</span>  
+       <span class="n">continuation</span><span class="p">.</span><span class="n">invokeOnCancellation</span> <span class="p">{</span> <span class="n">cancel</span><span class="p">()</span> <span class="p">}</span>  
+    <span class="p">}</span>
+</code></pre></div><div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">These implementations are single-shot operation.</div>
+        </div>
+    </div>
 <p>But what if you would have to observe an asynchronous stream of values through callbacks? This can be achieved with the help of the Flow API. If you still haven&rsquo;t check it up, the <a href="https://kotlinlang.org/docs/reference/coroutines/flow.html" target="_blank" rel="noopener noreffer">docs</a> are pretty nice, or you can just go quickly though <a href="https://www.coroutinedispatcher.com/2020/01/what-i-learned-from-kotlin-flow-api.html" target="_blank" rel="noopener noreffer">this</a> article (even though it&rsquo;s mostly for Android developers).</p>
 <p>In this case, the callbackFlow comes to save the day:</p>
-<pre><code> fun &lt;T : Any&gt; MyAwesomeInterface&lt;T&gt;.execute(): Flow&lt;T&gt; =  
-   callbackFlow {  
-       executeAsync { value, exception -&gt;  
-            when {  
-                exception != null -&gt; close(exception)  
-                value == null -&gt; close()  
-                else-&gt; offer(value as T)  
-            }  
-        }  
-        awaitClose{ cancel() }  
-    }
-</code></pre><p>There are some important things to note here:<br>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="k">fun</span> &lt;T : Any&gt; <span class="nf">MyAwesomeInterface</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">execute</span><span class="p">():</span> <span class="n">Flow</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">=</span>  
+   <span class="n">callbackFlow</span> <span class="p">{</span>  
+       <span class="n">executeAsync</span> <span class="p">{</span> <span class="n">value</span><span class="p">,</span> <span class="n">exception</span> <span class="p">-&gt;</span>  
+            <span class="k">when</span> <span class="p">{</span>  
+                <span class="n">exception</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">-&gt;</span> <span class="n">close</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>  
+                <span class="n">value</span> <span class="p">==</span> <span class="k">null</span> <span class="p">-&gt;</span> <span class="n">close</span><span class="p">()</span>  
+                <span class="k">else</span><span class="p">-&gt;</span> <span class="n">offer</span><span class="p">(</span><span class="n">value</span> <span class="k">as</span> <span class="n">T</span><span class="p">)</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span>  
+        <span class="n">awaitClose</span><span class="p">{</span> <span class="n">cancel</span><span class="p">()</span> <span class="p">}</span>  
+    <span class="p">}</span>
+</code></pre></div><p>There are some important things to note here:<br>
  - Our execute() extension function is no longer a suspend function<br>
  - The close() is used to notify for a failure/success<br>
  - The offer() is called each time a new data has arrived.</p>
-<p><em>Important note: Not calling the awaitClose() would take you directly to ClosedSendChannelException if the method is executed n+1 times.</em></p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Not calling the awaitClose() would take you directly to ClosedSendChannelException if the method is executed n+1 times._</div>
+        </div>
+    </div>
 <p><strong>But my interface doesn&rsquo;t have a cancel() method.</strong></p>
 <p>Than just unregister the listener. The cancel() method is there also to represent  the context of removing it.</p>
 <p><strong>A few notes about backpressure.</strong></p>
 <p>In cases when the operation happens too fast and the coroutine cannot handle it, the best thing is to replace the offer() method with sendBlocking().</p>
 <p>In the opposite case, when the values should not arrive too fast, just put a .buffer(Channel.UNLIMITED) after the callbackFlow:</p>
-<pre><code> fun &lt;T : Any&gt; MyAwesomeInterface&lt;T&gt;.execute(): Flow&lt;T&gt; =  
-   callbackFlow {  
-       executeAsync { /* same thing here */}  
-        awaitClose{ cancel() }  
-    }.buffer(Channel.UNLIMITED)
-</code></pre><p>Don&rsquo;t forget that this case, comes with a memory cost.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="k">fun</span> &lt;T : Any&gt; <span class="nf">MyAwesomeInterface</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">execute</span><span class="p">():</span> <span class="n">Flow</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">=</span>  
+   <span class="n">callbackFlow</span> <span class="p">{</span>  
+       <span class="n">executeAsync</span> <span class="p">{</span> <span class="cm">/* same thing here */</span><span class="p">}</span>  
+        <span class="n">awaitClose</span><span class="p">{</span> <span class="n">cancel</span><span class="p">()</span> <span class="p">}</span>  
+    <span class="p">}.</span><span class="n">buffer</span><span class="p">(</span><span class="n">Channel</span><span class="p">.</span><span class="n">UNLIMITED</span><span class="p">)</span>
+</code></pre></div><p>Don&rsquo;t forget that this case, comes with a memory cost.</p>
 <p><strong>Conclusion:</strong></p>
 <p>Actually, these feature of callbacks are awesome and pretty safe in my opinion. They open a wide area of possibilities to improve your libraries, create a new one, or even shorten some parts of code from your current project.</p>
 <p>Stavro Xhardha</p>
