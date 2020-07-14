@@ -32,7 +32,7 @@ Well, I really struggled with this concept because it is a little bit tricky. Th
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/what-i-learned-from-kotlin-flow-api\/"
-        },"genre": "posts","keywords": "Observables, Coroutines, Android Architecture Components, Kotlin Flows, LiveData, Asynchronous, Kotlin, Android","wordcount":  1018 ,
+        },"genre": "posts","keywords": "Observables, Coroutines, Android Architecture Components, Kotlin Flows, LiveData, Asynchronous, Kotlin, Android","wordcount":  1043 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/what-i-learned-from-kotlin-flow-api\/","datePublished": "2020-01-24T13:54:00+01:00","dateModified": "2020-01-24T13:54:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -109,14 +109,18 @@ Well, I really struggled with this concept because it is a little bit tricky. Th
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">What I learned from Kotlin Flow API</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-01-24">2020-01-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1018 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-01-24">2020-01-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1043 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#conclusion-whats-the-next-step">Conclusion (what&rsquo;s the next step)</a></li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-RkVRvfUOguU/XirklPNZgKI/AAAAAAAARRA/02ijqmfVQskx0mSBd_umY2AoR8Wh8rqBQCLcBGAsYHQ/s1600/tenor.gif" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
         src="/coroutinedispatcher/svg/loading.min.svg"
@@ -146,58 +150,58 @@ Well, I really struggled with this concept because it is a little bit tricky. Th
 <p><strong>The use case</strong></p>
 <p>I used this <a href="https://codelabs.developers.google.com/codelabs/advanced-kotlin-coroutines/#0" target="_blank" rel="noopener noreffer">codelab</a> to learn Flows in practice. The use case was simple: Receive some data from the network, cache them to the room database and observe changes through LiveData (and load them into a <code>Recyclerview</code>, 60% of Android development 😜). Since I had nothing new in LiveData I didn&rsquo;t struggle at all. The task was to change all the LiveData transformations/processing etc into Flow implementation.</p>
 <p>Let&rsquo;s do it. Starting from the source of truth we would have this:</p>
-<pre><code>@Query(&quot;SELECT * FROM plants ORDER BY name&quot;)  
-fun getPlants(): LiveData&lt;List&lt;Plant&gt;&gt;
-</code></pre><p>Which transforms into:</p>
-<pre><code>@Query(&quot;SELECT * from plants ORDER BY name&quot;)  
-fun getPlantsFlow(): Flow&lt;List&lt;Plant&gt;&gt;
-</code></pre><p>Now, let&rsquo;s perform some operation with the result on our repository:</p>
-<pre><code>val plants = liveData&lt;List&lt;Plant&gt;&gt; {  
-    val plantsLiveData = plantDao.getPlants()  
-    val customSortOrder = plantsListSortOrderCache.getOrAwait()  
-    emitSource(plantsLiveData.map { plantList -&gt;  
-      plantList.applySort(customSortOrder)  
-    })  
-  }
-</code></pre><p>This is a LiveData builder, which would transform into:</p>
-<pre><code>private val customSortFlow = plantsListSortOrderCache::getOrAwait.asFlow()  
-  val plantsFlow: Flow&lt;List&lt;Plant&gt;&gt;  
-    get() = plantDao.getPlantsFlow().combine(customSortFlow) { plants, sortOrder -&gt;  
-      plants.applySort(sortOrder)  
-    }  
-      .flowOn(Dispatchers.Default) //I changed this for the sake of the guideline  
-      .conflate()
-</code></pre><p>Now, this is a little bit tricky. Notice the first block that has a LiveData builder. Two operations are being processed here: The first operation is getting safely some data from the network and sorting them by a certain field (id to be more precise), after that we just apply some sorting by a local method which sorts the list by another field. Since the goal of this guide is to show as many operations as they can, they introduce us to the <code>.combine()</code> operator and <code>.asFlow()</code> extension.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM plants ORDER BY name&#34;</span><span class="p">)</span>  
+<span class="k">fun</span> <span class="nf">getPlants</span><span class="p">():</span> <span class="n">LiveData</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Plant</span><span class="p">&gt;&gt;</span>
+</code></pre></div><p>Which transforms into:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * from plants ORDER BY name&#34;</span><span class="p">)</span>  
+<span class="k">fun</span> <span class="nf">getPlantsFlow</span><span class="p">():</span> <span class="n">Flow</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Plant</span><span class="p">&gt;&gt;</span>
+</code></pre></div><p>Now, let&rsquo;s perform some operation with the result on our repository:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">plants</span> <span class="p">=</span> <span class="n">liveData</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Plant</span><span class="p">&gt;&gt;</span> <span class="p">{</span>  
+    <span class="k">val</span> <span class="py">plantsLiveData</span> <span class="p">=</span> <span class="n">plantDao</span><span class="p">.</span><span class="n">getPlants</span><span class="p">()</span>  
+    <span class="k">val</span> <span class="py">customSortOrder</span> <span class="p">=</span> <span class="n">plantsListSortOrderCache</span><span class="p">.</span><span class="n">getOrAwait</span><span class="p">()</span>  
+    <span class="n">emitSource</span><span class="p">(</span><span class="n">plantsLiveData</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">plantList</span> <span class="p">-&gt;</span>  
+      <span class="n">plantList</span><span class="p">.</span><span class="n">applySort</span><span class="p">(</span><span class="n">customSortOrder</span><span class="p">)</span>  
+    <span class="p">})</span>  
+  <span class="p">}</span>
+</code></pre></div><p>This is a LiveData builder, which would transform into:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">val</span> <span class="py">customSortFlow</span> <span class="p">=</span> <span class="n">plantsListSortOrderCache</span><span class="o">::</span><span class="n">getOrAwait</span><span class="p">.</span><span class="n">asFlow</span><span class="p">()</span>  
+  <span class="k">val</span> <span class="py">plantsFlow</span><span class="p">:</span> <span class="n">Flow</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Plant</span><span class="p">&gt;&gt;</span>  
+    <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="n">plantDao</span><span class="p">.</span><span class="n">getPlantsFlow</span><span class="p">().</span><span class="n">combine</span><span class="p">(</span><span class="n">customSortFlow</span><span class="p">)</span> <span class="p">{</span> <span class="n">plants</span><span class="p">,</span> <span class="n">sortOrder</span> <span class="p">-&gt;</span>  
+      <span class="n">plants</span><span class="p">.</span><span class="n">applySort</span><span class="p">(</span><span class="n">sortOrder</span><span class="p">)</span>  
+    <span class="p">}</span>  
+      <span class="p">.</span><span class="n">flowOn</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">Default</span><span class="p">)</span> <span class="c1">//I changed this for the sake of the guideline  
+</span><span class="c1"></span>      <span class="p">.</span><span class="n">conflate</span><span class="p">()</span>
+</code></pre></div><p>Now, this is a little bit tricky. Notice the first block that has a LiveData builder. Two operations are being processed here: The first operation is getting safely some data from the network and sorting them by a certain field (id to be more precise), after that we just apply some sorting by a local method which sorts the list by another field. Since the goal of this guide is to show as many operations as they can, they introduce us to the <code>.combine()</code> operator and <code>.asFlow()</code> extension.</p>
 <p>If you come from RxJava the <code>combine()</code> is the equivalent of <code>zip()</code>. The <code>asFlow()</code> extension is a function which allows you to return everything you want into a Flow:</p>
-<pre><code>public fun &lt;T&gt; (suspend () -&gt; T).asFlow(): kotlinx.coroutines.flow.Flow&lt;T&gt; { /* compiled code */ }
-</code></pre><p>But if we notice we have more operators: <code>flowOn()</code>, and <code>conflate()</code>. <code>flowOn()</code> is actually RxJava&rsquo;s equivalent of <code>subscribeOn()</code>. What this operator does is switching the thread to the desired Dispatcher. Since the <code>applySort()</code> is just a CPU process and no disk/network operation, we are using <code>Dispatchers.Default</code> thread for this. The <code>conflate()</code> operation is just used to get the latest value instead of all the values during the operation (should read a little bit about <code>buffer()</code> and slow operations <a href="https://kotlinlang.org/docs/reference/coroutines/flow.html#buffering" target="_blank" rel="noopener noreffer">here</a> though).</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">public</span> <span class="k">fun</span> &lt;T&gt; <span class="err">(</span><span class="nf">suspend</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="n">T</span><span class="p">).</span><span class="n">asFlow</span><span class="p">():</span> <span class="n">kotlinx</span><span class="p">.</span><span class="n">coroutines</span><span class="p">.</span><span class="n">flow</span><span class="p">.</span><span class="n">Flow</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span> <span class="cm">/* compiled code */</span> <span class="p">}</span>
+</code></pre></div><p>But if we notice we have more operators: <code>flowOn()</code>, and <code>conflate()</code>. <code>flowOn()</code> is actually RxJava&rsquo;s equivalent of <code>subscribeOn()</code>. What this operator does is switching the thread to the desired Dispatcher. Since the <code>applySort()</code> is just a CPU process and no disk/network operation, we are using <code>Dispatchers.Default</code> thread for this. The <code>conflate()</code> operation is just used to get the latest value instead of all the values during the operation (should read a little bit about <code>buffer()</code> and slow operations <a href="https://kotlinlang.org/docs/reference/coroutines/flow.html#buffering" target="_blank" rel="noopener noreffer">here</a> though).</p>
 <p>What&rsquo;s left now? Ah, the ViewModel:</p>
-<pre><code>val plants: LiveData&lt;List&lt;Plant&gt;&gt; = plantRepository.plants //the original has some other operations but for this case we don't care, just return a LiveData
-</code></pre><p>Transforms to:</p>
-<pre><code>val plantsUsingFlow: LiveData&lt;List&lt;Plant&gt;&gt; = plantRepository.plantsFlow.asLiveData()
-</code></pre><p>The missing part for me was the <code>.asLiveData()</code> extension. Yes there is an extension function which you can use for every Flow in order to observe LiveData on the Fragment:</p>
-<pre><code>@JvmOverloads  
-fun &lt;T&gt; Flow&lt;T&gt;.asLiveData(  
-  context: CoroutineContext = EmptyCoroutineContext,  
-  timeoutInMs: Long = DEFAULT_TIMEOUT  
-): LiveData&lt;T&gt; = liveData(context, timeoutInMs) {  
-  collect {  
-    emit(it)  
-  }  
-}
-</code></pre><p>And all is done. Of course, I didn&rsquo;t cover the second part of the course which was about handling some click event from UI and re-sorting the list, but you can follow the course if you like. It&rsquo;s pretty fun.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">plants</span><span class="p">:</span> <span class="n">LiveData</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Plant</span><span class="p">&gt;&gt;</span> <span class="p">=</span> <span class="n">plantRepository</span><span class="p">.</span><span class="n">plants</span> 
+<span class="c1">//the original has some other operations but for this case we don&#39;t care, just return a LiveData
+</span></code></pre></div><p>Transforms to:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">plantsUsingFlow</span><span class="p">:</span> <span class="n">LiveData</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Plant</span><span class="p">&gt;&gt;</span> <span class="p">=</span> <span class="n">plantRepository</span><span class="p">.</span><span class="n">plantsFlow</span><span class="p">.</span><span class="n">asLiveData</span><span class="p">()</span>
+</code></pre></div><p>The missing part for me was the <code>.asLiveData()</code> extension. Yes there is an extension function which you can use for every Flow in order to observe LiveData on the Fragment:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@JvmOverloads</span>  
+<span class="k">fun</span> &lt;T&gt; <span class="nf">Flow</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">asLiveData</span><span class="p">(</span>  
+  <span class="n">context</span><span class="p">:</span> <span class="n">CoroutineContext</span> <span class="p">=</span> <span class="n">EmptyCoroutineContext</span><span class="p">,</span>  
+  <span class="n">timeoutInMs</span><span class="p">:</span> <span class="n">Long</span> <span class="p">=</span> <span class="n">DEFAULT_TIMEOUT</span>  
+<span class="p">):</span> <span class="n">LiveData</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">liveData</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">timeoutInMs</span><span class="p">)</span> <span class="p">{</span>  
+  <span class="n">collect</span> <span class="p">{</span>  
+    <span class="n">emit</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>
+</code></pre></div><p>And all is done. Of course, I didn&rsquo;t cover the second part of the course which was about handling some click event from UI and re-sorting the list, but you can follow the course if you like. It&rsquo;s pretty fun.</p>
 <p>Extra material</p>
 <p>During the course you would face some other operations:</p>
-<pre><code>.flatMapLatest{result -&gt; process(result)}
-```Basically just returns a new Flow each time a method returns a value.
-
-</code></pre><p>.onStart{doSomethingOnStart()}</p>
-<pre><code class="language-Well" data-lang="Well">
-</code></pre><p>.onCompletion{doSomething()}</p>
-<pre><code class="language-This" data-lang="This">
-</code></pre><p>.launchIn(viewModelScope)
-```The method that helps to define the coroutine scope for this flow (inside it you can find the <code>collect()</code> method) making this method the equivalent of <code>launch{collect()}</code></p>
-<p>Conclusion (what&rsquo;s the next step)</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="p">.</span><span class="n">flatMapLatest</span><span class="p">{</span><span class="n">result</span> <span class="p">-&gt;</span> <span class="n">process</span><span class="p">(</span><span class="n">result</span><span class="p">)}</span>
+</code></pre></div><p>Basically just returns a new Flow each time a method returns a value.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="p">.</span><span class="n">onStart</span><span class="p">{</span><span class="n">doSomethingOnStart</span><span class="p">()}</span>
+</code></pre></div><p>Well the name speaks for itself. An operation which executes when the stream starts</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="p">.</span><span class="n">onCompletion</span><span class="p">{</span><span class="n">doSomething</span><span class="p">()}</span>
+</code></pre></div><p>This is even easier, operation that executes when the stream ends</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="p">.</span><span class="n">launchIn</span><span class="p">(</span><span class="n">viewModelScope</span><span class="p">)</span>
+</code></pre></div><p>The method that helps to define the coroutine scope for this flow (inside it you can find the <code>collect()</code> method) making this method the equivalent of <code>launch{collect()}</code></p>
+<h2 id="conclusion-whats-the-next-step">Conclusion (what&rsquo;s the next step)</h2>
 <p>I would recommend hard work and reading the Flow API <a href="https://kotlinlang.org/docs/reference/coroutines/flow.html" target="_blank" rel="noopener noreffer">over here</a>. Once you have the concept, it&rsquo;s just operations you need to learn how-to and why. Just think of the <code>Flow&lt;T&gt;</code> as a <code>AsyncStreamingList&lt;T&gt;</code> which has some nice operations about the data. Flows apply to functional programming style and also shorten a lot of boilerplate if you use them right.</p>
 <p>Make sure not to over engineer things with Flow because that would be a total shot in the foot.</p>
 <p>First of all, I would recommend some really nice resources to learn Flows just like I did. One thing to note is that I&rsquo;m still no expert in this, and I&rsquo;m opened for critics. Here are some of the resources I used (except the codelab mentioned above):</p>
