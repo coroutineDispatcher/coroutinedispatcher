@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/modularizing-your-android-app-breaking\/"
-        },"genre": "posts","keywords": "Android Module, Micro Frontend, Android Architecture Components, Android Multi Module","wordcount":  652 ,
+        },"genre": "posts","keywords": "Android Module, Micro Frontend, Android Architecture Components, Android Multi Module","wordcount":  901 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/modularizing-your-android-app-breaking\/","datePublished": "2019-11-04T09:30:00+01:00","dateModified": "2019-11-04T09:30:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -103,8 +103,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Modularizing your Android app, breaking the monolith (Part 1)</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-04">2019-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;652 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-04">2019-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;901 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -149,13 +149,114 @@ The app actually is pretty simple. Is built with Architecture Components and has
 <p>All my fragments are pulling dependencies from my Application level. Except from one of them. That fragment is totally unrelated to the other part of the app. It just shows some hardcoded values in the RecyclerView. That really looks like a nice way to start.</p>
 <p><em>Note: I also have an AlarmManager and 2 WorkManagers both pulling dependencies from the application layer, which will be covered later.</em></p>
 <p>But first things first, let&rsquo;s set up gradle for a multi module project. What I mean is that there is no need to reimplement dependencies over and over again when I add a new Android module for some new feature. Instead, we can just put all of our external libraries and dependencies inside the project level gradle and let all the other modules gradle inherit from it. That would bring better management when library updates occur. A smart thing I found <a href="https://www.youtube.com/watch?v=TWLkswxjSr0&amp;t=1902s" target="_blank" rel="noopener noreffer">in this YouTube video</a>:</p>
-<p>This would keep all your build.gradle files super clean. Now you don&rsquo;t have to require a new dependency and manage the updates because you deal with it only once. And this is how you call them after:</p>
-<p><em>Note: You must apply plugin : &lsquo;kotlin-kapt&rsquo; when creating a new module.</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-groovy" data-lang="groovy"><span class="n">ext</span> <span class="o">{</span>
+
+    <span class="n">compileSDKVersionValue</span> <span class="o">=</span> <span class="mi">29</span>
+    <span class="n">minSDKVersionValue</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">targetSDKVersionValue</span> <span class="o">=</span> <span class="mi">29</span>
+
+    <span class="n">libraries</span> <span class="o">=</span> <span class="o">[</span>
+            <span class="n">cardView</span>              <span class="o">:</span> <span class="s1">&#39;androidx.cardview:cardview:1.0.0&#39;</span><span class="o">,</span>
+            <span class="n">androidXLegacySupport</span> <span class="o">:</span> <span class="s1">&#39;androidx.legacy:legacy-support-v4:1.0.0&#39;</span><span class="o">,</span>
+            <span class="n">androidXAppCompat</span>     <span class="o">:</span> <span class="s1">&#39;androidx.appcompat:appcompat:1.1.0&#39;</span><span class="o">,</span>
+            <span class="n">lifecycleExtension</span>    <span class="o">:</span> <span class="s1">&#39;androidx.lifecycle:lifecycle-extensions:2.1.0&#39;</span><span class="o">,</span>
+            <span class="n">viewModelKtx</span>          <span class="o">:</span> <span class="s1">&#39;androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">constraintLayout</span>      <span class="o">:</span> <span class="s1">&#39;androidx.constraintlayout:constraintlayout:2.0.0-beta3&#39;</span><span class="o">,</span>
+            <span class="n">fragmentNavigation</span>    <span class="o">:</span> <span class="s1">&#39;androidx.navigation:navigation-fragment-ktx:2.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">fragmentNavigationKtx</span> <span class="o">:</span> <span class="s1">&#39;androidx.navigation:navigation-ui-ktx:2.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">retrofit</span>              <span class="o">:</span> <span class="s1">&#39;com.squareup.retrofit2:retrofit:2.6.1&#39;</span><span class="o">,</span>
+            <span class="n">loggingInterceptor</span>    <span class="o">:</span> <span class="s1">&#39;com.squareup.okhttp3:logging-interceptor:4.1.0&#39;</span><span class="o">,</span>
+            <span class="n">dagger</span>                <span class="o">:</span> <span class="s1">&#39;com.google.dagger:dagger:2.24&#39;</span><span class="o">,</span>
+            <span class="n">coroutinesCore</span>        <span class="o">:</span> <span class="s1">&#39;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2&#39;</span><span class="o">,</span>
+            <span class="n">livedataKtx</span>           <span class="o">:</span> <span class="s1">&#39;androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">picasso</span>               <span class="o">:</span> <span class="s1">&#39;com.squareup.picasso:picasso:2.71828&#39;</span><span class="o">,</span>
+            <span class="n">materialDialogCore</span>    <span class="o">:</span> <span class="s1">&#39;com.afollestad.material-dialogs:core:2.8.1&#39;</span><span class="o">,</span>
+            <span class="n">materialDialogInputs</span>  <span class="o">:</span> <span class="s1">&#39;com.afollestad.material-dialogs:input:3.0.0-rc2&#39;</span><span class="o">,</span>
+            <span class="n">room</span>                  <span class="o">:</span> <span class="s1">&#39;androidx.room:room-runtime:2.2.1&#39;</span><span class="o">,</span>
+            <span class="n">roomKtx</span>               <span class="o">:</span> <span class="s1">&#39;androidx.room:room-ktx:2.2.1&#39;</span><span class="o">,</span>
+            <span class="n">jodaTime</span>              <span class="o">:</span> <span class="s1">&#39;net.danlew:android.joda:2.10.2&#39;</span><span class="o">,</span>
+            <span class="n">rocket</span>                <span class="o">:</span> <span class="s1">&#39;com.github.stavro96:Rocket:1.2.0&#39;</span><span class="o">,</span>
+            <span class="n">paging</span>                <span class="o">:</span> <span class="s1">&#39;androidx.paging:paging-runtime:2.1.0&#39;</span><span class="o">,</span>
+            <span class="n">fragment</span>              <span class="o">:</span> <span class="s1">&#39;androidx.fragment:fragment:1.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">fragmentKtx</span>           <span class="o">:</span> <span class="s1">&#39;androidx.fragment:fragment-ktx:1.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">workManager</span>           <span class="o">:</span> <span class="s1">&#39;androidx.work:work-runtime-ktx:2.2.0&#39;</span><span class="o">,</span>
+            <span class="n">viewModelSavedState</span>   <span class="o">:</span> <span class="s1">&#39;androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc01&#39;</span><span class="o">,</span>
+            <span class="nl">retrofitMoshiConverter:</span> <span class="s1">&#39;com.squareup.retrofit2:converter-moshi:2.4.0&#39;</span><span class="o">,</span>
+            <span class="n">moshiCore</span>             <span class="o">:</span> <span class="s1">&#39;com.squareup.moshi:moshi:1.8.0&#39;</span><span class="o">,</span>
+            <span class="n">moshiKotlin</span>           <span class="o">:</span> <span class="s1">&#39;com.squareup.moshi:moshi-kotlin:1.6.0&#39;</span><span class="o">,</span>
+            <span class="n">smoothie</span>              <span class="o">:</span> <span class="s1">&#39;com.github.stavro96:smoothie:1.0&#39;</span><span class="o">,</span>
+            <span class="n">assistedInject</span>        <span class="o">:</span> <span class="s1">&#39;com.squareup.inject:assisted-inject-annotations-dagger2:0.5.0&#39;</span><span class="o">,</span>
+            <span class="n">kotlin</span>                <span class="o">:</span> <span class="s1">&#39;org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version&#39;</span><span class="o">,</span>
+            <span class="n">coreKtx</span>               <span class="o">:</span> <span class="s1">&#39;androidx.core:core-ktx:1.2.0-beta01&#39;</span><span class="o">,</span>
+            <span class="n">airBnBLottie</span>          <span class="o">:</span> <span class="s1">&#39;com.airbnb.android:lottie:3.0.7&#39;</span><span class="o">,</span>
+            <span class="n">firebase</span>              <span class="o">:</span> <span class="s1">&#39;com.google.firebase:firebase-core:17.2.1&#39;</span><span class="o">,</span>
+            <span class="n">crashLytics</span>           <span class="o">:</span> <span class="s1">&#39;com.crashlytics.sdk.android:crashlytics:2.10.1&#39;</span><span class="o">,</span>
+            <span class="n">locationService</span>       <span class="o">:</span> <span class="s1">&#39;com.google.android.gms:play-services-location:17.0.0&#39;</span>
+    <span class="o">]</span>
+
+    <span class="n">annotationProcessors</span> <span class="o">=</span> <span class="o">[</span>
+            <span class="n">moshiKapt</span>         <span class="o">:</span> <span class="s1">&#39;com.squareup.moshi:moshi-kotlin-codegen:1.8.0&#39;</span><span class="o">,</span>
+            <span class="n">daggerKapt</span>        <span class="o">:</span> <span class="s1">&#39;com.google.dagger:dagger-compiler:2.24&#39;</span><span class="o">,</span>
+            <span class="nl">assistedInjectKapt:</span> <span class="s1">&#39;com.squareup.inject:assisted-inject-processor-dagger2:0.5.0&#39;</span><span class="o">,</span>
+            <span class="n">roomKapt</span>          <span class="o">:</span> <span class="s1">&#39;androidx.room:room-compiler:2.2.1&#39;</span>
+    <span class="o">]</span>
+
+    <span class="n">testImplementations</span> <span class="o">=</span> <span class="o">[</span>
+            <span class="n">coroutinesTest</span>        <span class="o">:</span> <span class="s1">&#39;org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2&#39;</span><span class="o">,</span>
+            <span class="n">jUnit</span>                 <span class="o">:</span> <span class="s1">&#39;junit:junit:4.12&#39;</span><span class="o">,</span>
+            <span class="n">mockitoCore</span>           <span class="o">:</span> <span class="s1">&#39;org.mockito:mockito-core:2.28.2&#39;</span><span class="o">,</span>
+            <span class="n">jodaTimeTest</span>          <span class="o">:</span> <span class="s1">&#39;joda-time:joda-time:2.10.2&#39;</span><span class="o">,</span>
+            <span class="n">mockitoKotlin</span>         <span class="o">:</span> <span class="s1">&#39;com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0&#39;</span><span class="o">,</span>
+            <span class="n">mockitoInline</span>         <span class="o">:</span> <span class="s1">&#39;org.mockito:mockito-inline:2.13.0&#39;</span><span class="o">,</span>
+            <span class="nl">androidArchCoreTesting:</span> <span class="s1">&#39;android.arch.core:core-testing:1.1.1&#39;</span><span class="o">,</span>
+            <span class="n">coroutinesTesting</span>     <span class="o">:</span> <span class="s1">&#39;org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2&#39;</span><span class="o">,</span>
+            <span class="n">mockWebServer</span>         <span class="o">:</span> <span class="s1">&#39;com.squareup.okhttp3:mockwebserver:4.1.0&#39;</span>
+    <span class="o">]</span>
+
+    <span class="n">androidTestImplementations</span> <span class="o">=</span> <span class="o">[</span>
+            <span class="n">espressoCore</span>            <span class="o">:</span> <span class="s1">&#39;androidx.test.espresso:espresso-core:3.2.0&#39;</span><span class="o">,</span>
+            <span class="n">espressoContrib</span>         <span class="o">:</span> <span class="s1">&#39;androidx.test.espresso:espresso-contrib:3.2.0&#39;</span><span class="o">,</span>
+            <span class="n">espressoIntents</span>         <span class="o">:</span> <span class="s1">&#39;androidx.test.espresso:espresso-intents:3.2.0&#39;</span><span class="o">,</span>
+            <span class="n">espressoAccessibility</span>   <span class="o">:</span> <span class="s1">&#39;androidx.test.espresso:espresso-accessibility:3.2.0&#39;</span><span class="o">,</span>
+            <span class="n">espressoWeb</span>             <span class="o">:</span> <span class="s1">&#39;androidx.test.espresso:espresso-web:3.2.0&#39;</span><span class="o">,</span>
+            <span class="nl">espressoIdlingConcurrent:</span> <span class="s1">&#39;androidx.test.espresso.idling:idling-concurrent:3.2.0&#39;</span><span class="o">,</span>
+            <span class="n">testRunner</span>              <span class="o">:</span> <span class="s1">&#39;androidx.test:runner:1.2.0&#39;</span><span class="o">,</span>
+            <span class="n">testRules</span>               <span class="o">:</span> <span class="s1">&#39;androidx.test:rules:1.2.0&#39;</span><span class="o">,</span>
+            <span class="n">androidJUnit</span>            <span class="o">:</span> <span class="s1">&#39;androidx.test.ext:junit:1.1.1&#39;</span><span class="o">,</span>
+            <span class="n">fragmentTesting</span>         <span class="o">:</span> <span class="s1">&#39;androidx.fragment:fragment-testing:1.2.0-rc01&#39;</span><span class="o">,</span>
+            <span class="n">mockitoAndroid</span>          <span class="o">:</span> <span class="s1">&#39;org.mockito:mockito-android:2.24.5&#39;</span><span class="o">,</span>
+            <span class="n">workerTest</span>              <span class="o">:</span> <span class="s1">&#39;androidx.work:work-testing:2.2.0&#39;</span>
+    <span class="o">]</span>
+
+    <span class="n">roomIncrementalAnnotationProcessor</span> <span class="o">=</span> <span class="o">[</span>
+            <span class="s2">&#34;room.schemaLocation&#34;</span>  <span class="o">:</span> <span class="s2">&#34;$projectDir/schemas&#34;</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span>
+            <span class="s2">&#34;room.incremental&#34;</span>     <span class="o">:</span> <span class="s2">&#34;true&#34;</span><span class="o">,</span>
+            <span class="s2">&#34;room.expandProjection&#34;</span><span class="o">:</span> <span class="s2">&#34;true&#34;</span><span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><p>This would keep all your build.gradle files super clean. Now you don&rsquo;t have to require a new dependency and manage the updates because you deal with it only once. And this is how you call them after:</p>
+<div class="highlight"><pre class="chroma"><code class="language-groovy" data-lang="groovy"><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;libs&#39;</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+    <span class="n">implementation</span> <span class="s2">&#34;org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version&#34;</span>
+    <span class="n">implementation</span> <span class="s1">&#39;androidx.appcompat:appcompat:1.1.0&#39;</span>
+    <span class="n">implementation</span> <span class="s1">&#39;androidx.core:core-ktx:1.1.0&#39;</span>
+    <span class="n">testImplementation</span> <span class="s1">&#39;junit:junit:4.12&#39;</span>
+    <span class="n">androidTestImplementation</span> <span class="s1">&#39;androidx.test.ext:junit:1.1.1&#39;</span>
+    <span class="n">androidTestImplementation</span> <span class="s1">&#39;androidx.test.espresso:espresso-core:3.2.0&#39;</span>
+    <span class="n">implementation</span> <span class="n">libraries</span><span class="o">.</span><span class="na">fragmentNavigationKtx</span>
+    <span class="n">implementation</span> <span class="n">libraries</span><span class="o">.</span><span class="na">fragmentNavigation</span>
+    <span class="n">implementation</span> <span class="n">libraries</span><span class="o">.</span><span class="na">viewModelKtx</span>
+<span class="o">}</span>
+</code></pre></div><p><em>Note: You must apply plugin : &lsquo;kotlin-kapt&rsquo; when creating a new module.</em></p>
 <p>Basically, this is all what my new module needs. And now let&rsquo;s break something.</p>
 <p>Create a new Android Module and just move all your new features classes over there. Don&rsquo;t forget layouts, strings, dimens, drawable and all resources that are unrelated to other fragments. Get them too. For the current case, there will be no errors because I inherit nothing from any of my app components.</p>
 <p>All I have to do now, is just apply this feature to my app/build.gradle level.</p>
 <p><em>Note: The nav graph should break because moving fragment outside the module would bring to unresolved element, but not to worry, we will fix this right now:</em></p>
-<p>Done. The application schema now would look like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-groovy" data-lang="groovy"><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="o">...</span><span class="na">rest</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dependencies</span> 
+    <span class="n">implementation</span> <span class="nf">project</span><span class="o">(</span><span class="s1">&#39;:feature_6_module&#39;</span><span class="o">)</span> 
+    <span class="c1">//the naming is not like that in my original project
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></div><p>Done. The application schema now would look like this:</p>
 <p><a href="https://1.bp.blogspot.com/-SKJ-0_sgYNU/Xb6p2JsjOZI/AAAAAAAAQL4/A8bjTdwbgnsqqgPhk1QqUqlffFFzYsLfACLcBGAsYHQ/s1600/Multi%2BModule%2BRefactoring%2BDiagram%2B%25281%2529.jpg" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
         src="/coroutinedispatcher/svg/loading.min.svg"
@@ -167,7 +268,7 @@ The app actually is pretty simple. Is built with Architecture Components and has
 <p>Now, my feature_6_module is installed as an &ldquo;external library&rdquo; to my app module.</p>
 <p><strong>Conclusion</strong></p>
 <p>This was part 1 of breaking a monolithic app into a modularized app in Android. Next part will be all about Dagger and core dependencies.</p>
-<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } Stavro Xhardha</p>
+<p>Stavro Xhardha</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

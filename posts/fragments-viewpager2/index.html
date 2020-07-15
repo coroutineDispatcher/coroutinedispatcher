@@ -34,7 +34,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/fragments-viewpager2\/"
-        },"genre": "posts","keywords": "ViewPager2, Kotlin, Fragments, Android, Android Development","wordcount":  368 ,
+        },"genre": "posts","keywords": "ViewPager2, Kotlin, Fragments, Android, Android Development","wordcount":  360 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/fragments-viewpager2\/","datePublished": "2019-12-23T09:30:00+01:00","dateModified": "2019-12-23T09:30:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -111,7 +111,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Fragments ❤  ViewPager2</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-12-23">2019-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;368 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-12-23">2019-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;360 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -133,68 +133,64 @@
 3- Support for <a href="https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/DiffUtil" target="_blank" rel="noopener noreffer">DiffUtil</a>, because it is based on RecyclerView.<br>
 4 - Fragments improved support, which we will talk about below.</p>
 <p>So, let&rsquo;s suppose that we have 2 Fragments: HomeFragment and SchoolFragment. In the Activity/Fragment xml file, which is going to hold these two sliding by switching with each-other, place the ViewPager2 tag:</p>
-<pre><code>&lt;androidx.viewpager2.widget.ViewPager2  
-    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;  
-    android:id=&quot;@+id/my_view_pager&quot;  
-    android:layout_width=&quot;match_parent&quot;  
-    android:layout_height=&quot;match_parent&quot; &gt;&quot;
-```Now, let's set up code in the MainActivity (in my case this is the name of the Activity):  
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;androidx.viewpager2.widget.ViewPager2</span>  
+    <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>  
+    <span class="na">android:id=</span><span class="s">&#34;@+id/my_view_pager&#34;</span>  
+    <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>  
+    <span class="na">android:layout_height=</span><span class="s">&#34;match_parent&#34;</span> <span class="nt">&gt;</span>&#34;
+</code></pre></div><p>Now, let&rsquo;s set up code in the MainActivity (in my case this is the name of the Activity):</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="n">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>  
   
-</code></pre><p>class MainActivity : AppCompatActivity() {</p>
-<pre><code>private lateinit var viewPager: ViewPager2  
-
-override fun onCreate(savedInstanceState: Bundle?) {  
-    super.onCreate(savedInstanceState)  
-    setContentView(R.layout.activity_main)  
-    viewPager = findViewById(R.id.my_view_pager)  
-    val tabLayout = findViewById(R.id.tabs)  
-    val pagerAdapter = ScreenSlidePagerAdapter(this)  
-    viewPager.adapter = pagerAdapter  
-    TabLayoutMediator(tabLayout, viewPager) { tab, position -&gt;  
-        when (position) {  
-            0 -&gt; tab.text = &quot;Home&quot;  
-            1 -&gt; tab.text = &quot;School&quot;  
-        }  
-    }.attach() //this replaces the tabLayout.setupWithViewPager() from ViewPager API  
-}  
-
-override fun onBackPressed() {  
-    if (viewPager.currentItem == 0) {  
-        super.onBackPressed() //if I'm in the first Fragment just go back  
-    } else {  
-        viewPager.currentItem = viewPager.currentItem - 1 //just slide to the first Fragment  
-    }  
-}  
-
-private inner class ScreenSlidePagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {  
-    override fun getItemCount(): Int = 2 //because I have two Fragments  
-
-    override fun createFragment(position: Int): Fragment = if (position == 0) {  
-        HomeFragment()  
-    } else {  
-        SchoolFragment()  
-    }  
-}  
-</code></pre>
-<p>}</p>
-<pre><code class="language-Some" data-lang="Some">  
-1- Notice that you have the FragmentStateAdapter instead of FragmentStatePagerAdapter.  
+    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">viewPager</span><span class="p">:</span> <span class="n">ViewPager2</span>  
   
-2- To associate TabLayout with the ViewPager there is no more tabLayout.setupWithViewPager(). Instead you should import _com.google.android.material:material:1.1.0-beta01_ or later version of the dependency. And than you can do:  
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>  
+        <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>  
+        <span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">activity_main</span><span class="p">)</span>  
+        <span class="n">viewPager</span> <span class="p">=</span> <span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">my_view_pager</span><span class="p">)</span>  
+        <span class="k">val</span> <span class="py">tabLayout</span> <span class="p">=</span> <span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">tabs</span><span class="p">)</span>  
+        <span class="k">val</span> <span class="py">pagerAdapter</span> <span class="p">=</span> <span class="n">ScreenSlidePagerAdapter</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>  
+        <span class="n">viewPager</span><span class="p">.</span><span class="n">adapter</span> <span class="p">=</span> <span class="n">pagerAdapter</span>  
+        <span class="n">TabLayoutMediator</span><span class="p">(</span><span class="n">tabLayout</span><span class="p">,</span> <span class="n">viewPager</span><span class="p">)</span> <span class="p">{</span> <span class="n">tab</span><span class="p">,</span> <span class="n">position</span> <span class="p">-&gt;</span>  
+            <span class="k">when</span> <span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="p">{</span>  
+                <span class="m">0</span> <span class="p">-&gt;</span> <span class="n">tab</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&#34;Home&#34;</span>  
+                <span class="m">1</span> <span class="p">-&gt;</span> <span class="n">tab</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&#34;School&#34;</span>  
+            <span class="p">}</span>  
+        <span class="p">}.</span><span class="n">attach</span><span class="p">()</span> <span class="c1">//this replaces the tabLayout.setupWithViewPager() from ViewPager API  
+</span><span class="c1"></span>    <span class="p">}</span>  
   
-</code></pre><p>TabLayoutMediator(tabLayout, viewPager) { tab, position -&gt;<br>
-when (position) {<br>
-0 -&gt; tab.text = &ldquo;Home&rdquo;<br>
-1 -&gt; tab.text = &ldquo;School&rdquo;<br>
-}<br>
-}.attach()</p>
-<pre><code>And that's it, now you have your shiny new ViewPager2 set up with Fragments.  
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onBackPressed</span><span class="p">()</span> <span class="p">{</span>  
+        <span class="k">if</span> <span class="p">(</span><span class="n">viewPager</span><span class="p">.</span><span class="n">currentItem</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>  
+            <span class="k">super</span><span class="p">.</span><span class="n">onBackPressed</span><span class="p">()</span> <span class="c1">//if I&#39;m in the first Fragment just go back  
+</span><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+            <span class="n">viewPager</span><span class="p">.</span><span class="n">currentItem</span> <span class="p">=</span> <span class="n">viewPager</span><span class="p">.</span><span class="n">currentItem</span> <span class="p">-</span> <span class="m">1</span> <span class="c1">//just slide to the first Fragment  
+</span><span class="c1"></span>        <span class="p">}</span>  
+    <span class="p">}</span>  
   
-Helpful resources:  
-[Slide between Fragments using Viewpager2.](https://developer.android.com/training/animation/screen-slide-2#kotlin)  
-[Turning the Page: Migrating to ViewPager2 (Android Dev Summit '19).](https://youtu.be/lAP6cz1HSzA)  
-  
-@import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css'); @import url('https://fonts.googleapis.com/css?family=Open+Sans'); body { margin: 20px; font: 16px 'Open Sans', sans-serif; } Stavro Xhardha</code></pre></div><div class="post-footer" id="post-footer">
+    <span class="k">private</span> <span class="k">inner</span> <span class="k">class</span> <span class="nc">ScreenSlidePagerAdapter</span><span class="p">(</span><span class="n">fragmentActivity</span><span class="p">:</span> <span class="n">FragmentActivity</span><span class="p">)</span> <span class="p">:</span> <span class="n">FragmentStateAdapter</span><span class="p">(</span><span class="n">fragmentActivity</span><span class="p">)</span> <span class="p">{</span>  
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">getItemCount</span><span class="p">():</span> <span class="n">Int</span> <span class="p">=</span> <span class="m">2</span> <span class="c1">//because I have two Fragments  
+</span><span class="c1"></span>  
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">createFragment</span><span class="p">(</span><span class="n">position</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">Fragment</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">position</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>  
+            <span class="n">HomeFragment</span><span class="p">()</span>  
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+            <span class="n">SchoolFragment</span><span class="p">()</span>  
+        <span class="p">}</span>  
+    <span class="p">}</span>  
+<span class="p">}</span>
+</code></pre></div><p>Some things to spot here though.</p>
+<p>1- Notice that you have the FragmentStateAdapter instead of FragmentStatePagerAdapter.</p>
+<p>2- To associate TabLayout with the ViewPager there is no more tabLayout.setupWithViewPager(). Instead you should import <em>com.google.android.material:material:1.1.0-beta01</em> or later version of the dependency. And than you can do:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">TabLayoutMediator</span><span class="p">(</span><span class="n">tabLayout</span><span class="p">,</span> <span class="n">viewPager</span><span class="p">)</span> <span class="p">{</span> <span class="n">tab</span><span class="p">,</span> <span class="n">position</span> <span class="p">-&gt;</span>  
+            <span class="k">when</span> <span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="p">{</span>  
+                <span class="m">0</span> <span class="p">-&gt;</span> <span class="n">tab</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&#34;Home&#34;</span>  
+                <span class="m">1</span> <span class="p">-&gt;</span> <span class="n">tab</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&#34;School&#34;</span>  
+            <span class="p">}</span>  
+        <span class="p">}.</span><span class="n">attach</span><span class="p">()</span>
+</code></pre></div><p>And that&rsquo;s it, now you have your shiny new ViewPager2 set up with Fragments.</p>
+<p>Helpful resources:<br>
+<a href="https://developer.android.com/training/animation/screen-slide-2#kotlin" target="_blank" rel="noopener noreffer">Slide between Fragments using Viewpager2.</a><br>
+<a href="https://youtu.be/lAP6cz1HSzA" target="_blank" rel="noopener noreffer">Turning the Page: Migrating to ViewPager2 (Android Dev Summit &lsquo;19).</a></p>
+<p>Stavro Xhardha</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

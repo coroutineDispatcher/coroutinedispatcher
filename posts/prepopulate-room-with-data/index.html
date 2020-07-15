@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/prepopulate-room-with-data\/"
-        },"genre": "posts","keywords": "Java, PrePopulate Room, Android Room, Kotlin, Android, Room Persistence, Sqlite","wordcount":  500 ,
+        },"genre": "posts","keywords": "Java, PrePopulate Room, Android Room, Kotlin, Android, Room Persistence, Sqlite","wordcount":  520 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/prepopulate-room-with-data\/","datePublished": "2020-01-06T09:04:00+01:00","dateModified": "2020-01-06T09:04:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -103,14 +103,25 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Prepopulate Room with data.</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-01-06">2020-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;500 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-01-06">2020-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;520 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1---a-db-file-is-not-a-sql-file">1 - A .db file, is not a .sql file.</a></li>
+    <li><a href="#2---null-values-and-naming">2 - Null values and naming</a></li>
+    <li><a href="#3--must-have-incremental-processor-enabled">3- Must have incremental processor enabled:</a></li>
+    <li><a href="#how-to-know-if-we-are-doing-it-correctly">How to know if we are doing it correctly?</a></li>
+    <li><a href="#1---we-have-the-incorrect-file">1 - We have the incorrect file</a></li>
+    <li><a href="#2---the-file-is-correct-but-the-table-in-sql-has-nothing-to-do-with-our-model-representation">2 - The file is correct but the table in SQL has nothing to do with our model representation</a></li>
+    <li><a href="#a-wish-i-made">A wish I made.</a></li>
+    <li><a href="#conclusion">Conclusion:</a></li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p><a href="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
         src="/coroutinedispatcher/svg/loading.min.svg"
@@ -121,67 +132,49 @@
         title="https://s1.zerochan.net/Yu-Gi-Oh!.Duel.Monsters.600.605081.jpg" /></a></p>
 <p>There are times, when we just need the data when the app starts, and all the functionality is just a matter of work. Or we just need the app to be independent from the network and we have the data. A simple dog-race database or cat-race database doesn&rsquo;t actually need online interaction at all (if there are not too many data of course). So, Room comes with a nice solution about this. The <a href="https://developer.android.com/training/data-storage/room/prepopulate" target="_blank" rel="noopener noreffer">docs</a> are pretty clear and short when it comes to this topic.<br>
 We just write:</p>
-<pre><code>Room.databaseBuilder(appContext, AppDatabase.class, &quot;Sample.db&quot;)  
-    .createFromAsset(&quot;database/myapp.db&quot;)  
-    .build()  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">Room</span><span class="p">.</span><span class="n">databaseBuilder</span><span class="p">(</span><span class="n">appContext</span><span class="p">,</span> <span class="n">AppDatabase</span><span class="p">.</span><span class="k">class</span><span class="p">,</span> <span class="s">&#34;Sample.db&#34;</span><span class="p">)</span>  
+    <span class="p">.</span><span class="n">createFromAsset</span><span class="p">(</span><span class="s">&#34;database/myapp.db&#34;</span><span class="p">)</span>  
+    <span class="p">.</span><span class="n">build</span><span class="p">()</span>  
 
-```And our data are ready to be instantiated when the app starts. One more thing to note is that its extremely fast to do it this way. However, here are some problems that the docs don't even bother to mention (which I think are important for some).  
-
-1 - A .db file, is not a .sql file.
------------------------------------
-
-The file we are supposed to hold in assets folder which contains a query like: CREATE TABLE IF NOT EXISTS  has nothing to do with the file in the code above, that we are supposed to import. We need to create a database like this. I actually used [SqliteBrowser](https://sqlitebrowser.org/), to execute the query, but there should be other ways too.  
-
-2 - Null values and naming
---------------------------
-
-Our data model needs to be precisely as the data we are supposed to prepopulate. For example if we have a \[name\] TEXT NULL we should make sure that the representation of it must meet the same conditions, including nullability and naming (this also includes table names):  
-</code></pre><p>@ColumnInfo(name = &ldquo;name&rdquo;)<br>
-val name: String? = &ldquo;&rdquo;,</p>
-<pre><code class="language-Otherwise," data-lang="Otherwise,">
-3- Must have incremental processor enabled:
--------------------------------------------
-
-Don't forget to have the correct setup in build.gradle (or in my case build.gradle.kts), because this feature is only available after Room 2.2.0:  
-</code></pre><p>javaCompileOptions {<br>
-annotationProcessorOptions {<br>
-arguments = mapOf(<br>
-&ldquo;room.schemaLocation&rdquo; to &ldquo;$projectDir/schemas&rdquo;,<br>
-&ldquo;room.incremental&rdquo; to &ldquo;true&rdquo;,<br>
-&ldquo;room.expandProjection&rdquo; to &ldquo;true&rdquo;<br>
-)<br>
-}<br>
-}</p>
-<pre><code>
-How to know if we are doing it correctly?
------------------------------------------
-
-There are two cases to spot here:  
-
-1 - We have the incorrect file
-------------------------------
-
-In this case Room would automatically throw a RuntimeException yelling: &quot;Cannot copy database file&quot;.  
-
-2 - The file is correct but the table in SQL has nothing to do with our model representation
---------------------------------------------------------------------------------------------
-
-In this case Room would throw a SqliteException with some error like: &quot;Database file is corrupt&quot;. Trust me whatever you google on this case, cannot help 😅.  
-  
-_Note: This article is just about importing a .db file from assets folder. You can also import a db file from the device after download. Please check the docs for more._  
-
-A wish I made.
---------------
-
-Well, I would like to see an option from Room to import a JSON as a file. Should be cool to have it as a feature.  
-  
-
-Conclusion:
------------
-
-I hope I helped anyone who is willing to write an app with totally offline data. It's pretty good solution, when we don't have too much.  
-  
-Stavro Xhardha</code></pre></div><div class="post-footer" id="post-footer">
+</code></pre></div><p>And our data are ready to be instantiated when the app starts. One more thing to note is that its extremely fast to do it this way. However, here are some problems that the docs don&rsquo;t even bother to mention (which I think are important for some).</p>
+<h2 id="1---a-db-file-is-not-a-sql-file">1 - A .db file, is not a .sql file.</h2>
+<p>The file we are supposed to hold in assets folder which contains a query like: CREATE TABLE IF NOT EXISTS  has nothing to do with the file in the code above, that we are supposed to import. We need to create a database like this. I actually used <a href="https://sqlitebrowser.org/" target="_blank" rel="noopener noreffer">SqliteBrowser</a>, to execute the query, but there should be other ways too.</p>
+<h2 id="2---null-values-and-naming">2 - Null values and naming</h2>
+<p>Our data model needs to be precisely as the data we are supposed to prepopulate. For example if we have a [name] TEXT NULL we should make sure that the representation of it must meet the same conditions, including nullability and naming (this also includes table names):</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;name&#34;</span><span class="p">)</span>  
+<span class="k">val</span> <span class="py">name</span><span class="p">:</span> <span class="n">String</span><span class="p">?</span> <span class="p">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>  
+</code></pre></div><p>Otherwise, we would feel some serious trouble. If we have the correct set up, let Room to connect the rest (the Sqlite table and it&rsquo;s Kotlin/Java object representation).</p>
+<h2 id="3--must-have-incremental-processor-enabled">3- Must have incremental processor enabled:</h2>
+<p>Don&rsquo;t forget to have the correct setup in build.gradle (or in my case build.gradle.kts), because this feature is only available after Room 2.2.0:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="n">javaCompileOptions</span> <span class="p">{</span>  
+            <span class="n">annotationProcessorOptions</span> <span class="p">{</span>  
+                <span class="n">arguments</span> <span class="p">=</span> <span class="n">mapOf</span><span class="p">(</span>  
+                    <span class="s">&#34;room.schemaLocation&#34;</span> <span class="n">to</span> <span class="s">&#34;$projectDir/schemas&#34;</span><span class="p">,</span>  
+                    <span class="s">&#34;room.incremental&#34;</span> <span class="n">to</span> <span class="s">&#34;true&#34;</span><span class="p">,</span>  
+                    <span class="s">&#34;room.expandProjection&#34;</span> <span class="n">to</span> <span class="s">&#34;true&#34;</span>  
+                <span class="p">)</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span>
+</code></pre></div><h2 id="how-to-know-if-we-are-doing-it-correctly">How to know if we are doing it correctly?</h2>
+<p>There are two cases to spot here:</p>
+<h2 id="1---we-have-the-incorrect-file">1 - We have the incorrect file</h2>
+<p>In this case Room would automatically throw a RuntimeException yelling: &ldquo;Cannot copy database file&rdquo;.</p>
+<h2 id="2---the-file-is-correct-but-the-table-in-sql-has-nothing-to-do-with-our-model-representation">2 - The file is correct but the table in SQL has nothing to do with our model representation</h2>
+<p>In this case Room would throw a SqliteException with some error like: &ldquo;Database file is corrupt&rdquo;. Trust me whatever you google on this case, cannot help 😅.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">This article is just about importing a .db file from assets folder. You can also import a db file from the device after download. Please check the docs for more.</div>
+        </div>
+    </div>
+<h2 id="a-wish-i-made">A wish I made.</h2>
+<p>Well, I would like to see an option from Room to import a JSON as a file. Should be cool to have it as a feature.</p>
+<h2 id="conclusion">Conclusion:</h2>
+<p>I hope I helped anyone who is willing to write an app with totally offline data. It&rsquo;s pretty good solution, when we don&rsquo;t have too much.</p>
+<p>Stavro Xhardha</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

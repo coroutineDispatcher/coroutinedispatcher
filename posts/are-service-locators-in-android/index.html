@@ -8,7 +8,6 @@
         <title>Are service locators in Android actually simple? - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Are service locators in Android actually simple?" />
 <meta property="og:description" content="This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
 The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:
-hljs.initHighlightingOnLoad();
 
 The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API." />
 <meta property="og:type" content="article" />
@@ -19,7 +18,6 @@ The screen renders just a the list of cats retrieved by the database after the d
 <meta name="twitter:title" content="Are service locators in Android actually simple?"/>
 <meta name="twitter:description" content="This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
 The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:
-hljs.initHighlightingOnLoad();
 
 The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API."/>
 <meta name="application-name" content="LoveIt">
@@ -34,7 +32,7 @@ The screen renders just a the list of cats retrieved by the database after the d
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/are-service-locators-in-android\/"
-        },"genre": "posts","keywords": "Dependency Injection, Dagger 2, Service Locator, Android, KodeIn, Koin","wordcount":  883 ,
+        },"genre": "posts","keywords": "Dependency Injection, Dagger 2, Service Locator, Android, KodeIn, Koin","wordcount":  907 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/are-service-locators-in-android\/","datePublished": "2019-12-02T09:06:00+01:00","dateModified": "2019-12-02T09:06:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -111,14 +109,19 @@ The screen renders just a the list of cats retrieved by the database after the d
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Are service locators in Android actually simple?</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-12-02">2019-12-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;883 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-12-02">2019-12-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;907 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#koinhttpsinsert-koinio"><a href="https://insert-koin.io/">Koin</a></a></li>
+    <li><a href="#kodeinhttpskodeinorgkodein-di"><a href="https://kodein.org/Kodein-DI/">KodeIn</a></a></li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
         src="/coroutinedispatcher/svg/loading.min.svg"
@@ -129,7 +132,6 @@ The screen renders just a the list of cats retrieved by the database after the d
         title="https://1.bp.blogspot.com/-PLu4zsHPCWg/XeJ2ARDrtYI/AAAAAAAAQjk/thEc8CczQVAV_IuRT_3fIi8KwUzzJKUUwCLcBGAsYHQ/s1600/william-daigneault-oWrZoAVOBS0-unsplash.jpg" /></a></p>
 <p>This week, I&rsquo;ve been playing with service locators in Android. I made <a href="https://github.com/coroutineDispatcher/service_locator_demo" target="_blank" rel="noopener noreffer">this</a> repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.</p>
 <p>The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:</p>
-<p>hljs.initHighlightingOnLoad();</p>
 <p><a href="https://1.bp.blogspot.com/-QU4jCWTjQCo/XeI9eqyD9qI/AAAAAAAAQjI/IKjH3T1I3VcrOen2PeMKVhXtsWhPc8K_wCLcBGAsYHQ/s1600/ServiceLocator%2BDiagram.jpg" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
         src="/coroutinedispatcher/svg/loading.min.svg"
@@ -145,87 +147,82 @@ The screen renders just a the list of cats retrieved by the database after the d
 4- The famous ViewModelFactory (for simplicity I&rsquo;m not handling the savedStateHandle in this article)<br>
 5-  Picasso, to render the images.</p>
 <p>I&rsquo;m comparing these  tools in verbosity, simplicity and time to set up.</p>
-<p><strong><a href="https://insert-koin.io/" target="_blank" rel="noopener noreffer">Koin</a>.</strong><br>
-Koin as a service locator is the easiest to get in with. The docs are pretty simple and it provides a lot of features, making it the perfect tool for Android in particular. However, it has some things I don&rsquo;t really like. Something I like to call the <em>pre-declaration of the constructor</em>. Notice this code here:</p>
-<pre><code>val myModule = module{  
-      ...  
-      single {  
-            CoroutineDispatchers(  
-                Dispatchers.Main,  
-                Dispatchers.IO  
-            )  
-        }  
+<h2 id="koinhttpsinsert-koinio"><a href="https://insert-koin.io/" target="_blank" rel="noopener noreffer">Koin</a></h2>
+<p>Koin as a service locator is the easiest to get in with. The docs are pretty simple and it provides a lot of features, making it the perfect tool for Android in particular. However, it has some things I don&rsquo;t really like. Something I like to call the <em>pre-declaration of the constructor</em>. Notice this code here:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">myModule</span> <span class="p">=</span> <span class="n">module</span><span class="p">{</span>  
+      <span class="p">...</span>  
+      <span class="n">single</span> <span class="p">{</span>  
+            <span class="n">CoroutineDispatchers</span><span class="p">(</span>  
+                <span class="n">Dispatchers</span><span class="p">.</span><span class="n">Main</span><span class="p">,</span>  
+                <span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span>  
+            <span class="p">)</span>  
+        <span class="p">}</span>  
   
-        factory {  
-            EntranceRepository(get(), get())  
-        }  
+        <span class="n">factory</span> <span class="p">{</span>  
+            <span class="n">EntranceRepository</span><span class="p">(</span><span class="k">get</span><span class="p">(),</span> <span class="k">get</span><span class="p">())</span>  
+        <span class="p">}</span>  
   
-        viewModel {  
-            EntranceFragmentViewModel(get(), get())  
-        }  
-      ...  
-    }
-```These lines are what I love and what I hate about Koin. First of all, I really love that it provides it's own feature about the ViewModel factory. But it has some perks, IMO:  
+        <span class="n">viewModel</span> <span class="p">{</span>  
+            <span class="n">EntranceFragmentViewModel</span><span class="p">(</span><span class="k">get</span><span class="p">(),</span> <span class="k">get</span><span class="p">())</span>  
+        <span class="p">}</span>  
+      <span class="p">...</span>  
+    <span class="p">}</span>
+</code></pre></div><p>These lines are what I love and what I hate about Koin. First of all, I really love that it provides it&rsquo;s own feature about the ViewModel factory. But it has some perks, IMO:</p>
+<p>1- First of all when it comes to naming, if you think about it, one keyword is single (so it&rsquo;s a scope), and the other is a factory (doesn&rsquo;t give a message about the scope, but it&rsquo;s a factory), and the other is a viewmodel (definitely not a scope). This makes it a little bit chaotic, mixing the concept of scopes with factory patterns.</p>
+<p>2- The second thing is declaration of the EntranceRepository(get(), get()) which is basically definition of a constructor. This is boilerplate IMO. And correct me if I&rsquo;m wrong, but I assume it uses some kind of reflection (in which I don&rsquo;t know much), in order to invoke constructor in runtime. If you don&rsquo;t provide the EntranceRepository like that, you are most likely to break the app in runtime.</p>
+<p><em>I&rsquo;m not handling the part of field injection, because it looks the same in all DI tools. The constructor injection in Android is a little bit more tricky than the other parts.</em></p>
+<h2 id="kodeinhttpskodeinorgkodein-di"><a href="https://kodein.org/Kodein-DI/" target="_blank" rel="noopener noreffer">KodeIn</a></h2>
+<p>The same thing applies to KodeIn when it comes to speed of set up. It&rsquo;s fantastic. Furthermore, the lazy initialisation of dependencies looks really great to me.</p>
+<p>1- However, this is what I found suspicious in KodeIn <a href="https://kodein.org/Kodein-DI/?6.5/android#_view_models" target="_blank" rel="noopener noreffer">docs</a>:</p>
+<p> _ To use Kodein, you need an Android context. For that, View Models need to implement AndroidViewModel._<br>
+I&rsquo;m pretty sure not many would agree to do that, and <a href="https://medium.com/androiddevelopers/locale-changes-and-the-androidviewmodel-antipattern-84eb677660d9" target="_blank" rel="noopener noreffer">here</a> are some good reasons about it.</p>
+<p>Otherwise, you would need to keep your ViewModelFactory pattern, and KodeIn hasn&rsquo;t a pre-built feature for that, you have to do it manually. The pre declaration of constructor problem, does apply for KodeIn too.</p>
+<p>2- Another thing I noticed in KodeIn field injection, was the by kodein() delegation which does create a little bit of confusion because the kodein() method is a different extension method for Activities, Fragments etc.</p>
+<p><strong>My own idea of a service locator in Android:</strong><br>
+Must note that this is only an idea and it&rsquo;s totally immature, but I find compile time safer than runtime. Therefore, annotations are perfectly solving a case of DI in the JVM world. If we forget Dagger for a moment, the next best example would be Spring framework with its&rsquo; @Autowire injection keyword.<br>
+Anyways, there could be library which could be a mix between Dagger and other service locators. I still imagine something like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Holder</span>  
+<span class="k">class</span> <span class="nc">MyApplication</span><span class="p">:</span> <span class="n">Application</span><span class="p">(){</span>  
+   
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(){</span>  
+   <span class="p">..</span>  
+   <span class="n">MyApplicationHolder</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">//after compilation  
+</span><span class="c1"></span>  <span class="p">}</span>  
+    
+  <span class="n">@Single</span>  
+  <span class="k">fun</span> <span class="nf">provideDependency1</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dependency1</span><span class="p">{</span>  
+    <span class="k">return</span> <span class="n">Dependency1</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">setItsThings</span><span class="p">(</span><span class="n">things</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>   
+  <span class="p">}</span>  
+    
+  <span class="n">@SomeScoped</span>  
+  <span class="k">fun</span> <span class="nf">provideDependency3</span><span class="p">():</span> <span class="n">Dependency3</span><span class="p">{</span>  
+    <span class="k">return</span> <span class="n">Dependency3</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">setItsThings3</span><span class="p">(</span><span class="n">things3</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>  
+  <span class="p">}</span>  
+    
+  <span class="n">@Single</span>  
+  <span class="n">@ByFactory</span>  
+  <span class="k">fun</span> <span class="nf">provideViewModel</span><span class="p">()</span> <span class="p">:</span> <span class="n">MyViewModel</span><span class="p">{</span>  
+    <span class="k">return</span> <span class="n">MyViewModel</span><span class="p">(</span><span class="n">dependency1</span><span class="p">,</span> <span class="n">dependency2</span><span class="p">)</span>  
+  <span class="p">}</span>  
+<span class="p">}</span>  
   
-1- First of all when it comes to naming, if you think about it, one keyword is single (so it's a scope), and the other is a factory (doesn't give a message about the scope, but it's a factory), and the other is a viewmodel (definitely not a scope). This makes it a little bit chaotic, mixing the concept of scopes with factory patterns.  
+<span class="n">@Single</span> <span class="c1">//which would be just a @Inject + @Singleton equivalent  
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">Dependency2</span><span class="p">(){</span>  
+<span class="p">}</span>  
   
-2- The second thing is declaration of the EntranceRepository(get(), get()) which is basically definition of a constructor. This is boilerplate IMO. And correct me if I'm wrong, but I assume it uses some kind of reflection (in which I don't know much), in order to invoke constructor in runtime. If you don't provide the EntranceRepository like that, you are most likely to break the app in runtime.  
-  
-_I'm not handling the part of field injection, because it looks the same in all DI tools. The constructor injection in Android is a little bit more tricky than the other parts._  
-  
-**[KodeIn](https://kodein.org/Kodein-DI/)**  
-  
-The same thing applies to KodeIn when it comes to speed of set up. It's fantastic. Furthermore, the lazy initialisation of dependencies looks really great to me.  
-  
-1- However, this is what I found suspicious in KodeIn [docs](https://kodein.org/Kodein-DI/?6.5/android#_view_models):  
-  
- _ To use Kodein, you need an Android context. For that, View Models need to implement AndroidViewModel._  
-I'm pretty sure not many would agree to do that, and [here](https://medium.com/androiddevelopers/locale-changes-and-the-androidviewmodel-antipattern-84eb677660d9) are some good reasons about it.  
-  
-Otherwise, you would need to keep your ViewModelFactory pattern, and KodeIn hasn't a pre-built feature for that, you have to do it manually. The pre declaration of constructor problem, does apply for KodeIn too.  
-  
-2- Another thing I noticed in KodeIn field injection, was the by kodein() delegation which does create a little bit of confusion because the kodein() method is a different extension method for Activities, Fragments etc.  
-  
-**My own idea of a service locator in Android:**  
-Must note that this is only an idea and it's totally immature, but I find compile time safer than runtime. Therefore, annotations are perfectly solving a case of DI in the JVM world. If we forget Dagger for a moment, the next best example would be Spring framework with its' @Autowire injection keyword.  
-Anyways, there could be library which could be a mix between Dagger and other service locators. I still imagine something like this:  
-  
-</code></pre><p>@Holder<br>
-class MyApplication: Application(){</p>
-<p>override fun onCreate(){<br>
-..<br>
-MyApplicationHolder.init(this) //after compilation<br>
-}</p>
-<p>@Single<br>
-fun provideDependency1() : Dependency1{<br>
-return Dependency1.builder().setItsThings(things).build()<br>
-}</p>
-<p>@SomeScoped<br>
-fun provideDependency3(): Dependency3{<br>
-return Dependency3.builder().setItsThings3(things3).build()<br>
-}</p>
-<p>@Single<br>
-@ByFactory<br>
-fun provideViewModel() : MyViewModel{<br>
-return MyViewModel(dependency1, dependency2)<br>
-}<br>
-}</p>
-<p>@Single //which would be just a @Inject + @Singleton equivalent<br>
-class Dependency2(){<br>
-}</p>
-<p>//ViewModels</p>
-<p>@Single //A ViewModel factory would be generated for you by the &ldquo;framework&rdquo;<br>
-class MyViewModel(d1: D1, d2: D2) : ViewModel(){</p>
-<p>}</p>
-<pre><code class="language-This" data-lang="This">  
-**Conclusion:**  
-Using KodeIn or Koin in your codebase is pretty reasonable thing to do, if it solves your problem. But this article was more about to state that _they are not as simple as developer state_ they are. Furthermore, I still think that Dagger takes a little more time to implement (and hopefully that's the hardest thing in Dagger, trust me) , but the generation of boilerplate comes from the framework and giving less work to the developer. @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css'); @import url('https://fonts.googleapis.com/css?family=Open+Sans'); body { margin: 20px; font: 16px 'Open Sans', sans-serif; }  
-  
-If you want to know more about service locators, dependency injection and IoC in particular, please refer [here](https://martinfowler.com/articles/injection.html).  
-  
-Full repository [here](https://github.com/coroutineDispatcher/service_locator_demo).  
-  
-Stavro Xhardha</code></pre></div><div class="post-footer" id="post-footer">
+<span class="c1">//ViewModels  
+</span><span class="c1"></span>  
+<span class="n">@Single</span> <span class="c1">//A ViewModel factory would be generated for you by the &#34;framework&#34;  
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">MyViewModel</span><span class="p">(</span><span class="n">d1</span><span class="p">:</span> <span class="n">D1</span><span class="p">,</span> <span class="n">d2</span><span class="p">:</span> <span class="n">D2</span><span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">(){</span>  
+    
+<span class="p">}</span>
+</code></pre></div><p>This is far from explained or implemented, and I am still learning about code generation, but a Dagger without components would be awesome as a service locator (hopefully this is not Dagger1, because I&rsquo;ve never seen it 😅) .</p>
+<p><strong>Conclusion:</strong><br>
+Using KodeIn or Koin in your codebase is pretty reasonable thing to do, if it solves your problem. But this article was more about to state that <em>they are not as simple as developer state</em> they are. Furthermore, I still think that Dagger takes a little more time to implement (and hopefully that&rsquo;s the hardest thing in Dagger, trust me) , but the generation of boilerplate comes from the framework and giving less work to the developer.</p>
+<p>If you want to know more about service locators, dependency injection and IoC in particular, please refer <a href="https://martinfowler.com/articles/injection.html" target="_blank" rel="noopener noreffer">here</a>.</p>
+<p>Full repository <a href="https://github.com/coroutineDispatcher/service_locator_demo" target="_blank" rel="noopener noreffer">here</a>.</p>
+<p>Stavro Xhardha</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

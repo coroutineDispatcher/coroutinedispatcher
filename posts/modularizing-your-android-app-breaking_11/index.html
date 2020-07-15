@@ -28,7 +28,7 @@ On our first article we just moved some classes outside the application and appl
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/modularizing-your-android-app-breaking_11\/"
-        },"genre": "posts","keywords": "Android Module, Micro Frontend, Dagger 2, Android Architecture Components, Android Multi Module","wordcount":  651 ,
+        },"genre": "posts","keywords": "Android Module, Micro Frontend, Dagger 2, Android Architecture Components, Android Multi Module","wordcount":  637 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/modularizing-your-android-app-breaking_11\/","datePublished": "2019-11-11T09:15:00+01:00","dateModified": "2019-11-11T09:15:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -105,8 +105,8 @@ On our first article we just moved some classes outside the application and appl
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Modularizing your Android app, breaking the monolith (Part 2)</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-11">2019-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;651 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-11">2019-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;637 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -163,7 +163,7 @@ _Small clarification: the capitalized letter **Module** refers to Dagger modul
 To know how I end up in details to this solution about my ViewModel (and why I am providing a Factory like that), please refer to this article <a href="https://www.coroutinedispatcher.com/2019/08/how-to-produce-savedstatehandle-in-your.html" target="_blank" rel="noopener noreffer">here</a>. The only unclear thing is how we brought that applicationComponent. Well, it&rsquo;s just brought from an abstract class from the :core_module which extends Fragment and holds this variable which has a reference to the CoreComponent. Therefore, every fragment will extend a BaseFragment abstract class.</p>
 <p><strong>We are not done yet.</strong></p>
 <p>Now, doesn&rsquo;t that seem to much work for every feature just for the ViewModel? I require from you to be patient as we are covering this in the next part. The problem is simple: We still haven&rsquo;t solve the feature independence problem, we just set up dagger and made a built without errors. If you notice, :core_module is installed in all features (except one), which means that a feature which doesn&rsquo;t need a dependency still knows everything about it. Therefore, the next step will be to fix that problem.</p>
-<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } Stavro Xhardha</p>
+<p>Stavro Xhardha</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

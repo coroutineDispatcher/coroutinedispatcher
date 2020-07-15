@@ -12,7 +12,6 @@
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/are-service-locators-in-android/</guid>
     <description><![CDATA[This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
 The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:
-hljs.initHighlightingOnLoad();
 
 The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API.]]></description>
 </item></channel>
