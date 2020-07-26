@@ -32,7 +32,7 @@ Let&rsquo;s suppose we have this scenario: I have a list of data, which are show
     <pubDate>Mon, 07 Oct 2019 09:30:00 &#43;0200</pubDate>
     <author>Author</author>
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-rxjava-testing/</guid>
-    <description><![CDATA[&amp;nbps; When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing + Room pretty amusing, I thought I should share it with you.
+    <description><![CDATA[When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing + Room pretty amusing, I thought I should share it with you.
 Room has already a great support for RxJava or Coroutines. I have used both ways to access the data layer and I was really satisfied with both. So I decided to make a 2-series blog posts with testing in Room with RxJava and testing Room with coroutines.]]></description>
 </item><item>
     <title>Solving Room &#34;cannot find setter for field&#34; error in build time</title>
@@ -42,9 +42,6 @@ Room has already a great support for RxJava or Coroutines. I have used both ways
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/solving-room-cannot-find-setter-for/</guid>
     <description><![CDATA[Room persistence library is one of the easiest one to set up. However, when using data classes for your Room entities, you might face some small problem, which on the first look doesn&rsquo;t really make any sense.
 Let&rsquo;s try to compile this class:
-The problem:
-
-And so will happen with other fields
-But I already have a data class entity that has only vals. Why doesn&rsquo;t this class compile?]]></description>
+@Entity(tableName = &#34;users&#34;) data class User( @PrimaryKey @ColumnInfo(name = &#34;id&#34;) val number: Int, @ColumnInfo(name = &#34;user_name&#34;) val userName: String, @ColumnInfo(name = &#34;user_status&#34;) val userStatus: String, @Ignore val englishNameMeaning: UserGrade ) The problem:]]></description>
 </item></channel>
 </rss>

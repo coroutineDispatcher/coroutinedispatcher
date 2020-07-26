@@ -8,10 +8,7 @@
         <title>Solving Room &#34;cannot find setter for field&#34; error in build time - Coroutinedispatchers&#39; blog</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Solving Room &#34;cannot find setter for field&#34; error in build time" />
 <meta property="og:description" content="Room persistence library is one of the easiest one to set up. However, when using data classes for your Room entities, you might face some small problem, which on the first look doesn&rsquo;t really make any sense.
 Let&rsquo;s try to compile this class:
-The problem:
-
-And so will happen with other fields
-But I already have a data class entity that has only vals. Why doesn&rsquo;t this class compile?" />
+@Entity(tableName = &#34;users&#34;) data class User( @PrimaryKey @ColumnInfo(name = &#34;id&#34;) val number: Int, @ColumnInfo(name = &#34;user_name&#34;) val userName: String, @ColumnInfo(name = &#34;user_status&#34;) val userStatus: String, @Ignore val englishNameMeaning: UserGrade ) The problem:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/solving-room-cannot-find-setter-for/" />
 <meta property="article:published_time" content="2019-08-20T13:55:00+02:00" />
@@ -20,10 +17,7 @@ But I already have a data class entity that has only vals. Why doesn&rsquo;t th
 <meta name="twitter:title" content="Solving Room &#34;cannot find setter for field&#34; error in build time"/>
 <meta name="twitter:description" content="Room persistence library is one of the easiest one to set up. However, when using data classes for your Room entities, you might face some small problem, which on the first look doesn&rsquo;t really make any sense.
 Let&rsquo;s try to compile this class:
-The problem:
-
-And so will happen with other fields
-But I already have a data class entity that has only vals. Why doesn&rsquo;t this class compile?"/>
+@Entity(tableName = &#34;users&#34;) data class User( @PrimaryKey @ColumnInfo(name = &#34;id&#34;) val number: Int, @ColumnInfo(name = &#34;user_name&#34;) val userName: String, @ColumnInfo(name = &#34;user_status&#34;) val userStatus: String, @Ignore val englishNameMeaning: UserGrade ) The problem:"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -36,7 +30,7 @@ But I already have a data class entity that has only vals. Why doesn&rsquo;t th
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/solving-room-cannot-find-setter-for\/"
-        },"genre": "posts","keywords": "Android Room, Android, cannot find setter for field, Room Persistence","wordcount":  340 ,
+        },"genre": "posts","keywords": "Android Room, Android, cannot find setter for field, Room Persistence","wordcount":  458 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/solving-room-cannot-find-setter-for\/","datePublished": "2019-08-20T13:55:00+02:00","dateModified": "2019-08-20T13:55:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -113,8 +107,8 @@ But I already have a data class entity that has only vals. Why doesn&rsquo;t th
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Solving Room &#34;cannot find setter for field&#34; error in build time</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-08-20">2019-08-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;340 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-08-20">2019-08-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;458 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -131,7 +125,22 @@ But I already have a data class entity that has only vals. Why doesn&rsquo;t th
         title="https://1.bp.blogspot.com/-U7d19cdLM_4/XVvdf_PApeI/AAAAAAAAO9E/CbjeihCRP1YHfP7fWMrJ2OcY-s9uIpVigCLcBGAs/s1600/cristian-baron-dPFaq7RVzbQ-unsplash.jpg" /></a></p>
 <p>Room persistence library is one of the easiest one to set up. However, when using data classes for your Room entities, you might face some small problem, which on the first look doesn&rsquo;t really make any sense.</p>
 <p>Let&rsquo;s try to compile this class:</p>
-<p><strong>The problem:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Entity</span><span class="p">(</span><span class="n">tableName</span> <span class="p">=</span> <span class="s">&#34;users&#34;</span><span class="p">)</span>
+<span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span>
+    <span class="n">@PrimaryKey</span>
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;id&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_name&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">userName</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_status&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">userStatus</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@Ignore</span>
+    <span class="k">val</span> <span class="py">englishNameMeaning</span><span class="p">:</span> <span class="n">UserGrade</span>
+<span class="p">)</span>
+</code></pre></div><p><strong>The problem:</strong></p>
 <p><a href="https://1.bp.blogspot.com/-PPgod4Z5IjM/XVvPC7EQlaI/AAAAAAAAO84/VoCX0RocUjALqQP9_ulYwKZWrPZP2pSfgCLcBGAs/s1600/Screenshot_1.png" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
         src="/coroutinedispatcher/svg/loading.min.svg"
@@ -143,15 +152,60 @@ But I already have a data class entity that has only vals. Why doesn&rsquo;t th
 <p>And so will happen with other fields</p>
 <p>But I already have a data class entity that has only vals.  Why doesn&rsquo;t this class compile?<br>
 The problem here is the class UserGrade that room has no idea how give a value to it. Furthermore, that&rsquo;s a non nullable type. Even though I&rsquo;m ignoring it from Room, the compiler cannot continue because it&rsquo;s the constructor that is checked first, thus failing all my other values to be set.</p>
-<p>So, a small fix for this, is that make every variable a var instead of val and make our object nullable type. It&rsquo;s not a bad solution, but now I have to define a constructor, to tell Room that these are the default values from it: </p>
-<p><strong>The solution</strong></p>
-<p>Perhaps it is not such a big deal, but when chances are, why not try a better approach? Also, it might be a little problematic to break the standardization of the entities. Having a data class with vals and a data class with vars for the same purpose, is not a good style, at least for me. </p>
+<p>So, a small fix for this, is that make every variable a var instead of val and make our object nullable type. It&rsquo;s not a bad solution, but now I have to define a constructor, to tell Room that these are the default values from it:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Entity</span><span class="p">(</span><span class="n">tableName</span> <span class="p">=</span> <span class="s">&#34;users&#34;</span><span class="p">)</span>
+<span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span>
+    <span class="n">@PrimaryKey</span>
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;id&#34;</span><span class="p">)</span>
+    <span class="k">var</span> <span class="py">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_name&#34;</span><span class="p">)</span>
+    <span class="k">var</span> <span class="py">userName</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_status&#34;</span><span class="p">)</span>
+    <span class="k">var</span> <span class="py">userStatus</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@Ignore</span>
+    <span class="k">var</span> <span class="py">englishNameMeaning</span><span class="p">:</span> <span class="n">UserGrade</span><span class="p">?</span>
+<span class="p">){</span>
+  <span class="k">constructor</span><span class="p">():</span> <span class="k">this</span><span class="p">(</span><span class="n">number</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">userName</span> <span class="p">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">userStatus</span> <span class="p">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>The solution</strong></p>
+<p>Perhaps it is not such a big deal, but when chances are, why not try a better approach? Also, it might be a little problematic to break the standardization of the entities. Having a data class with vals and a data class with vars for the same purpose, is not a good style, at least for me.</p>
 <p>Let&rsquo;s re roll to immutable variables and place a default value on our UserGrade object:</p>
-<p>If you try to build, the same error will appear. The compiler will still yell at you. Even though the problem still persists from Room library, it&rsquo;s not its fault. That&rsquo;s because when Kotlin compiles to Java, it has no idea what default values in parameters are.  </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Entity</span><span class="p">(</span><span class="n">tableName</span> <span class="p">=</span> <span class="s">&#34;users&#34;</span><span class="p">)</span>
+<span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span>
+    <span class="n">@PrimaryKey</span>
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;id&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_name&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">userName</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_status&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">userStatus</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@Ignore</span>
+    <span class="k">val</span> <span class="py">englishNameMeaning</span><span class="p">:</span> <span class="n">UserGrade</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+<span class="p">)</span>
+</code></pre></div><p>If you try to build, the same error will appear. The compiler will still yell at you. Even though the problem still persists from Room library, it&rsquo;s not its fault. That&rsquo;s because when Kotlin compiles to Java, it has no idea what default values in parameters are.</p>
 <p>The last approach of this use case is to add the @JvmOverloads annotation before the constructor, so Java will know to create the constructor overloading for us:</p>
-<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; }<br>
-And that&rsquo;s it. Good luck!</p>
-<p>You can follow me on <a href="https://twitter.com/suspendfunction" target="_blank" rel="noopener noreffer">twitter</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Entity</span><span class="p">(</span><span class="n">tableName</span> <span class="p">=</span> <span class="s">&#34;users&#34;</span><span class="p">)</span>
+<span class="k">data</span> <span class="k">class</span> <span class="nc">User</span> <span class="n">@JvmOverloads</span> <span class="k">constructor</span><span class="p">(</span>
+    <span class="n">@PrimaryKey</span>
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;id&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_name&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">userName</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@ColumnInfo</span><span class="p">(</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#34;user_status&#34;</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">userStatus</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+
+    <span class="n">@Ignore</span>
+    <span class="k">val</span> <span class="py">englishNameMeaning</span><span class="p">:</span> <span class="n">UserGrade</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+<span class="p">)</span>
+</code></pre></div><p>And that&rsquo;s it. Good luck!</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -190,5 +244,5 @@ And that&rsquo;s it. Good luck!</p>
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
 </html>

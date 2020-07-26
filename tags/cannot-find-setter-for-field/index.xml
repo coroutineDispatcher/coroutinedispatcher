@@ -12,9 +12,6 @@
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/solving-room-cannot-find-setter-for/</guid>
     <description><![CDATA[Room persistence library is one of the easiest one to set up. However, when using data classes for your Room entities, you might face some small problem, which on the first look doesn&rsquo;t really make any sense.
 Let&rsquo;s try to compile this class:
-The problem:
-
-And so will happen with other fields
-But I already have a data class entity that has only vals. Why doesn&rsquo;t this class compile?]]></description>
+@Entity(tableName = &#34;users&#34;) data class User( @PrimaryKey @ColumnInfo(name = &#34;id&#34;) val number: Int, @ColumnInfo(name = &#34;user_name&#34;) val userName: String, @ColumnInfo(name = &#34;user_status&#34;) val userStatus: String, @Ignore val englishNameMeaning: UserGrade ) The problem:]]></description>
 </item></channel>
 </rss>

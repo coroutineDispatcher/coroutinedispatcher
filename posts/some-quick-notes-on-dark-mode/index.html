@@ -29,7 +29,7 @@ The only thing you need to do to get your app ready for dark mode is the themes 
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/some-quick-notes-on-dark-mode/" /><link rel="prev" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/a-small-comparison-between-3-essential/" /><link rel="next" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/publish-your-library-to-jitpack/" /><link rel="stylesheet" href="/coroutinedispatcher/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/some-quick-notes-on-dark-mode/" /><link rel="prev" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/how-to-produce-savedstatehandle-in-your/" /><link rel="next" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/publish-your-library-to-jitpack/" /><link rel="stylesheet" href="/coroutinedispatcher/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -38,7 +38,7 @@ The only thing you need to do to get your app ready for dark mode is the themes 
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/some-quick-notes-on-dark-mode\/"
-        },"genre": "posts","keywords": "Android Architecture Components, Dark theme Android, Kotlin, Dark Mode, Android Development","wordcount":  422 ,
+        },"genre": "posts","keywords": "Android Architecture Components, Dark theme Android, Kotlin, Dark Mode, Android Development","wordcount":  495 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/some-quick-notes-on-dark-mode\/","datePublished": "2019-09-09T10:03:00+02:00","dateModified": "2019-09-09T10:03:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -115,8 +115,8 @@ The only thing you need to do to get your app ready for dark mode is the themes 
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Some quick notes on Dark Mode</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-09-09">2019-09-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;422 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-09-09">2019-09-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;495 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -151,21 +151,67 @@ The only thing you need to do to get your app ready for dark mode is the themes 
         alt="https://1.bp.blogspot.com/-BnND1T8D_og/XXVL25pkwkI/AAAAAAAAPKo/3IsLKRX9B5QnqLNE6xFh7DTy8qopaM_WQCLcBGAs/s400/Screenshot_20190908-204008__01.jpg"
         title="https://1.bp.blogspot.com/-BnND1T8D_og/XXVL25pkwkI/AAAAAAAAPKo/3IsLKRX9B5QnqLNE6xFh7DTy8qopaM_WQCLcBGAs/s400/Screenshot_20190908-204008__01.jpg" /></a></p>
 <p><strong>The setup:</strong><br>
-The only thing you need to do  to get your app ready for dark mode is the themes tag and the AppCompatDelegate class. The rest depends on your project. So instead of some &lt;style name=&quot;AppTheme&rdquo; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt; you just need the &lt;style name=&quot;AppTheme&rdquo; parent=&quot;Theme.AppCompat.DayNight&quot;&gt; . The code for dark mode/light mode is pretty simple: </p>
-<p>_Note: These are not the <a href="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme" target="_blank" rel="noopener noreffer">only states.</a> _</p>
+The only thing you need to do to get your app ready for dark mode is the themes tag and the AppCompatDelegate class. The rest depends on your project. So instead of some &lt;style name=&quot;AppTheme&rdquo; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt; you just need the &lt;style name=&quot;AppTheme&rdquo; parent=&quot;Theme.AppCompat.DayNight&quot;&gt; . The code for dark mode/light mode is pretty simple:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//dark mode
+</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">setDefaultNightMode</span><span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_YES</span><span class="p">)</span>
+
+<span class="c1">//light mode
+</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">setDefaultNightMode</span><span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_NO</span><span class="p">)</span>
+
+<span class="c1">//asking if dark mode is on:
+</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_YES</span>
+
+<span class="c1">//asking if light mode is on:
+</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_NO</span>
+</code></pre></div><p>_Note: These are not the <a href="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme" target="_blank" rel="noopener noreffer">only states.</a> _</p>
 <p><strong>The problems I faced:</strong></p>
 <p><strong>The drawer:</strong><br>
-First of all,   if you notice the drawer on the Light mode, you will see that the text of the menu items, is black. I don&rsquo;t really want that, because in dark mode it will truly suck. Since you cannot change it from xml, here is what you can do for it:</p>
-<p>** Custom inserted colors:**<br>
+First of all,  if you notice the drawer on the Light mode, you will see that the text of the menu items, is black. I don&rsquo;t really want that, because in dark mode it will truly suck. Since you cannot change it from xml, here is what you can do for it:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">checkNavView</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">colorListItems</span> <span class="p">=</span> <span class="n">ColorStateList</span><span class="p">(</span>
+            <span class="n">arrayOf</span><span class="p">(</span>
+                <span class="n">intArrayOf</span><span class="p">(-</span><span class="n">android</span><span class="p">.</span><span class="n">R</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">state_enabled</span><span class="p">),</span>
+                <span class="n">intArrayOf</span><span class="p">(</span><span class="n">android</span><span class="p">.</span><span class="n">R</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">state_enabled</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">intArrayOf</span><span class="p">(</span>
+                <span class="n">ContextCompat</span><span class="p">.</span><span class="n">getColor</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">R</span><span class="p">.</span><span class="n">color</span><span class="p">.</span><span class="n">md_black_1000</span><span class="p">),</span>
+                <span class="n">ContextCompat</span><span class="p">.</span><span class="n">getColor</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">R</span><span class="p">.</span><span class="n">color</span><span class="p">.</span><span class="n">colorAccentDark</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">val</span> <span class="py">colorListText</span> <span class="p">=</span> <span class="n">ColorStateList</span><span class="p">(</span>
+            <span class="n">arrayOf</span><span class="p">(</span>
+                <span class="n">intArrayOf</span><span class="p">(-</span><span class="n">android</span><span class="p">.</span><span class="n">R</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">state_enabled</span><span class="p">),</span>
+                <span class="n">intArrayOf</span><span class="p">(</span><span class="n">android</span><span class="p">.</span><span class="n">R</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">state_enabled</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">intArrayOf</span><span class="p">(</span>
+                <span class="n">ContextCompat</span><span class="p">.</span><span class="n">getColor</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">R</span><span class="p">.</span><span class="n">color</span><span class="p">.</span><span class="n">md_black_1000</span><span class="p">),</span>
+                <span class="n">ContextCompat</span><span class="p">.</span><span class="n">getColor</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">R</span><span class="p">.</span><span class="n">color</span><span class="p">.</span><span class="n">md_white_1000</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">MODE_NIGHT_YES</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">nav_view</span><span class="p">.</span><span class="n">itemTextColor</span> <span class="p">=</span> <span class="n">colorListText</span>
+            <span class="n">nav_view</span><span class="p">.</span><span class="n">itemIconTintList</span> <span class="p">=</span> <span class="n">colorListItems</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div><p>** Custom inserted colors:**<br>
 There is two options in this part of the problem. Well, my background colors or my text colors had a color set by the xml and not by the theme. So what you can do here is choose colors that don&rsquo;t really affect the visibility on theme change, or leave Androids default.</p>
 <p>Since I am using a single Activity and making these changes in the activity (because the drawer is located there) there is no more need to handle things in fragments (except when having to replace an icon depending on the theme).</p>
 <p><strong>The toolbar:</strong><br>
 Yes. We should be careful with the toolbar. Once you implement the dark theme, you may not want your toolbar to have a black text as well. So you just change it&rsquo;s behavior to:</p>
-<p><strong>The savedInstanceState.</strong><br>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">checkToolbar</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">MODE_NIGHT_YES</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">toolbar</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">setTheme</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">ThemeOverlay_MaterialComponents_Dark</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">toolbar</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">setTheme</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">ThemeOverlay_MaterialComponents_Light</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div><p><strong>The savedInstanceState.</strong><br>
 One mistake I used to make during my implementation was that I tried to recreate() the activity in order for the onSavedInstanceState to be called. No need for that, once you call AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.WHATEVER_MODE) the activity will recreate for you. Once the activity is recreated, in your onCreate method you can check for the drawer or toolbar as discussed above.</p>
 <p><strong>Is there a better approach?</strong><br>
 Perhaps yes. You may try to code all this from the theme tag on the styles.xml. But since xml is not my thing,  I chose this approach.</p>
-<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } Hope I helped. Full project on <a href="https://github.com/coroutineDispatcher/pocket_treasure" target="_blank" rel="noopener noreffer">Github</a>.</p>
+<p>Hope I helped. Full project on <a href="https://github.com/coroutineDispatcher/pocket_treasure" target="_blank" rel="noopener noreffer">Github</a>.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -189,7 +235,7 @@ Perhaps yes. You may try to code all this from the theme tag on the styles.xml. 
         </section>
     </div>
 
-    <div class="post-nav"><a href="/coroutinedispatcher/posts/a-small-comparison-between-3-essential/" class="prev" rel="prev" title="A small comparison between 3 essential algorithms in Kotlin"><i class="fas fa-angle-left fa-fw"></i>A small comparison between 3 essential algorithms in Kotlin</a>
+    <div class="post-nav"><a href="/coroutinedispatcher/posts/how-to-produce-savedstatehandle-in-your/" class="prev" rel="prev" title="How to produce the SavedStateHandle in your ViewModel using AssistedInject"><i class="fas fa-angle-left fa-fw"></i>How to produce the SavedStateHandle in your ViewModel using AssistedInject</a>
             <a href="/coroutinedispatcher/posts/publish-your-library-to-jitpack/" class="next" rel="next" title="Publish your library to JitPack ">Publish your library to JitPack <i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
@@ -204,5 +250,5 @@ Perhaps yes. You may try to code all this from the theme tag on the styles.xml. 
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
 </html>

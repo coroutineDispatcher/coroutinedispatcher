@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/modularizing-your-android-app-breaking_18\/"
-        },"genre": "posts","keywords": "Android Module, Micro Frontend, Dagger 2, Android Architecture Components, Android Multi Module","wordcount":  508 ,
+        },"genre": "posts","keywords": "Android Module, Micro Frontend, Dagger 2, Android Architecture Components, Android Multi Module","wordcount":  663 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/modularizing-your-android-app-breaking_18\/","datePublished": "2019-11-18T08:57:00+01:00","dateModified": "2019-11-18T08:57:00+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -103,8 +103,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Modularizing your Android app, breaking the monolith (Part 3)</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-18">2019-11-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;508 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-18">2019-11-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;663 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -156,8 +156,55 @@
 <p>In this way, the :feature_4 and :feature_2 not only are separated from all the other modules but they are also separated from each other.</p>
 <p><strong>Some code:</strong><br>
 We still have to do only dependency configuration only. This is good news:</p>
-<p>This way I&rsquo;m able to get the Application instance from my :core_module and provide it for my local database. And then I can do:</p>
-<p>Now, the same rule should apply for the other module which needs the database configuration.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@FragmentScoped</span> <span class="c1">//remember we are in one lower level than the @Singleton (it&#39;s multi-module mandatory)
+</span><span class="c1"></span><span class="n">@Component</span><span class="p">(</span>
+    <span class="n">modules</span> <span class="p">=</span> <span class="p">[</span><span class="n">F2ViewModelModule</span><span class="o">::</span><span class="k">class</span><span class="p">,</span> <span class="n">F2DatabaseModule</span><span class="o">::</span><span class="k">class</span><span class="p">],</span>
+    <span class="n">dependencies</span> <span class="p">=</span> <span class="p">[</span><span class="n">CoreComponent</span><span class="o">::</span><span class="k">class</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="k">interface</span> <span class="nc">F2Component</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">inject</span><span class="p">(</span><span class="n">f2Fragment</span><span class="p">:</span> <span class="n">F2Fragment</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">@Module</span>
+<span class="k">class</span> <span class="nc">F2DatabaseModule</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">application</span><span class="p">:</span> <span class="n">Application</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">@FragmentScoped</span>
+    <span class="n">@Provides</span>
+    <span class="k">fun</span> <span class="nf">provideF2Database</span><span class="p">():</span> <span class="n">F2Database</span> <span class="p">=</span>
+        <span class="n">Room</span><span class="p">.</span><span class="n">databaseBuilder</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">,</span>
+            <span class="n">F2Database</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">,</span>
+            <span class="s">&#34;f2_db&#34;</span>
+        <span class="p">).</span><span class="n">fallbackToDestructiveMigration</span><span class="p">()</span> <span class="c1">//don&#39;t laugh, solves my case
+</span><span class="c1"></span>        <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="n">@FragmentScoped</span>
+    <span class="n">@Provides</span>
+    <span class="k">fun</span> <span class="nf">provideF2EntityDao</span><span class="p">(</span><span class="n">f2db</span><span class="p">:</span> <span class="n">F2Database</span><span class="p">):</span> <span class="n">F2DbDao</span> <span class="p">=</span> <span class="n">f2db</span><span class="p">.</span><span class="n">f2EntityDao</span><span class="p">()</span>
+
+<span class="p">}</span>
+</code></pre></div><p>This way I&rsquo;m able to get the Application instance from my :core_module and provide it for my local database. And then I can do:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">F2Fragment</span><span class="p">:</span> <span class="n">BaseFragment</span><span class="p">(){</span>
+
+    <span class="n">@Inject</span>
+    <span class="k">lateinit</span> <span class="k">var</span> <span class="py">f2ViewModelFactory</span><span class="p">:</span> <span class="n">F2ViewModel</span><span class="p">.</span><span class="n">Factory</span>
+
+    <span class="p">....</span>
+
+   <span class="k">override</span> <span class="k">fun</span> <span class="nf">initializeComponents</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">provideDI</span><span class="p">()</span>
+        <span class="n">btnRetry</span><span class="p">.</span><span class="n">setOnClickListener</span> <span class="p">{</span>
+            <span class="n">f2ViewModel</span><span class="p">.</span><span class="n">retryConnection</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">provideDI</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">DaggerF2Component</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">coreComponent</span><span class="p">(</span><span class="n">applicationComponent</span><span class="p">)</span> <span class="c1">//retreived from base fragment
+</span><span class="c1"></span>            <span class="p">.</span><span class="n">f2DbModule</span><span class="p">(</span><span class="n">F2DbModule</span><span class="p">(</span><span class="n">applicationComponent</span><span class="p">.</span><span class="n">application</span><span class="p">))</span>
+            <span class="p">.</span><span class="n">build</span><span class="p">().</span><span class="n">inject</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Now, the same rule should apply for the other module which needs the database configuration.</p>
 <p><strong><em>Can we do more?</em></strong></p>
 <p>Sure! The API calls are still centralized. What I mean is that methods of every API call are still exposed to all the modules. Furthermore, I am not using the same base URL. So I guess we should apply what we did to our Retrofit Interface too. Instead of having one interface with a lot of methods, we can have a lot of interfaces with the respective methods for the API call. I won&rsquo;t stop in the implementation for this case, but I guess the below image would give the message:</p>
 <p><a href="https://1.bp.blogspot.com/-ev0m_pg21sA/XcwjqsTF5II/AAAAAAAAQWA/pUBvMtKpb2QfsR2XZpJ6SZMn890ZfvgwwCLcBGAsYHQ/s1600/Part3Uncrashed%2B%25284%2529.jpg" target="_blank" rel="noopener noreffer"><img
@@ -169,7 +216,32 @@ We still have to do only dependency configuration only. This is good news:</p>
         alt="https://1.bp.blogspot.com/-ev0m_pg21sA/XcwjqsTF5II/AAAAAAAAQWA/pUBvMtKpb2QfsR2XZpJ6SZMn890ZfvgwwCLcBGAsYHQ/s1600/Part3Uncrashed%2B%25284%2529.jpg"
         title="https://1.bp.blogspot.com/-ev0m_pg21sA/XcwjqsTF5II/AAAAAAAAQWA/pUBvMtKpb2QfsR2XZpJ6SZMn890ZfvgwwCLcBGAsYHQ/s1600/Part3Uncrashed%2B%25284%2529.jpg" /></a></p>
 <p>The same logic as the database configuration appeals to the retrofit modularization in code also:</p>
-<p><strong>Conclusion</strong><br>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@FragmentScoped</span>
+<span class="n">@Component</span><span class="p">(</span>
+    <span class="n">modules</span> <span class="p">=</span> <span class="p">[...</span> <span class="p">,</span> <span class="n">FxNetworkModule</span><span class="o">::</span><span class="k">class</span><span class="p">],</span>
+    <span class="n">dependencies</span> <span class="p">=</span> <span class="p">[</span><span class="n">CoreComponent</span><span class="o">::</span><span class="k">class</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="k">interface</span> <span class="nc">FXComponent</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">inject</span><span class="p">(</span><span class="n">fxFragment</span><span class="p">:</span> <span class="n">FXFragment</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">@Module</span>
+<span class="k">class</span> <span class="nc">FxNetworkModule</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">retrofit</span><span class="p">:</span> <span class="n">Retrofit</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//retrofit comes from the CoreComponent
+</span><span class="c1"></span>
+    <span class="n">@Provides</span>
+    <span class="n">@FragmentScoped</span>
+    <span class="k">fun</span> <span class="nf">provideFeatureXApi</span><span class="p">():</span> <span class="n">FeatureXApi</span> <span class="p">=</span> <span class="n">retrofit</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">FeatureXApi</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//And then we can add it as the previous way:
+</span><span class="c1"></span>
+<span class="c1">//inside FeatureXFragment:
+</span><span class="c1"></span>
+<span class="n">DaggerFeatureXComponent</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">coreComponent</span><span class="p">(</span><span class="n">applicationComponent</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">featureXNetworkModule</span><span class="p">(</span><span class="n">FeatureXNetworkModule</span><span class="p">(</span><span class="n">applicationComponent</span><span class="p">.</span><span class="n">retrofit</span><span class="p">))</span> <span class="c1">//provide retrofit
+</span><span class="c1"></span>            <span class="p">.</span><span class="n">featureXDatabaseModule</span><span class="p">(</span><span class="n">FeatureXDatabaseModule</span><span class="p">(</span><span class="n">applicationComponent</span><span class="p">.</span><span class="n">application</span><span class="p">))</span> <span class="c1">//provide application for db
+</span><span class="c1"></span>            <span class="p">.</span><span class="n">build</span><span class="p">().</span><span class="n">inject</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+</code></pre></div><p><strong>Conclusion</strong><br>
 There you go, now your modules are totally independent from each-other and our multi module app is 90% ready. The last part will be covering some short topics about my background-things (AlarmManager, WorkManager) and mostly resources, layouts and values.</p>
 <p>Stavro Xhardha</p>
 </div><div class="post-footer" id="post-footer">
@@ -210,5 +282,5 @@ There you go, now your modules are totally independent from each-other and our m
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
 </html>

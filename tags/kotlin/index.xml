@@ -81,8 +81,8 @@ Let&rsquo;s suppose we have this scenario: I have a list of data, which are show
     <author>Author</author>
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/from-gson-to-moshi-what-i-learned/</guid>
     <description><![CDATA[There is no doubt that people are getting away from GSON and I agree with those reasons too. The only advantage GSON has over other parsing libraries is that it takes a really short amount of time to set up. Furthermore, the most important thing is that Moshi is embracing Kotlin support.
-hljs.initHighlightingOnLoad();First let&rsquo;s implement the dependency:
-implementation(&quot;com.squareup.moshi:moshi:1.8.0&quot;) ```It's not a struggle to migrate to Moshi. It's really Gson look-a-like.]]></description>
+First let&rsquo;s implement the dependency:
+implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a struggle to migrate to Moshi. It&rsquo;s really Gson look-a-like.]]></description>
 </item><item>
     <title>Unit testing with coroutines</title>
     <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/unit-testing-with-coroutines/</link>

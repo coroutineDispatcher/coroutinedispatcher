@@ -35,16 +35,6 @@ There might have been some small misconceptions regarding the usage of it, but, 
 3- Support for DiffUtil, because it is based on RecyclerView.
 4 - Fragments improved support, which we will talk about below.]]></description>
 </item><item>
-    <title>Getting hands dirty with Flutter</title>
-    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/getting-hands-dirty-with-flutter/</link>
-    <pubDate>Mon, 23 Sep 2019 09:00:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/getting-hands-dirty-with-flutter/</guid>
-    <description><![CDATA[An Android Developer point of view.
-
-I have never been a fan of cross-platforms until Flutter came by. Actually, it was my first experience with cross-platforms. Never have I ever tried React Native, Ionic or whatever. But what was intriguing about Flutter? Well, since I am a Google fan and a Native Android Developer, i thought I should give it a try.
-Jumping into Flutter was pretty easy. They have simple documentation comparing to the Android Developers documentation, and I think it has a lot more details and better best-practices.]]></description>
-</item><item>
     <title>Some quick notes on Dark Mode</title>
     <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/some-quick-notes-on-dark-mode/</link>
     <pubDate>Mon, 09 Sep 2019 10:03:00 &#43;0200</pubDate>

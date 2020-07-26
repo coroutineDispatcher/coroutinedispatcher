@@ -10,7 +10,7 @@
     <pubDate>Mon, 07 Oct 2019 09:30:00 &#43;0200</pubDate>
     <author>Author</author>
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-rxjava-testing/</guid>
-    <description><![CDATA[&amp;nbps; When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing + Room pretty amusing, I thought I should share it with you.
+    <description><![CDATA[When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing + Room pretty amusing, I thought I should share it with you.
 Room has already a great support for RxJava or Coroutines. I have used both ways to access the data layer and I was really satisfied with both. So I decided to make a 2-series blog posts with testing in Room with RxJava and testing Room with coroutines.]]></description>
 </item></channel>
 </rss>
