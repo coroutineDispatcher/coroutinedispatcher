@@ -2,7 +2,7 @@
     <channel>
         <title>Coroutinedispatchers&#39; blog</title>
         <link>http://coroutinedispatcher.com/</link>
-        <description>About LoveIt Theme</description>
+        <description>A blog with kotlins&#39; suspend modifier</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
             <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 11 Jun 2020 21:04:00 &#43;0200</lastBuildDate>
             <atom:link href="http://coroutinedispatcher.com/index.xml" rel="self" type="application/rss+xml" />
