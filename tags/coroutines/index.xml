@@ -31,14 +31,5 @@ Well, I really struggled with this concept because it is a little bit tricky. Th
     <author>Author</author>
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-coroutines-testing/</guid>
     <description><![CDATA[My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited.]]></description>
-</item><item>
-    <title>Why the ViewModel is now a must</title>
-    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/why-viewmodel-is-now-must/</link>
-    <pubDate>Tue, 25 Jun 2019 12:53:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/why-viewmodel-is-now-must/</guid>
-    <description><![CDATA[Inspired by Lyla Fujiwars latest post, ViewModels with Saved State, Jetpack Navigation, Data Binding and Coroutines, I decided to list some of the reasons why the ViewModel is strongly suggested to be used on the Android app.
-1. Views are independent
-The ViewModel does fully respect the Single Responsibility Principle, leaving the Activity/Fragmentdo its thing. When the ViewModel is included, views are passive and just wait for changes without actually doing anything.]]></description>
 </item></channel>
 </rss>

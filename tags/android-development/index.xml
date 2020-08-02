@@ -56,23 +56,6 @@ The only thing you need to do to get your app ready for dark mode is the themes 
     <description><![CDATA[While the Android architecture made development simpler, we should always be aware of the Lifecycle and with that, the right way to provide ViewModels. Creating one ViewModel factory for each Fragment and ViewModel you have is really expensive, bad architecture, and too much unnecessary code. Not to mention the fact that you should care about scopes, dependencies, components modules when using Dagger for DI.
 You can have a simple &ldquo;generic&rdquo; ViewModel factory for all your app as a Singleton, with the help of Kotlin Reflection and Daggers Multibinding.]]></description>
 </item><item>
-    <title>Manage network states with the Paging library</title>
-    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/manage-network-states-with-paging/</link>
-    <pubDate>Wed, 31 Jul 2019 16:22:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/manage-network-states-with-paging/</guid>
-    <description><![CDATA[With Room implementation, the Paging Library is not such a big deal. However it needs some small configurations when it comes to using it for API-calls.
-One thing to keep in mind, is the initial state, which basically is a different task, which might fail with an Exception. And the same logic is followed by the continues state after the first data are loaded. When using coroutines, we might wanna have an extra problem: managing the CoroutineScope inside a DataSource.]]></description>
-</item><item>
-    <title>Why the ViewModel is now a must</title>
-    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/why-viewmodel-is-now-must/</link>
-    <pubDate>Tue, 25 Jun 2019 12:53:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/why-viewmodel-is-now-must/</guid>
-    <description><![CDATA[Inspired by Lyla Fujiwars latest post, ViewModels with Saved State, Jetpack Navigation, Data Binding and Coroutines, I decided to list some of the reasons why the ViewModel is strongly suggested to be used on the Android app.
-1. Views are independent
-The ViewModel does fully respect the Single Responsibility Principle, leaving the Activity/Fragmentdo its thing. When the ViewModel is included, views are passive and just wait for changes without actually doing anything.]]></description>
-</item><item>
     <title>What I learned from unit testing</title>
     <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/what-i-learned-from-unit-testing/</link>
     <pubDate>Thu, 20 Jun 2019 12:38:00 &#43;0200</pubDate>

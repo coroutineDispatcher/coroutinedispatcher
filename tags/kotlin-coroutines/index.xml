@@ -46,13 +46,5 @@ Let&rsquo;s think of a very simple use case:]]></description>
     <author>Author</author>
     <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/room-and-coroutines-testing/</guid>
     <description><![CDATA[My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited.]]></description>
-</item><item>
-    <title>Manage network states with the Paging library</title>
-    <link>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/manage-network-states-with-paging/</link>
-    <pubDate>Wed, 31 Jul 2019 16:22:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>https://coroutinedispatcher.github.io/coroutinedispatcher/posts/manage-network-states-with-paging/</guid>
-    <description><![CDATA[With Room implementation, the Paging Library is not such a big deal. However it needs some small configurations when it comes to using it for API-calls.
-One thing to keep in mind, is the initial state, which basically is a different task, which might fail with an Exception. And the same logic is followed by the continues state after the first data are loaded. When using coroutines, we might wanna have an extra problem: managing the CoroutineScope inside a DataSource.]]></description>
 </item></channel>
 </rss>

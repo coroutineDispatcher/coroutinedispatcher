@@ -21,7 +21,7 @@ Once the user logs into my app, I need to schedule 5 alarms for him."/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/a-fusion-between-workmanager-and/" /><link rel="prev" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/why-viewmodel-is-now-must/" /><link rel="next" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/getting-hands-dirty-with-kotlinjs/" /><link rel="stylesheet" href="/coroutinedispatcher/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/a-fusion-between-workmanager-and/" /><link rel="prev" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/what-i-learned-from-unit-testing/" /><link rel="next" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/getting-hands-dirty-with-kotlinjs/" /><link rel="stylesheet" href="/coroutinedispatcher/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -30,7 +30,7 @@ Once the user logs into my app, I need to schedule 5 alarms for him."/>
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/a-fusion-between-workmanager-and\/"
-        },"genre": "posts","wordcount":  578 ,
+        },"genre": "posts","wordcount":  799 ,
         "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/a-fusion-between-workmanager-and\/","datePublished": "2019-07-04T16:50:00+02:00","dateModified": "2019-07-04T16:50:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -47,18 +47,7 @@ Once the user logs into my app, I need to schedule 5 alarms for him."/>
             <a href="/coroutinedispatcher/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher/"> Home </a><a class="menu-item" href="/coroutinedispatcher/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher/"> Home </a><a class="menu-item" href="/coroutinedispatcher/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                 </a>
             </div>
@@ -74,23 +63,7 @@ Once the user logs into my app, I need to schedule 5 alarms for him."/>
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        Cancel
-                    </a>
-                </div><a class="menu-item" href="/coroutinedispatcher/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/coroutinedispatcher/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -107,8 +80,8 @@ Once the user logs into my app, I need to schedule 5 alarms for him."/>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">A fusion between WorkManager and AlarmManager</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-07-04">2019-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;578 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-07-04">2019-07-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;799 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -129,25 +102,108 @@ Once the user logs into my app, I need to schedule 5 alarms for him. But the ala
 Sync timing -&gt; Save to database -&gt; Schedule Alarms. (btw on the time alarm will fire, it&rsquo;s just a notification to be shown)<br>
 Now this has to happen every day at 00:01. The data coming from the server hold the alarm timings for a year, but certainly I can&rsquo;t schedule alarms from current moment till the end of the year. It would drain phones battery. So I need to start a WorkManagerto save data to my local Room database and after that I need to repeatedly  schedule alarms every day.</p>
 <p>**On with the show: **<br>
-First of all, if anyone is curious why I chose WorkManagerover JobScheduleror even BroadcastReceiver: </p>
+First of all, if anyone is curious why I chose WorkManagerover JobScheduleror even BroadcastReceiver:</p>
 <p>1- Don&rsquo;t have to register nothing to the Manifest file.<br>
 2- Don&rsquo;t have to worry about internet connection, phone reboot etc.<br>
 3- I faced lots of deprecated methods and constants without it.</p>
 <p>Let&rsquo;s start:</p>
-<p>So the WorkManager has a few things to set up. Since I will get data from API, I need my worker to be started <strong>if and only if</strong> there is internet connection which is specified by the setRequiredNetworkType(NetworkType.CONNECTED) method in the Constraint.Builder(). After that I need to specify how many times will my worker run. On my case there is no comment needed looking at the name OneTimeWorkRequestBuilderwhich has a worker of mine. After setting my defined constraints I can start my DataSyncWorker.</p>
-<p>Let&rsquo;s check the class now: </p>
-<p>Since I love coroutines and I am using them everywhere, I am using the WorkManagerby extending CoroutineWorker. So the method where all my sync happens is named doWork which btw is a suspending method handled by the Android framework itself. By the way is hell lot of data. </p>
-<p>And now, lets jump into my OfflineScheduler: </p>
-<p>Looks like I&rsquo;m done scheduling my notifications at current timing for today and also tomorrows timing alarm, which will schedule other alarms:</p>
-<p>Once the alarm has been set, Android &ldquo;waits&rdquo; until the time comes and brings my code here:</p>
-<p>And another one which was scheduled for the midnight, which basically will trigger my OfflineScheduler code again:</p>
-<p>And it will fire and fire until the end of time 💪</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//starting it in the HomeViewModel&#39;s instantiation, handled with a sharedpreferences flag so it can&#39;t be refired
+</span><span class="c1"></span><span class="k">val</span> <span class="py">constraints</span> <span class="p">=</span> <span class="n">Constraints</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+        <span class="p">.</span><span class="n">setRequiredNetworkType</span><span class="p">(</span><span class="n">NetworkType</span><span class="p">.</span><span class="n">CONNECTED</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+    <span class="k">val</span> <span class="py">compressionWork</span> <span class="p">=</span> <span class="n">OneTimeWorkRequestBuilder</span><span class="p">&lt;</span><span class="n">DataSyncWorker</span><span class="p">&gt;()</span>
+        <span class="p">.</span><span class="n">setConstraints</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="n">WorkManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">().</span><span class="n">enqueue</span><span class="p">(</span><span class="n">compressionWork</span><span class="p">)</span>
+</code></pre></div><p>So the WorkManager has a few things to set up. Since I will get data from API, I need my worker to be started <strong>if and only if</strong> there is internet connection which is specified by the setRequiredNetworkType(NetworkType.CONNECTED) method in the Constraint.Builder(). After that I need to specify how many times will my worker run. On my case there is no comment needed looking at the name OneTimeWorkRequestBuilderwhich has a worker of mine. After setting my defined constraints I can start my DataSyncWorker.</p>
+<p>Let&rsquo;s check the class now:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">DataSyncWorker</span><span class="p">(</span><span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">WorkerParameters</span><span class="p">)</span> <span class="p">:</span> <span class="n">CoroutineWorker</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">api</span><span class="p">:</span> <span class="n">MyApi</span>
+    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dao</span><span class="p">:</span> <span class="n">MyDao</span>
+    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">offlineScheduler</span><span class="p">:</span> <span class="n">OfflineScheduler</span>
+
+    <span class="k">override</span> <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">doWork</span><span class="p">():</span> <span class="n">Result</span> <span class="p">=</span> <span class="n">coroutineScope</span> <span class="p">{</span>
+        <span class="n">instantiateDependencies</span><span class="p">()</span> <span class="c1">//lateinits are instantiated here
+</span><span class="c1"></span>        <span class="n">launch</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">dataToReceive</span> <span class="p">=</span> <span class="n">api</span><span class="p">.</span><span class="n">getAllData</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dataToReceive</span><span class="p">.</span><span class="n">isSuccessful</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">//save data to database
+</span><span class="c1"></span>                <span class="c1">//init OfflineScheduler object
+</span><span class="c1"></span>                <span class="n">offlineScheduler</span><span class="p">.</span><span class="n">initScheduler</span><span class="p">()</span>
+                <span class="n">Result</span><span class="p">.</span><span class="n">success</span><span class="p">()</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">Result</span><span class="p">.</span><span class="n">retry</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">Result</span><span class="p">.</span><span class="n">success</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Since I love coroutines and I am using them everywhere, I am using the WorkManagerby extending CoroutineWorker. So the method where all my sync happens is named doWork which btw is a suspending method handled by the Android framework itself. By the way is hell lot of data.</p>
+<p>And now, lets jump into my OfflineScheduler:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">OfflineScheduler</span> <span class="n">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
+    <span class="k">val</span> <span class="py">sharedPrefs</span><span class="p">:</span> <span class="n">MSharedPref</span><span class="p">,</span>
+    <span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Application</span><span class="p">,</span>
+    <span class="k">val</span> <span class="py">dao</span><span class="p">:</span> <span class="n">MyDao</span>
+<span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">initScheduler</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">currentDaySelection</span> <span class="p">=</span> <span class="n">dao</span><span class="p">.</span><span class="n">seletAllSavedData</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">currentDaySelection</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">scheduleNotificationTimes</span><span class="p">(</span><span class="n">currentDaySelection</span><span class="p">)</span>
+            <span class="n">invokeTomorrowAlarm</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+           <span class="c1">// it&#39;s january 1st of next year or I have screwed up everything
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div><p>Looks like I&rsquo;m done scheduling my notifications at current timing for today and also tomorrows timing alarm, which will schedule other alarms:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// bunch of intent and pending intent set up
+</span><span class="c1"></span>
+<span class="k">val</span> <span class="py">alarmManager</span> <span class="p">=</span> <span class="n">mContext</span><span class="p">.</span><span class="n">getSystemService</span><span class="p">(</span><span class="n">Context</span><span class="p">.</span><span class="n">ALARM_SERVICE</span><span class="p">)</span> <span class="k">as</span> <span class="n">AlarmManager</span>
+
+<span class="n">alarmManager</span><span class="p">.</span><span class="n">setExact</span><span class="p">(</span><span class="n">AlarmManager</span><span class="p">.</span><span class="n">RTC</span><span class="p">,</span> <span class="n">myTimeInstance</span><span class="p">.</span><span class="n">millis</span><span class="p">,</span> <span class="n">pendingIntent</span><span class="p">)</span>
+</code></pre></div><p>Once the alarm has been set, Android &ldquo;waits&rdquo; until the time comes and brings my code here:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">NotificationReceiver</span> <span class="p">:</span> <span class="n">BroadcastReceiver</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="k">private</span> <span class="k">val</span> <span class="py">CHANNEL_ID</span> <span class="p">=</span> <span class="s">&#34;daily_notification&#34;</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onReceive</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">?,</span> <span class="n">intent</span><span class="p">:</span> <span class="n">Intent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="n">showNotifications</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">intent</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div><p>And another one which was scheduled for the midnight, which basically will trigger my OfflineScheduler code again:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MidnightScheduler</span> <span class="p">:</span> <span class="n">BroadcastReceiver</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onReceive</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">?,</span> <span class="n">intent</span><span class="p">:</span> <span class="n">Intent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="c1">//it&#39;s midnight
+</span><span class="c1"></span>        <span class="k">val</span> <span class="py">offlineScheduler</span> <span class="p">=</span> <span class="n">SingletonInstance</span><span class="p">.</span><span class="n">getOfflineScheduler</span><span class="p">()</span>
+        <span class="n">GlobalScope</span><span class="p">.</span><span class="n">launch</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">offlineScheduler</span><span class="p">.</span><span class="n">initScheduler</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>And it will fire and fire until the end of time 💪</p>
 <p>There are 2 more things:</p>
 <p>First of all, for the classes extending BroadCastReceiver to work, need to be registered to Manifest file.<br>
 And second of all how do I schedule my notifications whem the phone reboots? 👀</p>
 <p>So I made another Receiver which only needs to be registered on the Manifest and nothing more:</p>
-<p>Now this one needs a small modification achieved by a boolean flag. What happens if my worker has never started and I request to schedule local data (which never arrived)? A total disaster.</p>
-<p>@import url(&lsquo;<a href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');">https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');</a> @import url(&lsquo;<a href="https://fonts.googleapis.com/css?family=Open+Sans');">https://fonts.googleapis.com/css?family=Open+Sans');</a> body { margin: 20px; font: 16px &lsquo;Open Sans&rsquo;, sans-serif; } And pretty much that&rsquo;s it. That&rsquo;s the best combination I could do to solve my case, and if you have other suggestions about my case, feel free to comment.</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">AlarmRebootReceiver</span> <span class="p">:</span> <span class="n">BroadcastReceiver</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onReceive</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">?,</span> <span class="n">intent</span><span class="p">:</span> <span class="n">Intent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">intent</span><span class="o">?.</span><span class="n">action</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="s">&#34;android.intent.action.BOOT_COMPLETED&#34;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">//phone has rebooted
+</span><span class="c1"></span>        <span class="k">val</span> <span class="py">offlineScheduler</span> <span class="p">=</span> <span class="n">SingletonInstance</span><span class="p">.</span><span class="n">getOfflineScheduler</span><span class="p">()</span>
+        <span class="n">GlobalScope</span><span class="p">.</span><span class="n">launch</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">workerHasalreadyBeenFiredOnce</span><span class="p">())</span>
+                <span class="n">offlineScheduler</span><span class="p">.</span><span class="n">initScheduler</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Now this one needs a small modification achieved by a boolean flag. What happens if my worker has never started and I request to schedule local data (which never arrived)? A total disaster.</p>
+<p>And pretty much that&rsquo;s it. That&rsquo;s the best combination I could do to solve my case, and if you have other suggestions about my case, feel free to comment.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -171,7 +227,7 @@ And second of all how do I schedule my notifications whem the phone reboots? �
         </section>
     </div>
 
-    <div class="post-nav"><a href="/coroutinedispatcher/posts/why-viewmodel-is-now-must/" class="prev" rel="prev" title="Why the ViewModel is now a must"><i class="fas fa-angle-left fa-fw"></i>Why the ViewModel is now a must</a>
+    <div class="post-nav"><a href="/coroutinedispatcher/posts/what-i-learned-from-unit-testing/" class="prev" rel="prev" title="What I learned from unit testing"><i class="fas fa-angle-left fa-fw"></i>What I learned from unit testing</a>
             <a href="/coroutinedispatcher/posts/getting-hands-dirty-with-kotlinjs/" class="next" rel="next" title="Getting hands dirty with KotlinJs">Getting hands dirty with KotlinJs<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
@@ -186,5 +242,5 @@ And second of all how do I schedule my notifications whem the phone reboots? �
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
 </html>
