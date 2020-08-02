@@ -10,7 +10,7 @@
 So what the hell is testing?
 Testing is just a piece of code where you invoke your written production code and check its&rsquo; behavior." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/what-i-learned-from-unit-testing/" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/what-i-learned-from-unit-testing/" />
 <meta property="article:published_time" content="2019-06-20T12:38:00+02:00" />
 <meta property="article:modified_time" content="2019-06-20T12:38:00+02:00" />
 <meta name="twitter:card" content="summary"/>
@@ -21,7 +21,7 @@ Testing is just a piece of code where you invoke your written production code an
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/what-i-learned-from-unit-testing/" /><link rel="prev" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/how-to-setup-android-navigation/" /><link rel="next" href="https://coroutinedispatcher.github.io/coroutinedispatcher/posts/a-fusion-between-workmanager-and/" /><link rel="stylesheet" href="/coroutinedispatcher/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/coroutinedispatcher/css/style.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/coroutinedispatcher/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://coroutinedispatcher.com/posts/what-i-learned-from-unit-testing/" /><link rel="prev" href="http://coroutinedispatcher.com/posts/how-to-setup-android-navigation/" /><link rel="next" href="http://coroutinedispatcher.com/posts/a-fusion-between-workmanager-and/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -29,9 +29,9 @@ Testing is just a piece of code where you invoke your written production code an
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/what-i-learned-from-unit-testing\/"
+            "@id": "http:\/\/coroutinedispatcher.com\/posts\/what-i-learned-from-unit-testing\/"
         },"genre": "posts","keywords": "Kotlin, Unit testing, Android Development","wordcount":  1326 ,
-        "url": "https:\/\/coroutinedispatcher.github.io\/coroutinedispatcher\/posts\/what-i-learned-from-unit-testing\/","datePublished": "2019-06-20T12:38:00+02:00","dateModified": "2019-06-20T12:38:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/coroutinedispatcher.com\/posts\/what-i-learned-from-unit-testing\/","datePublished": "2019-06-20T12:38:00+02:00","dateModified": "2019-06-20T12:38:00+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
                 "@type": "Person",
@@ -44,10 +44,10 @@ Testing is just a piece of code where you invoke your written production code an
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/coroutinedispatcher/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/coroutinedispatcher/"> Home </a><a class="menu-item" href="/coroutinedispatcher/posts/"> Posts </a><a class="menu-item" href="/coroutinedispatcher/about/"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts"> Posts </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                 </a>
             </div>
@@ -57,13 +57,13 @@ Testing is just a piece of code where you invoke your written production code an
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/coroutinedispatcher/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+                <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/coroutinedispatcher/" title="">Home</a><a class="menu-item" href="/coroutinedispatcher/posts/" title="">Posts</a><a class="menu-item" href="/coroutinedispatcher/about/" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts" title="">Posts</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -90,7 +90,7 @@ Testing is just a piece of code where you invoke your written production code an
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
             </div><div class="content" id="content"><p><a href="https://1.bp.blogspot.com/-yWGViBViCa8/XQten77OiAI/AAAAAAAAOEU/MXio_kH-aD8hLwfhZSyHgjAxy3Q9IxIgQCLcBGAs/s1600/ildefonso-polo-700782-unsplash.jpg" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
-        src="/coroutinedispatcher/svg/loading.min.svg"
+        src="/svg/loading.min.svg"
         data-src="https://1.bp.blogspot.com/-yWGViBViCa8/XQten77OiAI/AAAAAAAAOEU/MXio_kH-aD8hLwfhZSyHgjAxy3Q9IxIgQCLcBGAs/s1600/ildefonso-polo-700782-unsplash.jpg"
         data-srcset="https://1.bp.blogspot.com/-yWGViBViCa8/XQten77OiAI/AAAAAAAAOEU/MXio_kH-aD8hLwfhZSyHgjAxy3Q9IxIgQCLcBGAs/s1600/ildefonso-polo-700782-unsplash.jpg, https://1.bp.blogspot.com/-yWGViBViCa8/XQten77OiAI/AAAAAAAAOEU/MXio_kH-aD8hLwfhZSyHgjAxy3Q9IxIgQCLcBGAs/s1600/ildefonso-polo-700782-unsplash.jpg 1.5x, https://1.bp.blogspot.com/-yWGViBViCa8/XQten77OiAI/AAAAAAAAOEU/MXio_kH-aD8hLwfhZSyHgjAxy3Q9IxIgQCLcBGAs/s1600/ildefonso-polo-700782-unsplash.jpg 2x"
         data-sizes="auto"
@@ -189,7 +189,7 @@ Assert: Check if the selected behavior matches your expectations.</p>
 </code></pre></div><p>Run your test with the help of IDE. You will get notified if the test is correct it the IDE shows a green light:</p>
 <p><a href="https://1.bp.blogspot.com/-FEhMqPPR30g/XQ-rJFeeKnI/AAAAAAAAOHg/4fGCO_ZicSwrBkH_3yVGH7lq-B84WAFrQCLcBGAs/s1600/Screenshot%2B2019-06-23%2Bat%2B18.38.42.png" target="_blank" rel="noopener noreffer"><img
         class="lazyload"
-        src="/coroutinedispatcher/svg/loading.min.svg"
+        src="/svg/loading.min.svg"
         data-src="https://1.bp.blogspot.com/-FEhMqPPR30g/XQ-rJFeeKnI/AAAAAAAAOHg/4fGCO_ZicSwrBkH_3yVGH7lq-B84WAFrQCLcBGAs/s1600/Screenshot%2B2019-06-23%2Bat%2B18.38.42.png"
         data-srcset="https://1.bp.blogspot.com/-FEhMqPPR30g/XQ-rJFeeKnI/AAAAAAAAOHg/4fGCO_ZicSwrBkH_3yVGH7lq-B84WAFrQCLcBGAs/s1600/Screenshot%2B2019-06-23%2Bat%2B18.38.42.png, https://1.bp.blogspot.com/-FEhMqPPR30g/XQ-rJFeeKnI/AAAAAAAAOHg/4fGCO_ZicSwrBkH_3yVGH7lq-B84WAFrQCLcBGAs/s1600/Screenshot%2B2019-06-23%2Bat%2B18.38.42.png 1.5x, https://1.bp.blogspot.com/-FEhMqPPR30g/XQ-rJFeeKnI/AAAAAAAAOHg/4fGCO_ZicSwrBkH_3yVGH7lq-B84WAFrQCLcBGAs/s1600/Screenshot%2B2019-06-23%2Bat%2B18.38.42.png 2x"
         data-sizes="auto"
@@ -245,14 +245,14 @@ Unit testing speeds up time of development. Also unit testing helps you catch mo
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/coroutinedispatcher/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/coroutinedispatcher/tags/unit-testing/">Unit testing</a>,&nbsp;<a href="/coroutinedispatcher/tags/android-development/">Android Development</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/unit-testing/">Unit testing</a>,&nbsp;<a href="/tags/android-development/">Android Development</a></section>
         <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/coroutinedispatcher/">Home</a></span>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/coroutinedispatcher/posts/how-to-setup-android-navigation/" class="prev" rel="prev" title="How to setup Android Navigation Component with Drawer"><i class="fas fa-angle-left fa-fw"></i>How to setup Android Navigation Component with Drawer</a>
-            <a href="/coroutinedispatcher/posts/a-fusion-between-workmanager-and/" class="next" rel="next" title="A fusion between WorkManager and AlarmManager">A fusion between WorkManager and AlarmManager<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/how-to-setup-android-navigation/" class="prev" rel="prev" title="How to setup Android Navigation Component with Drawer"><i class="fas fa-angle-left fa-fw"></i>How to setup Android Navigation Component with Drawer</a>
+            <a href="/posts/a-fusion-between-workmanager-and/" class="next" rel="next" title="A fusion between WorkManager and AlarmManager">A fusion between WorkManager and AlarmManager<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
@@ -266,5 +266,5 @@ Unit testing speeds up time of development. Also unit testing helps you catch mo
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/coroutinedispatcher/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/coroutinedispatcher/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/coroutinedispatcher/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
