@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>The Great Wall of China was originally created to keep WebView out. It failed miserably. - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="The Great Wall of China was originally created to keep WebView out. It failed miserably." />
+<meta property="og:description" content="onCreate Let&rsquo;s face it, getting a NaN in Android is more frustrating than a (Kotlin)NullPointerException. Well, as a Native Android developer, I actually never touched the web professionally, except playing around with Vue js when people seemed pretty hyped for it. I tried to be a web developer only once in my life, but even then, I cheated, I used KotlinJS.
+Anyways, many mobile developers have been in situations when they had to write a WebViewFragment and load an URL." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/webview-android/" />
+<meta property="article:published_time" content="2020-08-07T21:06:25+02:00" />
+<meta property="article:modified_time" content="2020-08-07T21:06:25+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="The Great Wall of China was originally created to keep WebView out. It failed miserably."/>
+<meta name="twitter:description" content="onCreate Let&rsquo;s face it, getting a NaN in Android is more frustrating than a (Kotlin)NullPointerException. Well, as a Native Android developer, I actually never touched the web professionally, except playing around with Vue js when people seemed pretty hyped for it. I tried to be a web developer only once in my life, but even then, I cheated, I used KotlinJS.
+Anyways, many mobile developers have been in situations when they had to write a WebViewFragment and load an URL."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://coroutinedispatcher.com/posts/webview-android/" /><link rel="prev" href="http://coroutinedispatcher.com/posts/first-look-on-hilt/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "The Great Wall of China was originally created to keep WebView out. It failed miserably.",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/coroutinedispatcher.com\/posts\/webview-android\/"
+        },"genre": "posts","wordcount":  871 ,
+        "url": "http:\/\/coroutinedispatcher.com\/posts\/webview-android\/","datePublished": "2020-08-07T21:06:25+02:00","dateModified": "2020-08-07T21:06:25+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts"> Posts </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts" title="">Posts</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">The Great Wall of China was originally created to keep WebView out. It failed miserably.</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-08-07">2020-08-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;871 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#oncreate">onCreate</a></li>
+    <li><a href="#adding-your-own-cookies-in-a-webview">Adding your own cookies in a WebView</a>
+      <ul>
+        <li><a href="#so-lets-apply-cookies">So, let&rsquo;s apply cookies:</a></li>
+        <li><a href="#loading-your-html-file-from-device-internal-storage-or-assets">Loading your HTML file from device internal storage or assets</a></li>
+        <li><a href="#executing-javascript-methods">Executing JavaScript methods</a></li>
+        <li><a href="#extracting-current-page-content">Extracting current page content</a></li>
+      </ul>
+    </li>
+    <li><a href="#ondestroy">OnDestroy</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/webview_post.jpg"
+        data-srcset="/images/webview_post.jpg, /images/webview_post.jpg 1.5x, /images/webview_post.jpg 2x"
+        data-sizes="auto"
+        alt="/images/webview_post.jpg"
+        title="Photo by halacious @ Unsplash" /></p>
+<h2 id="oncreate">onCreate</h2>
+<p>Let&rsquo;s face it, getting a <code>NaN</code> in Android is more frustrating than a <code>(Kotlin)NullPointerException</code>. Well, as a Native Android developer, I actually never touched the web professionally, except playing around with Vue js when people seemed pretty hyped for it. I tried to be a web developer only once in my life, but even then, I cheated, I used KotlinJS.</p>
+<p>Anyways, many mobile developers have been in situations when they had to write a <code>WebViewFragment</code> and load an URL. End of story. But some of them, might have had more difficult cases, and believe me, it&rsquo;s somehow painful. I also had some pain with <code>WebView</code>s lately, so I thought I should share my experience, so we can save time for a lucky developer next time. Let&rsquo;s go through some cases, which they consumed more time in search for solution, rather than in actual development.</p>
+<h2 id="adding-your-own-cookies-in-a-webview">Adding your own cookies in a WebView</h2>
+<p>There are cases that you need to interact with the server using cookies. And a webpage as well, cannot be loaded without these cookies. So, how do you solve this issue? Well, let&rsquo;s suppose you cached the cookies in<code>SharedPreferences</code>(the source of data doesn&rsquo;t really matter):</p>
+<p> </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">cookiesString</span> <span class="p">=</span> <span class="n">sharedPrefs</span><span class="p">.</span><span class="n">getCookies</span><span class="p">()</span>
+</code></pre></div><p> </p>
+<p>In order to modify the default <code>WebView</code> cookies, you need a <code>CookieManager</code>. I guess the name is pretty descriptive for what this class is for. However, the Android documentation gives this explanation about it:  </p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>CookieManager<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Manages the cookies used by an application&rsquo;s WebView instances.</div>
+        </div>
+    </div>
+<p><div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">For simplicity, let&rsquo;s assume that we have only one pair of cookies</div>
+        </div>
+    </div>
+ </p>
+<h3 id="so-lets-apply-cookies">So, let&rsquo;s apply cookies:</h3>
+<p> </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">url</span> <span class="p">=</span> <span class="n">MyAwesomeUrl</span>
+<span class="k">val</span> <span class="py">cookieManager</span> <span class="p">=</span> <span class="n">CookieManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">().</span><span class="n">apply</span><span class="p">{</span>
+    <span class="n">setAcceptThirdPartyCookies</span><span class="p">(</span><span class="n">webView</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+    <span class="n">setCookie</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cookie</span><span class="p">)</span> <span class="p">{</span> <span class="n">cookieSet</span> <span class="p">-&gt;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">cookieSet</span><span class="p">)</span>  <span class="n">webView</span><span class="o">?.</span><span class="n">loadUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p> </p>
+<p>The most important part that is missed in almost all Stack Overflow answers is this particular callback. Since we have to interact with the internal phone memory to set our preferred cookies, we have to wait for some answer. And this is one of the cases. After that, you can easily load the URL.
+ </p>
+<h3 id="loading-your-html-file-from-device-internal-storage-or-assets">Loading your HTML file from device internal storage or assets</h3>
+<p>This is another &ldquo;special&rdquo; case that I faced (even though not so confusing). Well, I had a couple of HTML files which I had to download from the server. In case they fail to download, had to load a default one, which is supposed to be based in the <code>assets</code> folder. So, let&rsquo;s quickly show the code for both of them:</p>
+<p> </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// loading from internal app storage
+</span><span class="c1"></span><span class="k">val</span> <span class="py">directory</span> <span class="p">=</span> <span class="s">&#34;${MyApp.component().filesDir.absoluteFile}/someDir&#34;</span>
+<span class="k">val</span> <span class="py">htmlFile</span> <span class="p">=</span> <span class="n">File</span><span class="p">(</span> <span class="s">&#34;$directory/my_downloaded_html_file.html&#34;</span><span class="p">).</span><span class="n">readText</span><span class="p">()</span>
+
+<span class="n">mWebView</span><span class="p">.</span><span class="n">apply</span><span class="p">{</span>
+    <span class="n">settings</span><span class="p">.</span><span class="n">javascriptEnabled</span> <span class="p">=</span> <span class="k">true</span>
+    <span class="n">loadDataWithBaseUrl</span><span class="p">(</span><span class="s">&#34;file://$directory&#34;</span><span class="p">,</span> <span class="n">htmlFile</span><span class="p">,</span><span class="s">&#34;text/html&#34;</span><span class="p">,</span><span class="s">&#34;base64&#34;</span><span class="p">,</span><span class="k">null</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p> </p>
+<p>For <code>assets</code> folder, it&rsquo;s exactly the same logic, but instead of the internal app storage, the <code>requireActivity().assets.open(&quot;htmle_file_name.html&quot;)</code> is required.</p>
+<p>Uh, but there is more&hellip;..</p>
+<h3 id="executing-javascript-methods">Executing JavaScript methods</h3>
+<p>In case you need to execute a Javascript method, which lies somewhere magically inside the <code>&lt;script&gt;</code> tag of the rendered HTML file, that&rsquo;s where work begins. Well, in my case, once the WebView was rendered, I had to immediately call a JS function inside. So, what is the case for that?</p>
+<p>First, we need to be sure that the <code>WebView</code> has finished loading everything we said it to. Therefore, a callback is needed:</p>
+<p> </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="n">mWebView</span><span class="p">.</span><span class="n">webViewClient</span> <span class="p">=</span> <span class="k">object</span> <span class="err">: </span><span class="nc">WebViewClient</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onPageFinished</span><span class="p">(</span><span class="n">view</span><span class="p">:</span> <span class="n">WebView</span><span class="p">?,</span> <span class="n">url</span><span class="p">:</span> <span class="n">String</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="n">view</span><span class="o">?.</span><span class="n">evaluateJavascript</span><span class="p">(</span><span class="s">&#34;javascript:doSomething()&#34;</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p> </p>
+<p>The lucky part, is that I wasn&rsquo;t expecting for a return value here. But that doesn&rsquo;t mean I didn&rsquo;t have to write a JavaScript interface. I did, but for another case.</p>
+<h3 id="extracting-current-page-content">Extracting current page content</h3>
+<p>Let&rsquo;s consider this problem: Extract the <code>WebView</code> content, if it&rsquo;s a JSON, serialize and save it, then proceed to the next fragment. Otherwise, take the user one step back. For our scope, the only important part, would be: Extract the content from the <code>WebView</code>. Let&rsquo;s suppose we loaded some url and the content is rendered.</p>
+<p> </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">webView</span><span class="p">.</span><span class="n">apply</span><span class="p">{</span>
+    <span class="n">addJavascriptInterface</span><span class="p">(</span><span class="n">WebContentJavascriptInterface</span><span class="p">(</span><span class="n">requireActivity</span><span class="p">()),</span> <span class="s">&#34;ContentReader&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p> </p>
+<p>In this case, the <code>&quot;ContentReader&quot;</code>, is just a name to expose the object in JavaScript. So then, I can do:
+ </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// inside the webView context
+</span><span class="c1"></span><span class="n">addJavascriptInterface</span><span class="p">(</span><span class="n">WebContentJavascriptInterface</span><span class="p">(</span><span class="n">requireActivity</span><span class="p">()),</span> <span class="s">&#34;ContentReader&#34;</span><span class="p">)</span>
+<span class="n">webViewClient</span> <span class="p">=</span> <span class="k">object</span> <span class="err">: </span><span class="nc">WebViewClient</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">override</span> <span class="k">fun</span> <span class="nf">onPageFinished</span><span class="p">(</span><span class="n">view</span><span class="p">:</span> <span class="n">WebView</span><span class="p">?,</span> <span class="n">url</span><span class="p">:</span> <span class="n">String</span><span class="p">?)</span> <span class="p">{</span>
+                    <span class="n">loadUrl</span><span class="p">(</span>
+                        <span class="s">&#34;javascript:ContentReader.showWebViewContent&#34;</span> <span class="p">+</span>
+                                <span class="s">&#34;(&#39;&lt;html&gt;&#39;+document.getElementsByTagName(&#39;html&#39;)[0].innerHTML+&#39;&#34;</span> <span class="p">+</span>
+                                <span class="s">&#34;&lt;/html&gt;&#39;);&#34;</span>
+                    <span class="p">)</span>
+                    <span class="k">super</span><span class="p">.</span><span class="n">onPageFinished</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+</code></pre></div><p> </p>
+<p>So the method is executed, but we still have no clue where our <code>showWebViewContent</code> is. Our JavascriptInterface is still missing:
+ </p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">inner</span> <span class="k">class</span> <span class="nc">WebContentJavascriptInterface</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// you need a context for this case
+</span><span class="c1"></span>        <span class="n">@JavascriptInterface</span>
+        <span class="k">fun</span> <span class="nf">showWebViewContent</span><span class="p">(</span><span class="n">webViewContent</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">extractedTextFromHtml</span> <span class="p">=</span> <span class="n">HtmlCompat</span><span class="p">.</span><span class="n">fromHtml</span><span class="p">(</span>
+                <span class="n">webViewContent</span><span class="p">,</span>
+                <span class="n">HtmlCompat</span><span class="p">.</span><span class="n">FROM_HTML_MODE_LEGACY</span>
+            <span class="p">)</span>
+            <span class="n">viewModel</span><span class="p">.</span><span class="n">tryParsing</span><span class="p">(</span><span class="n">extractedTextFromHtml</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div><p> </p>
+<p>Notice that our <code>showWebViewContent</code> is the same in Kotlin and in our string that is supposed to execute in JavaScript. However, the magic happens with the <code>@JavascriptInterface</code> annotation. And that is the most important part to note here. It is precisely this annotation, that allows you to expose whatever you like from your Kotlin code to JavaScript.</p>
+<h2 id="ondestroy">OnDestroy</h2>
+<p>Working with <code>WebView</code>s is not that common in Android development. But when it happens, it gets very abstract for the developer. It somehow feels like switching platforms. The problems faced are not actually pretty hard to solve, but they are so uncommon and there is not too much structured information about them. Therefore, I hope this article helps everybody in the future, who has to deal with similar cases with <code>WebView</code>s.</p>
+<p>Stavro Xhardha</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-08-07</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/first-look-on-hilt/" class="prev" rel="prev" title="First look on Hilt"><i class="fas fa-angle-left fa-fw"></i>First look on Hilt</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

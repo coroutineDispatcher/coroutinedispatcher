@@ -2,11 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>http://coroutinedispatcher.com/</loc><lastmod>2020-08-07T21:06:25&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/posts/</loc><lastmod>2020-08-07T21:06:25&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/posts/webview-android/</loc><lastmod>2020-08-07T21:06:25&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/about/</loc><lastmod>2020-07-11T21:27:35&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/android/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/posts/first-look-on-hilt/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/posts/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/android-development/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/android-realm/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
