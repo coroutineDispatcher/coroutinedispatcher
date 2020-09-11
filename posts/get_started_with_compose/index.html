@@ -230,7 +230,7 @@ Getting started with it is not that hard. There are a lot of options, but I will
                             <span class="n">networkClient</span> <span class="p">=</span> <span class="n">networkClient</span>
                         <span class="p">)</span>
                     <span class="p">}</span>
-                    <span class="k">is</span> <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">ImageDetails</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                    <span class="k">is</span> <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">BreedDetails</span> <span class="p">-&gt;</span> <span class="p">{</span>
                         <span class="n">WebPageScreen</span><span class="p">(</span><span class="n">screenStateValue</span><span class="p">.</span><span class="n">urlToRender</span><span class="p">)</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
@@ -256,7 +256,7 @@ Getting started with it is not that hard. There are a lot of options, but I will
 
     <span class="k">sealed</span> <span class="k">class</span> <span class="nc">NavigationState</span> <span class="p">{</span>
         <span class="k">object</span> <span class="nc">Home</span> <span class="p">:</span> <span class="n">NavigationState</span><span class="p">()</span>
-        <span class="k">data</span> <span class="k">class</span> <span class="nc">ImageDetails</span><span class="p">(</span><span class="k">val</span> <span class="py">urlToRender</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">NavigationState</span><span class="p">()</span>
+        <span class="k">data</span> <span class="k">class</span> <span class="nc">BreedDetails</span><span class="p">(</span><span class="k">val</span> <span class="py">urlToRender</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">NavigationState</span><span class="p">()</span>
     <span class="p">}</span>
 
     <span class="k">fun</span> <span class="nf">navigateTo</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NavigationState</span><span class="p">)</span> <span class="p">{</span>
