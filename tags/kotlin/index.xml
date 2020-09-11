@@ -4,7 +4,15 @@
         <link>http://coroutinedispatcher.com/tags/kotlin/</link>
         <description>Kotlin - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 30 May 2020 19:52:00 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/kotlin/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/kotlin/" rel="self" type="application/rss+xml" /><item>
+    <title>First experience with Jetpack Compose</title>
+    <link>http://coroutinedispatcher.com/posts/get_started_with_compose/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/get_started_with_compose/</guid>
+    <description><![CDATA[onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
+ Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example.]]></description>
+</item><item>
     <title>Realm 7, the frozen throne</title>
     <link>http://coroutinedispatcher.com/posts/realm-7-frozen-throne/</link>
     <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
@@ -83,12 +91,5 @@ Let&rsquo;s suppose we have this scenario: I have a list of data, which are show
     <description><![CDATA[There is no doubt that people are getting away from GSON and I agree with those reasons too. The only advantage GSON has over other parsing libraries is that it takes a really short amount of time to set up. Furthermore, the most important thing is that Moshi is embracing Kotlin support.
 First let&rsquo;s implement the dependency:
 implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a struggle to migrate to Moshi. It&rsquo;s really Gson look-a-like.]]></description>
-</item><item>
-    <title>Unit testing with coroutines</title>
-    <link>http://coroutinedispatcher.com/posts/unit-testing-with-coroutines/</link>
-    <pubDate>Mon, 21 Oct 2019 15:19:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/unit-testing-with-coroutines/</guid>
-    <description><![CDATA[The coroutines API has already brought some innovation in the Android and Kotlin world. I always loved the idea of keeping it as simple as we all can. There is a saying around here that &ldquo;Whoever talks to much, makes too much mistakes&rdquo; and I see this a little bit related to Java&rsquo;s verbosity and also in the world of concurrency. It&rsquo;s said over and over again that concurrency is not simple and I couldn&rsquo;t agree more: You have to care about context, jobs running in parallel, cancelation, returning values etc.]]></description>
 </item></channel>
 </rss>

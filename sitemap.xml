@@ -2,18 +2,26 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://coroutinedispatcher.com/</loc><lastmod>2020-08-07T21:06:25&#43;02:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/posts/</loc><lastmod>2020-08-07T21:06:25&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/android/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/android-ui/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/androidx/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/composable/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/compose-navigation/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/posts/get_started_with_compose/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/jetpack-compose/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/kotlin/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/lambdas/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/posts/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/tags/viewmodels/</loc><lastmod>2020-09-11T18:23:50&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/posts/webview-android/</loc><lastmod>2020-08-07T21:06:25&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/about/</loc><lastmod>2020-07-11T21:27:35&#43;02:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/tags/android/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/posts/first-look-on-hilt/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/tags/</loc><lastmod>2020-06-11T21:04:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/android-development/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/android-realm/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/coroutines/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/database/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/tags/kotlin/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/kotlin-coroutines/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/kotlin-dsl/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/kotlin-flows/</loc><lastmod>2020-05-30T19:52:00&#43;02:00</lastmod></url><url>

@@ -4,7 +4,15 @@
         <link>http://coroutinedispatcher.com/tags/android/</link>
         <description>Android - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 11 Jun 2020 21:04:00 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/android/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/android/" rel="self" type="application/rss+xml" /><item>
+    <title>First experience with Jetpack Compose</title>
+    <link>http://coroutinedispatcher.com/posts/get_started_with_compose/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/get_started_with_compose/</guid>
+    <description><![CDATA[onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
+ Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example.]]></description>
+</item><item>
     <title>First look on Hilt</title>
     <link>http://coroutinedispatcher.com/posts/first-look-on-hilt/</link>
     <pubDate>Thu, 11 Jun 2020 21:04:00 &#43;0200</pubDate>
@@ -84,12 +92,5 @@ Well, I really struggled with this concept because it is a little bit tricky. Th
 2- Right to left support: you can set the android:layoutDirection=&quot;rtl&rdquo; to enable this.
 3- Support for DiffUtil, because it is based on RecyclerView.
 4 - Fragments improved support, which we will talk about below.]]></description>
-</item><item>
-    <title>Setting up Gradle with Kotlin DSL, a simple guide</title>
-    <link>http://coroutinedispatcher.com/posts/setting-up-gradle-with-kotlin-dsl/</link>
-    <pubDate>Mon, 16 Dec 2019 09:53:00 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/setting-up-gradle-with-kotlin-dsl/</guid>
-    <description><![CDATA[Kotlin is a very a pretty nice adoptive language and user friendly. It really replaced Java from my everyday programming. However, it was not enough. We all know that groovy runs on JVM. So, why do I even need a new language just for my builds? Can&rsquo;t it be Java? So Java is the basic language for the JVM, Kotlin runs on JVM, Groovy runs on JVM and my build system has a separated language from my business logic system.]]></description>
 </item></channel>
 </rss>

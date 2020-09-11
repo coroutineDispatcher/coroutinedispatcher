@@ -4,7 +4,15 @@
         <link>http://coroutinedispatcher.com/posts/</link>
         <description>All Posts | Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 07 Aug 2020 21:06:25 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>First experience with Jetpack Compose</title>
+    <link>http://coroutinedispatcher.com/posts/get_started_with_compose/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/get_started_with_compose/</guid>
+    <description><![CDATA[onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
+ Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example.]]></description>
+</item><item>
     <title>The Great Wall of China was originally created to keep WebView out. It failed miserably.</title>
     <link>http://coroutinedispatcher.com/posts/webview-android/</link>
     <pubDate>Fri, 07 Aug 2020 21:06:25 &#43;0200</pubDate>
@@ -82,13 +90,5 @@ I personally used Dokka for a small API i wrote for SharedPreferences. Anyways, 
 Prerequisites: If you don&rsquo;t know RxJava it&rsquo;s fine. But a RxJava recognizer would read this faster.
 Cold vs Hot streams
 Well, I really struggled with this concept because it is a little bit tricky. The main difference between cold and hot happened to be pretty simple: Hot streams produce when you don&rsquo;t care while in cold streams, if you don&rsquo;t collect() (or RxJava-s equivalent subscribe()) the stream won&rsquo;t be activated at all.]]></description>
-</item><item>
-    <title>Searchable Fragments with the Paging Library</title>
-    <link>http://coroutinedispatcher.com/posts/searchable-fragments-with-paging-library/</link>
-    <pubDate>Mon, 13 Jan 2020 09:00:00 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/searchable-fragments-with-paging-library/</guid>
-    <description><![CDATA[This post is inspired by @EpicPandaForce answer in StackOverflow. I faced the same problem which I didn&rsquo;t know how to solve: How to perform search when you are using a Paging Library (or how the hell to refresh after I reperform Rooms query)?
-Let&rsquo;s suppose we have this scenario: I have a list of data, which are shown in the Fragment by LiveData observation, which are retrieved by the ViewModel through LiveDataPagedListBuilder().]]></description>
 </item></channel>
 </rss>

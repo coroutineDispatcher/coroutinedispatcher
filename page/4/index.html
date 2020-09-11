@@ -10,7 +10,7 @@
 <meta property="og:description" content="A blog with kotlins&#39; suspend modifier" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://coroutinedispatcher.com/" />
-<meta property="og:updated_time" content="2020-08-07T21:06:25+02:00" />
+<meta property="og:updated_time" content="2020-09-11T18:23:50+02:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Coroutinedispatchers&#39; blog"/>
 <meta name="twitter:description" content="A blog with kotlins&#39; suspend modifier"/>
@@ -73,6 +73,12 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/modularizing-your-android-app-breaking_11/">Modularizing your Android app, breaking the monolith (Part 2)</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-11-11">2019-11-11</time></span></div><div class="content">This is part 2 of a series of articles about modularizing Android app. If you haven&rsquo;t yet read the first article, you may find it here.
+On our first article we just moved some classes outside the application and applied as an independent module. But what if we have dependencies pulled from the application level? This could be a small challenge. First of all, we want to clarify on how are we going to modularize the app.</div><div class="post-footer">
+        <a href="/posts/modularizing-your-android-app-breaking_11/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-module/">Android Module</a>,&nbsp;<a href="/tags/micro-frontend/">Micro Frontend</a>,&nbsp;<a href="/tags/dagger-2/">Dagger 2</a>,&nbsp;<a href="/tags/android-architecture-components./">Android Architecture Components.</a>,&nbsp;<a href="/tags/android-multi-module/">Android Multi Module</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/modularizing-your-android-app-breaking/">Modularizing your Android app, breaking the monolith (Part 1)</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-11-04">2019-11-04</time></span></div><div class="content">Inspired by a Martin Fowlers post about Micro Frontends, I decided to break my monolithic app into a modular app. I tried to read a little more about breaking monolithic apps in Android, and as far as I got, I felt confident to share my experience with you. This will be some series of blog posts where we actually try to break a simple app into a modularized Android app.</div><div class="post-footer">
         <a href="/posts/modularizing-your-android-app-breaking/">Read More</a><div class="post-tags">
@@ -100,13 +106,6 @@ implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a strugg
 Room has already a great support for RxJava or Coroutines. I have used both ways to access the data layer and I was really satisfied with both. So I decided to make a 2-series blog posts with testing in Room with RxJava and testing Room with coroutines.</div><div class="post-footer">
         <a href="/posts/room-and-rxjava-testing/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-room/">Android Room</a>,&nbsp;<a href="/tags/rxjava/">RxJava</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href=""></a>,&nbsp;<a href="/tags/room-persistence/">Room Persistence</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/an-early-look-at-dagger-reflect/">An early look at Dagger Reflect</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-09-30">2019-09-30</time></span></div><div class="content">When it comes to solving the Dependency Inversion principle, there is no better way then using annotations in the JVM world. However, generating code in compile time has some costs. For example the build time. And I believe this is the only thing dagger can&rsquo;t do well alone.
-This is not a bye bye dagger post. This is mostly, obtaining the most out of Dagger.
-To solve this problem, Dagger-Reflect was written.</div><div class="post-footer">
-        <a href="/posts/an-early-look-at-dagger-reflect/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/dagger-reflect/">Dagger-Reflect</a>,&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/annotation-processor/">Annotation processor</a>,&nbsp;<a href="/tags/dagger-2/">Dagger 2</a>,&nbsp;<a href="/tags/dagger-android/">Dagger-Android</a>,&nbsp;<a href="/tags/gradle/">Gradle</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/reflection/">Reflection</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>

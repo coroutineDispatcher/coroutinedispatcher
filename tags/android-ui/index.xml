@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android UI - Tag - Coroutinedispatchers&#39; blog</title>
+        <link>http://coroutinedispatcher.com/tags/android-ui/</link>
+        <description>Android UI - Tag - Coroutinedispatchers&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/android-ui/" rel="self" type="application/rss+xml" /><item>
+    <title>First experience with Jetpack Compose</title>
+    <link>http://coroutinedispatcher.com/posts/get_started_with_compose/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/get_started_with_compose/</guid>
+    <description><![CDATA[onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
+ Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example.]]></description>
+</item></channel>
+</rss>

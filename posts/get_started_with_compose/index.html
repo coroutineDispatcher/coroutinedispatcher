@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>First experience with Jetpack Compose - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="First experience with Jetpack Compose" />
+<meta property="og:description" content="onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
+ Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/get_started_with_compose/" />
+<meta property="article:published_time" content="2020-09-11T18:23:50+02:00" />
+<meta property="article:modified_time" content="2020-09-11T18:23:50+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="First experience with Jetpack Compose"/>
+<meta name="twitter:description" content="onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
+ Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://coroutinedispatcher.com/posts/get_started_with_compose/" /><link rel="prev" href="http://coroutinedispatcher.com/posts/webview-android/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "First experience with Jetpack Compose",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/coroutinedispatcher.com\/posts\/get_started_with_compose\/"
+        },"genre": "posts","keywords": "Jetpack Compose, Compose Navigation, Android, AndroidX, ViewModels, Kotlin, Composable, Android UI, Kotlin, Lambdas","wordcount":  1386 ,
+        "url": "http:\/\/coroutinedispatcher.com\/posts\/get_started_with_compose\/","datePublished": "2020-09-11T18:23:50+02:00","dateModified": "2020-09-11T18:23:50+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts"> Posts </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts" title="">Posts</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">First experience with Jetpack Compose</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-09-11">2020-09-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1386 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#first-what-is-jetpack-compose-and-how-is-it-used">First, what is Jetpack Compose and how is it used?</a>
+      <ul>
+        <li><a href="#quick-start">Quick Start</a></li>
+        <li><a href="#the-entry-point-to-a-compose-app">The entry point to a Compose app</a></li>
+        <li><a href="#composable-annotation">@Composable annotation</a></li>
+        <li><a href="#viewmodels">ViewModels</a></li>
+        <li><a href="#challenges-compared-to-getting-started-with-flutter">Challenges compared to (getting started with) Flutter</a></li>
+      </ul>
+    </li>
+    <li><a href="#more-notes">More notes</a>
+      <ul>
+        <li><a href="#webviews">WebViews</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/jetpack_post.jpg"
+        data-srcset="/images/jetpack_post.jpg, /images/jetpack_post.jpg 1.5x, /images/jetpack_post.jpg 2x"
+        data-sizes="auto"
+        alt="/images/jetpack_post.jpg"
+        title="Photo by Nils Nedel @ Unsplash" /></p>
+<h1 id="oncreate">onCreate</h1>
+<p>It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try.
+Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:</p>
+<ul>
+<li><a href="https://joebirch.co" target="_blank" rel="noopener noreffer">Joe Birch&rsquo;s</a> blog.</li>
+<li>Stack Overflow</li>
+<li>A quick read through the Google Codelabs</li>
+<li>Jetpack sample apps from Google&rsquo;s <a href="https://github.com/android/compose-samples" target="_blank" rel="noopener noreffer">repository</a> (Mostly looking at JetNews)</li>
+</ul>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">This posts code example is not a best practice example. Mostly can be used as a &ldquo;getting started with&rdquo; guideline, as the title suggests.</div>
+        </div>
+    </div>
+<h1 id="onresume">onResume</h1>
+<h2 id="first-what-is-jetpack-compose-and-how-is-it-used">First, what is Jetpack Compose and how is it used?</h2>
+<p>Jetpack Compose is Android&rsquo;s new UI toolkit inspired by Flutter. With it, you can build Android apps without the need to construct a single XML layout code. Instead, everything is done in Kotlin. However, Activities and Fragments and a lot of android dependencies will still be there (even though, not in this article).</p>
+<h3 id="quick-start">Quick Start</h3>
+<p>To get started with JetPack Compose, a couple of Gradle dependencies need to be imported, as well as some configuration blocks need to be added in the <code>android</code> block.</p>
+<div class="details admonition failure open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-times-circle fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>Jetpack Compose doesn&rsquo;t work <strong>without</strong> Android Studio Canary 4.2+</li>
+<li>Jetpack Compose works only with Kotlin</li>
+</ul>
+</div>
+        </div>
+    </div>
+<p>This is how your configuration should look:</p>
+<div class="highlight"><pre class="chroma"><code class="language-groovy" data-lang="groovy"><span class="c1">//App level build.gradle
+</span><span class="c1"></span><span class="n">android</span><span class="o">{</span>
+<span class="o">...</span>
+    <span class="n">compileOptions</span> <span class="o">{</span>
+           <span class="n">sourceCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>
+           <span class="n">targetCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>
+       <span class="o">}</span>
+       <span class="n">kotlinOptions</span> <span class="o">{</span>
+          <span class="n">jvmTarget</span> <span class="o">=</span> <span class="s1">&#39;1.8&#39;</span>
+          <span class="n">useIR</span> <span class="o">=</span> <span class="kc">true</span>
+       <span class="o">}</span>
+    <span class="n">buildFeatures</span> <span class="o">{</span>
+        <span class="n">compose</span> <span class="kc">true</span>
+    <span class="o">}</span>
+    <span class="n">composeOptions</span> <span class="o">{</span>
+        <span class="n">kotlinCompilerExtensionVersion</span> <span class="n">compose_version</span>
+        <span class="n">kotlinCompilerVersion</span> <span class="s1">&#39;1.4.0&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>And this is some of the dependencies you might need:</p>
+<div class="highlight"><pre class="chroma"><code class="language-groovy" data-lang="groovy"><span class="c1">//App level build.gradle
+</span><span class="c1"></span><span class="n">implementation</span> <span class="s2">&#34;androidx.compose.ui:ui:$compose_version&#34;</span>
+<span class="n">implementation</span> <span class="s2">&#34;androidx.compose.material:material:$compose_version&#34;</span>
+<span class="n">implementation</span> <span class="s2">&#34;androidx.ui:ui-tooling:$compose_version&#34;</span>
+</code></pre></div><p>However, if these are not sufficient for your app, you can check the list of all dependencies <a href="https://developer.android.com/jetpack/compose/setup" target="_blank" rel="noopener noreffer">here</a>.</p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Alternatively, the easiest path is to just go to <code>File -&gt; New -&gt; Compose Application</code>.</div>
+        </div>
+    </div>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Compose is also interoperable with existing Android applications.</div>
+        </div>
+    </div>
+<h3 id="the-entry-point-to-a-compose-app">The entry point to a Compose app</h3>
+<p>As in single activity apps, the Activity is the entry point for a Compose app as well. However, instead of calling <code>setContentView(R.layout.activity_main)</code> you have to construct the <code>setContent</code> method:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="n">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">...</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+        <span class="k">val</span> <span class="py">injector</span> <span class="p">=</span> <span class="p">(</span><span class="n">application</span> <span class="k">as</span> <span class="n">CatsApplication</span><span class="p">).</span><span class="n">injector</span>
+        <span class="n">setContent</span> <span class="p">{</span>
+            <span class="n">CatsTheme</span> <span class="p">{</span>
+                <span class="n">Surface</span><span class="p">(</span><span class="n">color</span> <span class="p">=</span> <span class="n">MaterialTheme</span><span class="p">.</span><span class="n">colors</span><span class="p">.</span><span class="n">background</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">CatsAppScafold</span><span class="p">(...)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Notice the <code>CatsTheme</code> block. Usually, that&rsquo;s the level where the theme is supposed to be set. But what is actually that component? Well, in Compose, everything is a function, most precisely, a composable function.</p>
+<h3 id="composable-annotation">@Composable annotation</h3>
+<p><code>@Composable</code> annotation is the way to make a function composable. That way, Android will know how to use it, and what to draw on the screen. If a Composable component requires a composable function, a normal method (without <code>@Composable</code> annotation) is not correctly constructed.</p>
+<p>Now, let&rsquo;s check what is inside our <code>CatsAppScafold</code>:</p>
+<p>Our entire app, is in this block:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ExperimentalCoroutinesApi</span>
+<span class="n">@Composable</span>
+<span class="k">fun</span> <span class="nf">CatsAppScaffold</span><span class="p">(</span>
+    <span class="n">navigationViewModel</span><span class="p">:</span> <span class="n">NavigationViewModel</span><span class="p">,</span>
+    <span class="n">networkClient</span><span class="p">:</span> <span class="n">NetworkClient</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">currentState</span> <span class="p">=</span> <span class="n">navigationViewModel</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">collectAsState</span><span class="p">()</span>
+    
+    <span class="n">Scaffold</span><span class="p">(</span>
+        <span class="n">backgroundColor</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">White</span><span class="p">,</span>
+        <span class="n">topBar</span> <span class="p">=</span> <span class="n">TopAppBar</span><span class="p">(</span><span class="n">title</span> <span class="p">=</span> <span class="p">{</span> <span class="n">Text</span><span class="p">(</span><span class="n">text</span> <span class="p">=</span> <span class="s">&#34;Cats &lt;3&#34;</span><span class="p">)</span> <span class="p">}),</span>
+        <span class="n">bodyContent</span> <span class="p">=</span> <span class="p">{</span>
+            <span class="n">Crossfade</span><span class="p">(</span>
+                <span class="n">current</span> <span class="p">=</span> <span class="n">currentState</span>
+            <span class="p">)</span> <span class="p">{</span> <span class="n">screenState</span> <span class="p">-&gt;</span>
+                <span class="k">when</span> <span class="p">(</span><span class="k">val</span> <span class="py">screenStateValue</span> <span class="p">=</span> <span class="n">screenState</span><span class="p">.</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">Home</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                        <span class="n">HomeScreen</span><span class="p">(</span>
+                            <span class="n">navigateTo</span> <span class="p">=</span> <span class="n">navigationViewModel</span><span class="o">::</span><span class="n">navigateTo</span><span class="p">,</span>
+                            <span class="n">networkClient</span> <span class="p">=</span> <span class="n">networkClient</span>
+                        <span class="p">)</span>
+                    <span class="p">}</span>
+                    <span class="k">is</span> <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">ImageDetails</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                        <span class="n">WebPageScreen</span><span class="p">(</span><span class="n">screenStateValue</span><span class="p">.</span><span class="n">urlToRender</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>Let&rsquo;s go step by step:</p>
+<p>A new method that might be noticed, is the <code>collectAsState()</code> extension. Since we have declared a <code>NavigationViewModel</code> in the activity scope for Navigation, a state is needed to be observed to check the screen status at any moment the app is running.</p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">In this case, what is being used for a state is a <code>StateFlow&lt;T&gt;</code> component from the coroutines API.</div>
+        </div>
+    </div>
+<p>This is how the <code>NavigationViewModel</code> looks:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ExperimentalCoroutinesApi</span>
+<span class="k">class</span> <span class="nc">NavigationViewModel</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">_state</span><span class="p">:</span> <span class="n">MutableStateFlow</span><span class="p">&lt;</span><span class="n">NavigationState</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">MutableStateFlow</span><span class="p">(</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">Home</span><span class="p">)</span>
+    <span class="k">val</span> <span class="py">state</span><span class="p">:</span> <span class="n">StateFlow</span><span class="p">&lt;</span><span class="n">NavigationState</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">_state</span>
+
+    <span class="k">sealed</span> <span class="k">class</span> <span class="nc">NavigationState</span> <span class="p">{</span>
+        <span class="k">object</span> <span class="nc">Home</span> <span class="p">:</span> <span class="n">NavigationState</span><span class="p">()</span>
+        <span class="k">data</span> <span class="k">class</span> <span class="nc">ImageDetails</span><span class="p">(</span><span class="k">val</span> <span class="py">urlToRender</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">NavigationState</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">navigateTo</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NavigationState</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_state</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">state</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">goBack</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">_state</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">NavigationState</span><span class="p">.</span><span class="n">Home</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>With <code>collectAsState()</code>, you can register a listener for a composable function. There are other alternatives too:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">LiveData</span><span class="p">.</span><span class="n">observeAsState</span><span class="p">()</span> <span class="c1">// For those who use LiveData
+</span><span class="c1"></span><span class="n">Observable</span><span class="p">.</span><span class="n">subscribeAsState</span><span class="p">()</span> <span class="c1">// For those who use Rx
+</span></code></pre></div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">This approach is followed because the app has only 2 screens. The full example code repository link will be at the bottom of this post</div>
+        </div>
+    </div>
+<h4 id="lets-go-through-the-short-blocks-as-well">Let&rsquo;s go through the short blocks as well:</h4>
+<p>The <code>Scaffold</code> block is just a composable function that helps for Material Design elements construction. One of its properties, <code>topBar</code>, gives an end to the pain of toolbar manipulation. Using the <code>TopAppBar</code> for the toolbar, can make your life easier.
+The <code>bodyContent</code> block, is the part where our views are going to be constructed.</p>
+<p>But what&rsquo;s with the <code>Crossfade</code> composable?
+<code>Crossfade</code> is a component used to perform a cross-fade animation when switching between two views. For this approach, we use it&rsquo;s <code>current</code> property to pass our latest state, and here is where the magic of navigation happens. I hope the block inside, is self-explanatory.</p>
+<h3 id="viewmodels">ViewModels</h3>
+<p>The problem with the above navigation approach is that when you create <code>viewModels</code>, in lower scoped composables, they are attached to the only Activity alive in this case, which might be total overkill if one has a lot of screens and <code>ViewModel</code>s. Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ExperimentalCoroutinesApi</span>
+<span class="n">@Composable</span>
+<span class="k">fun</span> <span class="nf">HomeScreen</span><span class="p">(</span>
+    <span class="n">navigateTo</span><span class="p">:</span> <span class="p">(</span><span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Unit</span><span class="p">,</span>
+    <span class="n">networkClient</span><span class="p">:</span> <span class="n">NetworkClient</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">homeViewModel</span><span class="p">:</span> <span class="n">HomeViewModel</span> <span class="p">=</span> <span class="n">viewModel</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="k">object</span> <span class="err">: </span><span class="nc">ViewModelProvider</span><span class="p">.</span><span class="n">Factory</span> <span class="p">{</span>
+        <span class="k">override</span> <span class="k">fun</span> &lt;T : ViewModel?&gt; <span class="nf">create</span><span class="p">(</span><span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;):</span> <span class="n">T</span> <span class="p">=</span>
+            <span class="n">HomeViewModel</span><span class="p">(</span><span class="n">networkClient</span><span class="p">)</span> <span class="k">as</span> <span class="n">T</span>
+    <span class="p">})</span>
+
+    <span class="k">val</span> <span class="py">state</span> <span class="p">=</span> <span class="n">homeViewModel</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">collectAsState</span><span class="p">()</span>
+
+    <span class="k">when</span> <span class="p">(</span><span class="k">val</span> <span class="py">statesValue</span> <span class="p">=</span> <span class="n">state</span><span class="p">.</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Idle</span> <span class="p">-&gt;</span> <span class="n">homeViewModel</span><span class="p">.</span><span class="n">getCatBreeds</span><span class="p">()</span>
+        <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Loading</span> <span class="p">-&gt;</span> <span class="n">CenterLoadingIndicator</span><span class="p">()</span>
+        <span class="k">is</span> <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Success</span> <span class="p">-&gt;</span> <span class="n">CatBreedsList</span><span class="p">(</span>
+            <span class="n">breedsList</span> <span class="p">=</span> <span class="n">statesValue</span><span class="p">.</span><span class="n">breedsList</span><span class="p">,</span>
+            <span class="n">itemClickAction</span> <span class="p">=</span> <span class="n">navigateTo</span>
+        <span class="p">)</span>
+        <span class="k">is</span> <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Error</span> <span class="p">-&gt;</span> <span class="n">ErrorView</span><span class="p">(</span><span class="n">retryAction</span> <span class="p">=</span> <span class="p">{</span>
+             <span class="n">homeViewModel</span><span class="p">.</span><span class="n">getCatBreeds</span><span class="p">()</span> 
+             <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>We need this <code>ViewModel</code> only when the HomeScreen is alive but AndroidX <code>ViewModel</code>s are associated to the scope of Fragment/Activity once created, in this case, <code>MainActivity</code>, and only when <code>MainActivity</code> is destroyed, their <code>onCleared()</code> method is called.</p>
+<h3 id="challenges-compared-to-getting-started-with-flutter">Challenges compared to (getting started with) Flutter</h3>
+<p>It would not hurt if the developer trying Compose, has already tried Flutter. Flutter uses the same logic as Compose (only the API changes a little), but since Compose is less mature than Flutter, mastering Compose after knowing a little Flutter would be a piece of cake.</p>
+<p>Jetpack Compose is not that intuitive as Flutter. A very good example, would be this block:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">LazyColumnFor</span><span class="p">(</span><span class="n">breedsList</span><span class="p">)</span> <span class="p">{</span> <span class="n">breed</span> <span class="p">-&gt;</span>
+        <span class="n">RippleIndication</span><span class="p">()</span>
+        <span class="n">Card</span><span class="p">(...){...}</span>
+    <span class="p">}</span>
+</code></pre></div><p>To make the <code>Card</code> element do a ripple effect when you click it, you have to call the <code>RippleIndication()</code> constructor, and below it the element having the ripple effect (or vice versa?). In Flutter it would definitely be something like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">RippleIndication</span><span class="p">(</span>
+    <span class="n">child</span><span class="p">:</span> <span class="n">Card</span><span class="p">(...)</span>
+<span class="p">)</span>
+</code></pre></div><p>Which IMO, it&rsquo;s far more intuitive.</p>
+<h4 id="snackbars">Snackbars</h4>
+<p><code>Snackbar</code>s: Believe it or not, I still don&rsquo;t know how you dismiss a <code>SnackBar</code> in Jetpack Compose. Let me know when there is a non-hacky way (or any function parameter that I missed reading).</p>
+<h4 id="mages">mages</h4>
+<p>In my own humble opinion, missing a feature such as loading an Image from a certain URL, without 3rd party dependency, is a problem. If we still compare with Flutter: A <code>NetworkImage()</code> is already there. While in Compose, for the moment, you are either supposed to write some logic on your own or just use <code>dev.chrisbanes.accompanist:accompanist-coil:0.2.1</code> (just a wrapper on top of Coil). And all that, for a <code>CoilImage(data = breed.imageUrl)</code>.</p>
+<h2 id="more-notes">More notes</h2>
+<h3 id="webviews">WebViews</h3>
+<p>Using WebViews in Jetpack Compose, is same as using the <code>WebView</code> class in the current status. However, there is a nice <code>AndroidView</code> wrapper for every tool that is either not ready yet, or not planning to be released a new one, ever. It took me some time to figure out how to do it, so I&rsquo;ll just paste the code here:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@SuppressLint</span><span class="p">(</span><span class="s">&#34;SetJavaScriptEnabled&#34;</span><span class="p">)</span>
+<span class="n">@Composable</span>
+<span class="k">fun</span> <span class="nf">WebPageScreen</span><span class="p">(</span><span class="n">urlToRender</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">AndroidView</span><span class="p">(</span><span class="n">viewBlock</span> <span class="p">=</span> <span class="o">::</span><span class="n">WebView</span><span class="p">)</span> <span class="p">{</span> <span class="n">webView</span> <span class="p">-&gt;</span>
+        <span class="n">with</span><span class="p">(</span><span class="n">webView</span><span class="p">){</span>
+            <span class="n">settings</span><span class="p">.</span><span class="n">javaScriptEnabled</span> <span class="p">=</span> <span class="k">true</span>
+            <span class="n">webViewClient</span> <span class="p">=</span> <span class="n">WebViewClient</span><span class="p">()</span>
+            <span class="n">loadUrl</span><span class="p">(</span><span class="n">urlToRender</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><a href="https://github.com/coroutineDispatcher/cats_compose_sample" target="_blank" rel="noopener noreffer">The sample app can be found in this repository.</a></div>
+        </div>
+    </div>
+<h1 id="ondestroy">OnDestroy</h1>
+<p>As a conclusion, I would say that Jetpack Compose looks very promising for native Android, and Kotlin gives awesome flexibility to use it. Android suffers a lot, as well as the developer who works on it, therefore Compose it&rsquo;s an awesome solution. However, if they want to promote Compose to terms like Kotlin Multi-Platform, or Server Driven Development, they are so much behind. As far as I have heard, SwiftUI is far ahead.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-09-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/jetpack-compose/">Jetpack Compose</a>,&nbsp;<a href="/tags/compose-navigation/">Compose Navigation</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/androidx/">AndroidX</a>,&nbsp;<a href="/tags/viewmodels/">ViewModels</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/composable/">Composable</a>,&nbsp;<a href="/tags/android-ui/">Android UI</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/lambdas/">Lambdas</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/webview-android/" class="prev" rel="prev" title="The Great Wall of China was originally created to keep WebView out. It failed miserably."><i class="fas fa-angle-left fa-fw"></i>The Great Wall of China was originally created to keep WebView out. It failed miserably.</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

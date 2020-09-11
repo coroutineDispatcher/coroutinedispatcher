@@ -4,12 +4,68 @@
         <link>http://coroutinedispatcher.com/tags/</link>
         <description>Tags - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 11 Jun 2020 21:04:00 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/" rel="self" type="application/rss+xml" /><item>
     <title>Android</title>
     <link>http://coroutinedispatcher.com/tags/android/</link>
-    <pubDate>Thu, 11 Jun 2020 21:04:00 &#43;0200</pubDate>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
     <author>Author</author>
     <guid>http://coroutinedispatcher.com/tags/android/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Android UI</title>
+    <link>http://coroutinedispatcher.com/tags/android-ui/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/android-ui/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>AndroidX</title>
+    <link>http://coroutinedispatcher.com/tags/androidx/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/androidx/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Composable</title>
+    <link>http://coroutinedispatcher.com/tags/composable/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/composable/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Compose Navigation</title>
+    <link>http://coroutinedispatcher.com/tags/compose-navigation/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/compose-navigation/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Jetpack Compose</title>
+    <link>http://coroutinedispatcher.com/tags/jetpack-compose/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/jetpack-compose/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Kotlin</title>
+    <link>http://coroutinedispatcher.com/tags/kotlin/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/kotlin/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Lambdas</title>
+    <link>http://coroutinedispatcher.com/tags/lambdas/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/lambdas/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>ViewModels</title>
+    <link>http://coroutinedispatcher.com/tags/viewmodels/</link>
+    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/viewmodels/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Android Development</title>
@@ -17,62 +73,6 @@
     <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
     <author>Author</author>
     <guid>http://coroutinedispatcher.com/tags/android-development/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Android Realm</title>
-    <link>http://coroutinedispatcher.com/tags/android-realm/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/android-realm/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Coroutines</title>
-    <link>http://coroutinedispatcher.com/tags/coroutines/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/coroutines/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Database</title>
-    <link>http://coroutinedispatcher.com/tags/database/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/database/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Kotlin</title>
-    <link>http://coroutinedispatcher.com/tags/kotlin/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/kotlin/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Kotlin Coroutines</title>
-    <link>http://coroutinedispatcher.com/tags/kotlin-coroutines/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/kotlin-coroutines/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Kotlin DSL</title>
-    <link>http://coroutinedispatcher.com/tags/kotlin-dsl/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/kotlin-dsl/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Kotlin Flows</title>
-    <link>http://coroutinedispatcher.com/tags/kotlin-flows/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/kotlin-flows/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Reactive Programming</title>
-    <link>http://coroutinedispatcher.com/tags/reactive-programming/</link>
-    <pubDate>Sat, 30 May 2020 19:52:00 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/reactive-programming/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
