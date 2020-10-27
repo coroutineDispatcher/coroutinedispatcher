@@ -102,7 +102,7 @@ If you are more interested in an even more detailed explanation, follow <a href=
 <h2 id="onresume">onResume</h2>
 <h3 id="the-problem">The problem</h3>
 <p>Let&rsquo;s suppose we have this scenario:</p>
-<p>After a simple calculation on the VieModel, we want to decide in which screen the user is going to be navigated to. Let&rsquo;s do that by using <code>StateFlow</code> (<code>MutableStateFlow</code>):</p>
+<p>After a simple calculation on the ViewModel, we want to decide in which screen the user is going to be navigated to. Let&rsquo;s do that by using <code>StateFlow</code> (<code>MutableStateFlow</code>):</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">val</span> <span class="py">_state</span> <span class="p">=</span> <span class="n">MutableStateFlow</span><span class="p">&lt;</span><span class="n">State</span><span class="p">&gt;(</span><span class="n">State</span><span class="p">.</span><span class="n">Idle</span><span class="p">)</span>
 <span class="k">val</span> <span class="py">state</span><span class="p">:</span> <span class="n">StateFlow</span><span class="p">&lt;</span><span class="n">State</span><span class="p">&gt;</span> <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="n">_state</span>
 
