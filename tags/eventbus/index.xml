@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>EventBus - Tag - Coroutinedispatchers&#39; blog</title>
+        <link>http://coroutinedispatcher.com/tags/eventbus/</link>
+        <description>EventBus - Tag - Coroutinedispatchers&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/eventbus/" rel="self" type="application/rss+xml" /><item>
+    <title>Usage of SharedFlow</title>
+    <link>http://coroutinedispatcher.com/posts/shared-flow/</link>
+    <pubDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/shared-flow/</guid>
+    <description><![CDATA[onCreate With the 1.4 Update, kotlin coroutines brought us a lot of features and improvements. One of them was the introduction of SharedFlow. Basically, what I would like to call it, is simply a &ldquo;Single Event StateFlow&rdquo;. Remember single event LiveData workaround? Well, here you have it, but 100% kotlin, and not a workaround anymore. If you are more interested in an even more detailed explanation, follow this issue on Github, brought by Roman Elizarov.]]></description>
+</item></channel>
+</rss>

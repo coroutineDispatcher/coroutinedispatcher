@@ -4,7 +4,14 @@
         <link>http://coroutinedispatcher.com/tags/kotlin/</link>
         <description>Kotlin - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/kotlin/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/kotlin/" rel="self" type="application/rss+xml" /><item>
+    <title>Usage of SharedFlow</title>
+    <link>http://coroutinedispatcher.com/posts/shared-flow/</link>
+    <pubDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/shared-flow/</guid>
+    <description><![CDATA[onCreate With the 1.4 Update, kotlin coroutines brought us a lot of features and improvements. One of them was the introduction of SharedFlow. Basically, what I would like to call it, is simply a &ldquo;Single Event StateFlow&rdquo;. Remember single event LiveData workaround? Well, here you have it, but 100% kotlin, and not a workaround anymore. If you are more interested in an even more detailed explanation, follow this issue on Github, brought by Roman Elizarov.]]></description>
+</item><item>
     <title>First experience with Jetpack Compose</title>
     <link>http://coroutinedispatcher.com/posts/get_started_with_compose/</link>
     <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
@@ -82,14 +89,5 @@ Let&rsquo;s suppose we have this scenario: I have a list of data, which are show
     <author>Author</author>
     <guid>http://coroutinedispatcher.com/posts/setting-up-gradle-with-kotlin-dsl/</guid>
     <description><![CDATA[Kotlin is a very a pretty nice adoptive language and user friendly. It really replaced Java from my everyday programming. However, it was not enough. We all know that groovy runs on JVM. So, why do I even need a new language just for my builds? Can&rsquo;t it be Java? So Java is the basic language for the JVM, Kotlin runs on JVM, Groovy runs on JVM and my build system has a separated language from my business logic system.]]></description>
-</item><item>
-    <title>From Gson to Moshi, what I learned</title>
-    <link>http://coroutinedispatcher.com/posts/from-gson-to-moshi-what-i-learned/</link>
-    <pubDate>Mon, 28 Oct 2019 10:11:00 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/from-gson-to-moshi-what-i-learned/</guid>
-    <description><![CDATA[There is no doubt that people are getting away from GSON and I agree with those reasons too. The only advantage GSON has over other parsing libraries is that it takes a really short amount of time to set up. Furthermore, the most important thing is that Moshi is embracing Kotlin support.
-First let&rsquo;s implement the dependency:
-implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a struggle to migrate to Moshi. It&rsquo;s really Gson look-a-like.]]></description>
 </item></channel>
 </rss>

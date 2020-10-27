@@ -10,7 +10,7 @@
 <meta property="og:description" content="A blog with kotlins&#39; suspend modifier" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://coroutinedispatcher.com/" />
-<meta property="og:updated_time" content="2020-09-11T18:23:50+02:00" />
+<meta property="og:updated_time" content="2020-10-27T14:24:48+01:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Coroutinedispatchers&#39; blog"/>
 <meta name="twitter:description" content="A blog with kotlins&#39; suspend modifier"/>
@@ -73,6 +73,12 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/room-and-rxjava-testing/">Room and RxJava testing</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-10-07">2019-10-07</time></span></div><div class="content">When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing + Room pretty amusing, I thought I should share it with you.
+Room has already a great support for RxJava or Coroutines. I have used both ways to access the data layer and I was really satisfied with both. So I decided to make a 2-series blog posts with testing in Room with RxJava and testing Room with coroutines.</div><div class="post-footer">
+        <a href="/posts/room-and-rxjava-testing/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-room/">Android Room</a>,&nbsp;<a href="/tags/rxjava/">RxJava</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href=""></a>,&nbsp;<a href="/tags/room-persistence/">Room Persistence</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/an-early-look-at-dagger-reflect/">An early look at Dagger Reflect</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-09-30">2019-09-30</time></span></div><div class="content">When it comes to solving the Dependency Inversion principle, there is no better way then using annotations in the JVM world. However, generating code in compile time has some costs. For example the build time. And I believe this is the only thing dagger can&rsquo;t do well alone.
 This is not a bye bye dagger post. This is mostly, obtaining the most out of Dagger.
@@ -110,11 +116,6 @@ Let&rsquo;s try to compile this class:
 @Entity(tableName = &#34;users&#34;) data class User( @PrimaryKey @ColumnInfo(name = &#34;id&#34;) val number: Int, @ColumnInfo(name = &#34;user_name&#34;) val userName: String, @ColumnInfo(name = &#34;user_status&#34;) val userStatus: String, @Ignore val englishNameMeaning: UserGrade ) The problem:</div><div class="post-footer">
         <a href="/posts/solving-room-cannot-find-setter-for/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-room/">Android Room</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/cannot-find-setter-for-field/">cannot find setter for field</a>,&nbsp;<a href="/tags/room-persistence/">Room Persistence</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/lets-get-beyond-null-safet/">Let&#39;s get beyond null safety</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-08-15">2019-08-15</time></span></div><div class="content">_Inspired by myself and perhaps some other people, who coded Java style in Kotlin. I have seen tones of articles which (mostly) highlight Kotlins null safety and nothing more. So that&rsquo;s it? If it was only for that I swear I would be still using Java with some null checks. Therefore, this article suggest what to use best in Kotlin as well as droping some everyday Java habits. _</div><div class="post-footer">
-        <a href="/posts/lets-get-beyond-null-safet/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/kotlin-programming/">Kotlin programming</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -140,6 +141,10 @@ Let&rsquo;s try to compile this class:
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/7/">7</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/8/">8</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
