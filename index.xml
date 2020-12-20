@@ -4,9 +4,19 @@
         <link>http://coroutinedispatcher.com/</link>
         <description>A blog with kotlins&#39; suspend modifier</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</lastBuildDate>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 13 Dec 2020 18:15:51 &#43;0100</lastBuildDate>
             <atom:link href="http://coroutinedispatcher.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Stateful MVVM across process death using SharedFlow</title>
+    <link>http://coroutinedispatcher.com/posts/decorate_stateful_mvvm/</link>
+    <pubDate>Sun, 13 Dec 2020 18:15:51 &#43;0100</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/decorate_stateful_mvvm/</guid>
+    <description><![CDATA[onCreate Lately, I have been playing and exploring SharedFlow. A pretty nice and very helpful design for situations like this. But as I was building a ViewModel this week, I ran into an architecture design dilema.
+onPause Disclamer: The solution given below, might not be the best out there, so please feel free to give your thoughts and critics for this.
+onResume Let&rsquo;s consider this quick example:
+class SomeViewModel @ViewModelInject constructor( private val dependency1: Dependency1, private val dependency2 : Dependency2, @Assisted private val savedStateHandle: SavedStateHandle ) : ViewModel() { private val _state : MutableSharedFlow&lt;State&gt; = MutableSharedFlow() val state : SharedFlow&lt;State&gt; = _state.]]></description>
+</item><item>
     <title>Usage of SharedFlow</title>
     <link>http://coroutinedispatcher.com/posts/shared-flow/</link>
     <pubDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</pubDate>
@@ -81,13 +91,5 @@ Well, it has been a very rough year for me, &ldquo;motion-ally&rdquo; and emotio
     <guid>http://coroutinedispatcher.com/posts/getting-rid-of-white-screen-on-app/</guid>
     <description><![CDATA[Details matter especially when it comes to making users happy. We have all kinds of users, those who don&rsquo;t care how the app is designed (just do what he/she needs), those who care, and those who are developers themselves. I have met people who don&rsquo;t use a single app just because it has some strange animation, and they hate it.
 For me, it&rsquo;s a little from both. I Like seeing a minimalist design (like Airbnb Android app, which is one of my favorites, for instance), but it is also important to fulfill your needs also.]]></description>
-</item><item>
-    <title>Generate Kotlin Docs using Dokka</title>
-    <link>http://coroutinedispatcher.com/posts/generate-kotlin-docs-using-dokka/</link>
-    <pubDate>Mon, 17 Feb 2020 15:48:00 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/generate-kotlin-docs-using-dokka/</guid>
-    <description><![CDATA[Have you ever generated Kotlin docs (Kdocs) for your library/project? I have. There is a tool for this called Dokka and you can find it here. It&rsquo;s not too hard to set up.
-I personally used Dokka for a small API i wrote for SharedPreferences. Anyways, the steps are pretty basic. One thing you must be careful though, is to know the syntax of the Kdocs pretty well (usually, if you know how to generate Javadoc, Kotlin docs don&rsquo;t have much difference).]]></description>
 </item></channel>
 </rss>

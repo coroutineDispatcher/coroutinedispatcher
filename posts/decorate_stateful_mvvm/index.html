@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Stateful MVVM across configuration changes - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="Stateful MVVM across configuration changes" />
+        <title>Stateful MVVM across process death using SharedFlow - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="Stateful MVVM across process death using SharedFlow" />
 <meta property="og:description" content="onCreate Lately, I have been playing and exploring SharedFlow. A pretty nice and very helpful design for situations like this. But as I was building a ViewModel this week, I ran into an architecture design dilema.
 onPause Disclamer: The solution given below, might not be the best out there, so please feel free to give your thoughts and critics for this.
 onResume Let&rsquo;s consider this quick example:
@@ -15,7 +15,7 @@ class SomeViewModel @ViewModelInject constructor( private val dependency1: Depen
 <meta property="article:published_time" content="2020-12-13T18:15:51+01:00" />
 <meta property="article:modified_time" content="2020-12-13T18:15:51+01:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Stateful MVVM across configuration changes"/>
+<meta name="twitter:title" content="Stateful MVVM across process death using SharedFlow"/>
 <meta name="twitter:description" content="onCreate Lately, I have been playing and exploring SharedFlow. A pretty nice and very helpful design for situations like this. But as I was building a ViewModel this week, I ran into an architecture design dilema.
 onPause Disclamer: The solution given below, might not be the best out there, so please feel free to give your thoughts and critics for this.
 onResume Let&rsquo;s consider this quick example:
@@ -27,12 +27,12 @@ class SomeViewModel @ViewModelInject constructor( private val dependency1: Depen
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Stateful MVVM across configuration changes",
+        "headline": "Stateful MVVM across process death using SharedFlow",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/coroutinedispatcher.com\/posts\/decorate_stateful_mvvm\/"
-        },"genre": "posts","wordcount":  632 ,
+        },"genre": "posts","wordcount":  627 ,
         "url": "http:\/\/coroutinedispatcher.com\/posts\/decorate_stateful_mvvm\/","datePublished": "2020-12-13T18:15:51+01:00","dateModified": "2020-12-13T18:15:51+01:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -80,9 +80,9 @@ class SomeViewModel @ViewModelInject constructor( private val dependency1: Depen
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Stateful MVVM across configuration changes</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Stateful MVVM across process death using SharedFlow</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-13">2020-12-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;632 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-13">2020-12-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;627 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -124,8 +124,8 @@ class SomeViewModel @ViewModelInject constructor( private val dependency1: Depen
       <span class="k">data</span> <span class="k">class</span> <span class="nc">Fail</span><span class="p">(</span><span class="k">val</span> <span class="py">message</span><span class="p">:</span> <span class="n">String</span><span class="p">?)</span> <span class="p">:</span> <span class="n">State</span><span class="p">()</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><p>This is how I normally manage it. But what if I want to save my data to survive process death/configuration change? Adding a new extra variable to observe the <code>savedStateHandle</code> is error prone and actually makes things way worse, introducing a lot of bugs. But I really wanted to use <code>SharedFlow</code>, because of its&rsquo; flexibility regarding single events which eventually make live easier. Also, with the help of Hilt, there is not much to be done when it comes to creating a <code>ViewModel</code> anymore, so the <code>savedStateHandle</code> comes for free.</p>
-<p>Therefore, I was thinking: How about, store the whole state in <code>saveStateHandle</code>? It would restore immediately what we had before configuration change/process death. What I needed to do though, was kick out 2 state <code>SharedFlow</code> variables:</p>
+</code></pre></div><p>This is how I normally manage it. But what if I want to save my data to survive process death? Adding a new extra variable to observe the <code>savedStateHandle</code> is error prone and actually makes things way worse, introducing a lot of bugs. But I really wanted to use <code>SharedFlow</code>, because of its&rsquo; flexibility regarding single events which eventually make live easier. Also, with the help of Hilt, there is not much to be done when it comes to creating a <code>ViewModel</code> anymore, so the <code>savedStateHandle</code> comes for free.</p>
+<p>Therefore, I was thinking: How about, store the whole state in <code>saveStateHandle</code>? It would restore immediately what we had before process death. What I needed to do though, was kick out 2 state <code>SharedFlow</code> variables:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="n">@ViewModelInject</span> <span class="k">constructor</span><span class="p">(</span>
    <span class="k">private</span> <span class="k">val</span> <span class="py">dependency1</span><span class="p">:</span> <span class="n">Dependency1</span><span class="p">,</span>
    <span class="k">private</span> <span class="k">val</span> <span class="py">dependency2</span> <span class="p">:</span> <span class="n">Dependency2</span><span class="p">,</span>
@@ -143,7 +143,7 @@ class SomeViewModel @ViewModelInject constructor( private val dependency1: Depen
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">state</span> <span class="p">=</span> <span class="n">savedStateHandle</span><span class="p">.</span><span class="n">getLiveData</span><span class="p">&lt;</span><span class="n">State</span><span class="p">&gt;(</span><span class="n">Key</span><span class="p">).</span><span class="n">asFlow</span><span class="p">()</span>
 </code></pre></div><p>With a small modification, since I need a hot <code>SharedFlow</code> instead:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">state</span> <span class="p">=</span> <span class="n">savedStateHandle</span><span class="p">.</span><span class="n">getLiveData</span><span class="p">&lt;</span><span class="n">State</span><span class="p">&gt;(</span><span class="n">Key</span><span class="p">).</span><span class="n">asFlow</span><span class="p">().</span><span class="n">shareIn</span><span class="p">(</span><span class="n">viewModelScope</span><span class="p">,</span> <span class="n">SharingStarted</span><span class="p">.</span><span class="n">Lazily</span><span class="p">)</span>
-</code></pre></div><p>Sometimes, depending on <code>LiveData</code> for such implementation, might sound a little hacky, but it seems that&rsquo;s the only option to rely to (atm) in order to receive a hot <code>sharedFlow</code> which also survives configuration change.</p>
+</code></pre></div><p>Sometimes, depending on <code>LiveData</code> for such implementation, might sound a little hacky, but it seems that&rsquo;s the only option to rely to (atm) in order to receive a hot <code>sharedFlow</code> which also survives process death.</p>
 <p>One small detail that must not be missed is the fact that the <code>State</code> in this case <strong>must</strong> implement <code>Parcelable</code>. Whith the help of <code>kotlin-android</code> it can be easily tackled:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">State</span> <span class="p">:</span> <span class="n">Parcelable</span> <span class="p">{</span>
         <span class="n">@Parcelize</span>
@@ -180,7 +180,7 @@ class SomeViewModel @ViewModelInject constructor( private val dependency1: Depen
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><h2 id="ondestroy">onDestroy</h2>
-<p>Handling process death / configuration change is still debatable in terms of: &ldquo;Do we always need it?&rdquo;. In my opinion, it has its&rsquo; importance, but sometimes it is too much. However, when choosing not to ignore this topic, it really brings a little more time to think and complexity regarding the design, so I was hoping I brought something which would make it simpler in case your project is already fully relied on <code>Flow</code>, <code>coroutines</code> API, and perhaps one of you might already made a decision to kick <code>LiveData</code> out.</p>
+<p>Handling process death is still debatable in terms of: &ldquo;Do we always need it?&rdquo;. In my opinion, it has its&rsquo; importance, but sometimes it is too much. However, when choosing not to ignore this topic, it really brings a little more time to think and complexity regarding the design, so I was hoping I brought something which would make it simpler in case your project is already fully relied on <code>Flow</code>, <code>coroutines</code> API, and perhaps one of you might already made a decision to kick <code>LiveData</code> out.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
