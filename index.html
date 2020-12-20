@@ -10,7 +10,7 @@
 <meta property="og:description" content="A blog with kotlins&#39; suspend modifier" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://coroutinedispatcher.com/" />
-<meta property="og:updated_time" content="2020-12-13T18:15:51+01:00" />
+<meta property="og:updated_time" content="2020-10-27T14:24:48+01:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Coroutinedispatchers&#39; blog"/>
 <meta name="twitter:description" content="A blog with kotlins&#39; suspend modifier"/>
@@ -73,13 +73,6 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/decorate_stateful_mvvm/">Stateful MVVM across configuration changes</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-12-13">2020-12-13</time></span></div><div class="content">onCreate Lately, I have been playing and exploring SharedFlow. A pretty nice and very helpful design for situations like this. But as I was building a ViewModel this week, I ran into an architecture design dilema.
-onPause Disclamer: The solution given below, might not be the best out there, so please feel free to give your thoughts and critics for this.
-onResume Let&rsquo;s consider this quick example:
-class SomeViewModel @ViewModelInject constructor( private val dependency1: Dependency1, private val dependency2 : Dependency2, @Assisted private val savedStateHandle: SavedStateHandle ) : ViewModel() { private val _state : MutableSharedFlow&lt;State&gt; = MutableSharedFlow() val state : SharedFlow&lt;State&gt; = _state.</div><div class="post-footer">
-        <a href="/posts/decorate_stateful_mvvm/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/shared-flow/">Usage of SharedFlow</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-27">2020-10-27</time></span></div><div class="content">onCreate With the 1.4 Update, kotlin coroutines brought us a lot of features and improvements. One of them was the introduction of SharedFlow. Basically, what I would like to call it, is simply a &ldquo;Single Event StateFlow&rdquo;. Remember single event LiveData workaround? Well, here you have it, but 100% kotlin, and not a workaround anymore. If you are more interested in an even more detailed explanation, follow this issue on Github, brought by Roman Elizarov.</div><div class="post-footer">
         <a href="/posts/shared-flow/">Read More</a><div class="post-tags">
@@ -109,6 +102,13 @@ Realm access from incorrect thread. Realm objects can only be accessed
 Realm &lt; 7.0: When you call Realm.</div><div class="post-footer">
         <a href="/posts/realm-7-frozen-throne/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/database/">Database</a>,&nbsp;<a href="/tags/reactive-programming/">Reactive Programming</a>,&nbsp;<a href="/tags/coroutines/">Coroutines</a>,&nbsp;<a href="/tags/android-realm/">Android Realm</a>,&nbsp;<a href="/tags/kotlin-flows/">Kotlin Flows</a>,&nbsp;<a href="/tags/kotlin-dsl/">Kotlin DSL</a>,&nbsp;<a href="/tags/kotlin-coroutines/">Kotlin Coroutines</a>,&nbsp;<a href="/tags/realm/">Realm</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/android-development/">Android Development</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/why-livedata-is-best-solution-yet-for-ui/">Why LiveData is the best solution (yet) for UI</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-05-23">2020-05-23</time></span></div><div class="content">Why LiveData is the best solution (yet) for UI
+As far as I am concerned, there are many developers who don&rsquo;t like LiveData. However, for the UI part, there is no better API to achieve MVVM (or even MVI,or stateful MVVM). Furthermore, makes the UI control very easy.
+There might have been some small misconceptions regarding the usage of it, but, if you use LiveData for the purpose it was created, I think that&rsquo;s far better than any other API (for the moment).</div><div class="post-footer">
+        <a href="/posts/why-livedata-is-best-solution-yet-for-ui/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-architecture-components./">Android Architecture Components.</a>,&nbsp;<a href="/tags/kotlin-flows/">Kotlin Flows</a>,&nbsp;<a href="/tags/android-lifecycle/">Android Lifecycle</a>,&nbsp;<a href="/tags/livedata/">LiveData</a>,&nbsp;<a href="/tags/kotlin-coroutines/">Kotlin Coroutines</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/kotlin-programming/">Kotlin programming</a>,&nbsp;<a href="/tags/android-development/">Android Development</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>

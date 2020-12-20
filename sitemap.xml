@@ -2,13 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://coroutinedispatcher.com/</loc><lastmod>2020-12-13T18:15:51&#43;01:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/posts/</loc><lastmod>2020-12-13T18:15:51&#43;01:00</lastmod></url><url>
-            <loc>http://coroutinedispatcher.com/posts/decorate_stateful_mvvm/</loc><lastmod>2020-12-13T18:15:51&#43;01:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/eventbus/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/kotlin/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/kotlin-coroutines/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/kotlin-flow/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
+            <loc>http://coroutinedispatcher.com/posts/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/sharedflow/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/stateflow/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
             <loc>http://coroutinedispatcher.com/tags/</loc><lastmod>2020-10-27T14:24:48&#43;01:00</lastmod></url><url>
