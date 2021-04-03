@@ -9,9 +9,10 @@
 <meta property="og:description" content="onCreate A new Dependency Injection library called Hilt was presented from the Google team. It was designed on top of Dagger library and provides a simpler, less boilerplate API to handle dependencies in an Android application. As first try, it was a real game changer. Therefore, we will make a short introduction to it, and then discuss about some opinions.
 Why was it build? First of all, Dagger was a little hard to start with, especially for beginners." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/first-look-on-hilt/" />
-<meta property="article:published_time" content="2020-06-11T21:04:00+02:00" />
-<meta property="article:modified_time" content="2020-06-11T21:04:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/first-look-on-hilt/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-11T21:04:00&#43;02:00" />
+<meta property="article:modified_time" content="2020-06-11T21:04:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="First look on Hilt"/>
 <meta name="twitter:description" content="onCreate A new Dependency Injection library called Hilt was presented from the Google team. It was designed on top of Dagger library and provides a simpler, less boilerplate API to handle dependencies in an Android application. As first try, it was a real game changer. Therefore, we will make a short introduction to it, and then discuss about some opinions.
@@ -130,24 +131,24 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
     </div>
 <h1 id="quick-start-on-hilt">Quick start on Hilt</h1>
 <p>Let&rsquo;s just start with modules. Since it is built on top of Dagger, there are some things which remain. Let&rsquo;s suppose we have this example:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Module</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Module</span>  
 <span class="k">object</span> <span class="nc">MyAppScopeDependenciesModule</span><span class="p">{</span>  
-  <span class="n">@Provides</span>  
-  <span class="n">@Singleton</span>  
+  <span class="nd">@Provides</span>  
+  <span class="nd">@Singleton</span>  
   <span class="k">fun</span> <span class="nf">provideDependency1</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep1</span> <span class="p">=</span> <span class="n">Dep1</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
    
-  <span class="n">@Provides</span>  
-  <span class="n">@Singleton</span>  
+  <span class="nd">@Provides</span>  
+  <span class="nd">@Singleton</span>  
   <span class="k">fun</span> <span class="nf">provideDependency2</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep2</span> <span class="p">=</span> <span class="n">Dep2</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
 <span class="p">}</span>
 </code></pre></div><p>And let&rsquo;s create a component just for the sake of the example (App level scope):</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Singleton</span>  
-<span class="n">@Component</span><span class="p">(</span><span class="n">modules</span> <span class="p">=</span> <span class="p">[</span><span class="n">MyAppScopeDependenciesModule</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Singleton</span>  
+<span class="nd">@Component</span><span class="p">(</span><span class="n">modules</span> <span class="p">=</span> <span class="p">[</span><span class="n">MyAppScopeDependenciesModule</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>  
 <span class="k">interface</span> <span class="nc">MyApplicationComponent</span><span class="p">{</span>  
   <span class="k">val</span> <span class="py">dependency1</span><span class="p">:</span> <span class="n">Dep1</span>  
   <span class="k">val</span> <span class="py">dependency2</span><span class="p">:</span> <span class="n">Dep2</span>  
    
-  <span class="n">@Component</span><span class="p">.</span><span class="n">Factory</span>  
+  <span class="nd">@Component</span><span class="p">.</span><span class="n">Factory</span>  
   <span class="k">interface</span> <span class="nc">Factory</span><span class="p">{</span>  
    <span class="k">fun</span> <span class="nf">create</span><span class="p">(</span><span class="n">application</span><span class="p">:</span> <span class="n">Application</span><span class="p">):</span> <span class="n">MyApplicationComponent</span>  
   <span class="p">}</span>  
@@ -155,7 +156,7 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
 </code></pre></div><p>And let&rsquo;s hit the Build button and then let&rsquo;s start importing dependencies:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MyApplication</span> <span class="p">:</span> <span class="n">Application</span><span class="p">(){</span>  
    
-  <span class="n">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span>  
+  <span class="nd">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span>  
    
   <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(){</span>  
     <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">()</span>  
@@ -165,37 +166,37 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
 <span class="p">}</span>  
 </code></pre></div><p>The relation between scopes and modules was always mysterious by them who never cared to check what the Dagger&rsquo;s annotation processor generated. Therefore, I must say that this was pretty well spotted by those who built Hilt. In Dagger, scoped modules were connected with scoped components by a stand-alone annotation, which provided nearly 0 information if these two (or more modules) were related.</p>
 <p>Now, let&rsquo;s try to build the above example with hilt:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Module</span>  
-<span class="n">@InstallIn</span><span class="p">(</span><span class="n">ApplicationComponent</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Module</span>  
+<span class="nd">@InstallIn</span><span class="p">(</span><span class="n">ApplicationComponent</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>  
 <span class="k">object</span> <span class="nc">MyAppScopeDependenciesModule</span><span class="p">{</span>  
-  <span class="n">@Provides</span>  
+  <span class="nd">@Provides</span>  
   <span class="k">fun</span> <span class="nf">provideDependency1</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep1</span> <span class="p">=</span> <span class="n">Dep1</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
    
-  <span class="n">@Provides</span>  
+  <span class="nd">@Provides</span>  
   <span class="k">fun</span> <span class="nf">provideDependency2</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dep2</span> <span class="p">=</span> <span class="n">Dep2</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">build</span><span class="p">()</span>  
 <span class="p">}</span>
 </code></pre></div><p>Before you hit Build button, that&rsquo;s all you need with Hilt.</p>
 <h3 id="where-is-my-component">Where is my component?</h3>
 <p>Hilt provides the component for you. No need there for creating a component or a scope. Think of components and scopes as they were merged together. And actually, this is why Hilt is a game changer. <a href="https://dagger.dev/hilt/component-hierarchy.svg" target="_blank" rel="noopener noreffer">Here</a>is the component hierarchy needed to be used in Android apps, coming from <code>dagger.hilt.android.components.*</code>. Basically, you know your dependencies life length, and now you know where to install it. One last step, let&rsquo;s perform Dependency Injection:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@HiltAndroidApp</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@HiltAndroidApp</span>  
 <span class="k">class</span> <span class="nc">MyApplication</span> <span class="p">:</span> <span class="n">Application</span><span class="p">(){</span>  
    
-  <span class="n">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span>  
+  <span class="nd">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span>  
    
   <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(){</span>  
     <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">()</span>  
-    <span class="p">...</span>  
+    <span class="o">..</span><span class="p">.</span>  
   <span class="p">}</span>  
 <span class="p">}</span>
 </code></pre></div><p>Also, if you want to perform DI in Activities, Fragments, Views, Services or Broadcast receivers, there is no need anymore for <code>AndroidInjection.inject(this)</code>. Instead just mark them with <code>@AndroidEntryPoint</code> at the top of the class:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@AndroidEntryPoint</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@AndroidEntryPoint</span>  
 <span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="n">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>  
   <span class="c1">// either comming from an ActivityComponent or ApplicationComponent  
-</span><span class="c1"></span>  <span class="n">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dependency</span><span class="p">:</span> <span class="n">Dependency</span>  
+</span><span class="c1"></span>  <span class="nd">@Inject</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">dependency</span><span class="p">:</span> <span class="n">Dependency</span>  
    
   <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">()</span> <span class="p">{</span>  
     <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">()</span>  
-    <span class="p">...</span>  
+    <span class="o">..</span><span class="p">.</span>  
   <span class="p">}</span>  
 <span class="p">}</span>
 </code></pre></div><div class="details admonition note open">
@@ -208,30 +209,30 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
     </div>
 <h3 id="is-that-the-best-it-can-do">Is that the best it can do?</h3>
 <p>Nope, Hilt has also finally solved the problem of <code>ViewModel</code>s instantiate process and in general, having runtime and build time dependencies in the constructor at once. Before Hilt, I used to install <a href="https://github.com/square/AssistedInject" target="_blank" rel="noopener noreffer">AssistedInject</a>to manage creating <code>saveStateHandle</code> properly and there is a <a href="https://www.coroutinedispatcher.com/2019/08/how-to-produce-savedstatehandle-in-your.html" target="_blank" rel="noopener noreffer">full tutorial</a> on how to do that. But let&rsquo;s also do something simple as a short presentation:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MyViewModel</span> <span class="n">@AssistedInject</span> <span class="k">constructor</span><span class="p">(</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MyViewModel</span> <span class="nd">@AssistedInject</span> <span class="k">constructor</span><span class="p">(</span>  
   <span class="k">private</span> <span class="k">val</span> <span class="py">dep1</span><span class="p">:</span> <span class="n">Dep1</span><span class="p">,</span>  
-  <span class="n">@Assisted</span> <span class="k">private</span> <span class="k">val</span> <span class="py">saveStateHandle</span><span class="p">:</span> <span class="n">SaveStateHandle</span>  
+  <span class="nd">@Assisted</span> <span class="k">private</span> <span class="k">val</span> <span class="py">saveStateHandle</span><span class="p">:</span> <span class="n">SaveStateHandle</span>  
 <span class="p">){</span>  
    
-  <span class="n">@AssistedInject</span><span class="p">.</span><span class="n">Factory</span>  
+  <span class="nd">@AssistedInject</span><span class="p">.</span><span class="n">Factory</span>  
   <span class="k">interface</span> <span class="nc">Factory</span><span class="p">{</span>  
     <span class="k">fun</span> <span class="nf">create</span><span class="p">(</span><span class="n">saveStateHandle</span><span class="p">:</span> <span class="n">SaveStateHandle</span><span class="p">)</span> <span class="p">:</span> <span class="n">MyViewModel</span>  
   <span class="p">}</span>  
 <span class="p">}</span>
 </code></pre></div><p>And then install a module for it:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@AssistedModule</span>  
-<span class="n">@Module</span><span class="p">(</span><span class="n">includes</span> <span class="p">=</span> <span class="p">[</span><span class="n">AssistedInject_ViewModelModule</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@AssistedModule</span>  
+<span class="nd">@Module</span><span class="p">(</span><span class="n">includes</span> <span class="p">=</span> <span class="p">[</span><span class="n">AssistedInject_ViewModelModule</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>  
 <span class="k">abstract</span> <span class="k">class</span> <span class="nc">ViewModelModule</span>
 </code></pre></div><p>And then expose the ViewModel in the <code>AppComponent</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Component</span><span class="p">(...)</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Component</span><span class="p">(</span><span class="o">..</span><span class="p">.)</span>  
 <span class="k">interface</span> <span class="nc">AppComponent</span><span class="p">{</span>  
-  <span class="p">...</span>  
+  <span class="o">..</span><span class="p">.</span>  
   <span class="k">val</span> <span class="py">vmFactory</span><span class="p">:</span> <span class="n">MyViewModel</span><span class="p">.</span><span class="n">Factory</span>  
-  <span class="p">...</span>  
+  <span class="o">..</span><span class="p">.</span>  
 <span class="p">}</span>
 </code></pre></div><p>And after that I could have a ViewModel happily ever after in my Fragment:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">inline</span> <span class="k">fun</span>  <span class="nf">Fragment</span><span class="p">.</span><span class="n">viewModelFactory</span><span class="p">(</span>  
-    <span class="k">crossinline</span> <span class="n">provider</span><span class="p">:</span> <span class="p">(</span><span class="n">SavedStateHandle</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">T</span>  
+    <span class="k">crossinline</span> <span class="n">provider</span><span class="p">:</span> <span class="p">(</span><span class="n">SavedStateHandle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>  
 <span class="p">)</span> <span class="p">=</span> <span class="n">viewModels</span> <span class="p">{</span>  
     <span class="k">object</span> <span class="err">: </span><span class="nc">AbstractSavedStateViewModelFactory</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">fragment</span><span class="p">.</span><span class="n">arguments</span> <span class="o">?:</span> <span class="n">Bundle</span><span class="p">())</span> <span class="p">{</span>  
         <span class="k">override</span> <span class="k">fun</span>  <span class="nf">create</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">,</span> <span class="n">handle</span><span class="p">:</span> <span class="n">SavedStateHandle</span><span class="p">):</span> <span class="n">T</span> <span class="p">=</span>  
@@ -241,9 +242,9 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
    
 <span class="k">class</span> <span class="nc">HomeFragment</span> <span class="p">:</span> <span class="n">Fragment</span><span class="p">()</span> <span class="p">{</span>  
    
-    <span class="k">private</span> <span class="k">val</span> <span class="py">myViewModel</span> <span class="k">by</span> <span class="n">viewModelFactory</span> <span class="p">{</span> <span class="n">Application</span><span class="p">.</span><span class="n">component</span><span class="p">().</span><span class="n">vmFactory</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>  
+    <span class="k">private</span> <span class="k">val</span> <span class="py">myViewModel</span> <span class="k">by</span> <span class="n">viewModelFactory</span> <span class="p">{</span> <span class="n">Application</span><span class="p">.</span><span class="n">component</span><span class="p">().</span><span class="n">vmFactory</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="k">it</span><span class="p">)</span> <span class="p">}</span>  
    
-    <span class="p">...</span>  
+    <span class="o">..</span><span class="p">.</span>  
  <span class="p">}</span>
 </code></pre></div><div class="details admonition note open">
         <div class="details-summary admonition-title">
@@ -255,9 +256,9 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
     </div>
 <p>Having to do all this steps for just a ViewModel was painful, not to mention that <code>AssistedInject</code> still had a lot to do (Or I could use Koin, but that is not the topic at the moment).</p>
 <p>While with Hilt, it is pretty simple:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">EditorViewModel</span> <span class="n">@ViewModelInject</span> <span class="k">constructor</span><span class="p">(</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">EditorViewModel</span> <span class="nd">@ViewModelInject</span> <span class="k">constructor</span><span class="p">(</span>  
     <span class="k">private</span> <span class="k">val</span> <span class="py">playgroundRepository</span><span class="p">:</span> <span class="n">PlaygroundRepository</span><span class="p">,</span>  
-    <span class="n">@Assisted</span> <span class="k">private</span> <span class="k">val</span> <span class="py">savedStateHandle</span><span class="p">:</span> <span class="n">SavedStateHandle</span>  
+    <span class="nd">@Assisted</span> <span class="k">private</span> <span class="k">val</span> <span class="py">savedStateHandle</span><span class="p">:</span> <span class="n">SavedStateHandle</span>  
 <span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{}</span>
 </code></pre></div><p>After that, nothing else is needed. Just import the ViewModel as you normally do:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//inside Fragment  
@@ -305,8 +306,8 @@ Why was it build? First of all, Dagger was a little hard to start with, especial
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

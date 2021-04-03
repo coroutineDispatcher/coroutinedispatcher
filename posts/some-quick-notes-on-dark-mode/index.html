@@ -14,9 +14,10 @@ What I wanted to achieve:
 The setup:
 The only thing you need to do to get your app ready for dark mode is the themes tag and the AppCompatDelegate class." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/some-quick-notes-on-dark-mode/" />
-<meta property="article:published_time" content="2019-09-09T10:03:00+02:00" />
-<meta property="article:modified_time" content="2019-09-09T10:03:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/some-quick-notes-on-dark-mode/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-09-09T10:03:00&#43;02:00" />
+<meta property="article:modified_time" content="2019-09-09T10:03:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Some quick notes on Dark Mode"/>
 <meta name="twitter:description" content="The dark mode, perhaps is one of the easiest functionality to implement without breaking literally anything in existing project. However, it has it&rsquo;s own hidden costs, tricks. Before implementing the Dark mode, what is most important is that your project must be ready for dark mode.
@@ -124,7 +125,7 @@ The only thing you need to do to get your app ready for dark mode is the themes 
         alt="https://1.bp.blogspot.com/-BnND1T8D_og/XXVL25pkwkI/AAAAAAAAPKo/3IsLKRX9B5QnqLNE6xFh7DTy8qopaM_WQCLcBGAs/s400/Screenshot_20190908-204008__01.jpg"
         title="https://1.bp.blogspot.com/-BnND1T8D_og/XXVL25pkwkI/AAAAAAAAPKo/3IsLKRX9B5QnqLNE6xFh7DTy8qopaM_WQCLcBGAs/s400/Screenshot_20190908-204008__01.jpg" /></a></p>
 <p><strong>The setup:</strong><br>
-The only thing you need to do to get your app ready for dark mode is the themes tag and the AppCompatDelegate class. The rest depends on your project. So instead of some &lt;style name=&quot;AppTheme&rdquo; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt; you just need the &lt;style name=&quot;AppTheme&rdquo; parent=&quot;Theme.AppCompat.DayNight&quot;&gt; . The code for dark mode/light mode is pretty simple:</p>
+The only thing you need to do to get your app ready for dark mode is the themes tag and the AppCompatDelegate class. The rest depends on your project. So instead of some &lt;style name=&ldquo;AppTheme&rdquo; parent=&ldquo;Theme.AppCompat.Light.DarkActionBar&rdquo;&gt; you just need the &lt;style name=&ldquo;AppTheme&rdquo; parent=&ldquo;Theme.AppCompat.DayNight&rdquo;&gt; . The code for dark mode/light mode is pretty simple:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//dark mode
 </span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">setDefaultNightMode</span><span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_YES</span><span class="p">)</span>
 
@@ -132,10 +133,10 @@ The only thing you need to do to get your app ready for dark mode is the themes 
 </span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">setDefaultNightMode</span><span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_NO</span><span class="p">)</span>
 
 <span class="c1">//asking if dark mode is on:
-</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_YES</span>
+</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="o">==</span> <span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_YES</span>
 
 <span class="c1">//asking if light mode is on:
-</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_NO</span>
+</span><span class="c1"></span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="o">==</span> <span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">MODE_NIGHT_NO</span>
 </code></pre></div><p>_Note: These are not the <a href="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme" target="_blank" rel="noopener noreffer">only states.</a> _</p>
 <p><strong>The problems I faced:</strong></p>
 <p><strong>The drawer:</strong><br>
@@ -163,7 +164,7 @@ First of all,  if you notice the drawer on the Light mode, you will see that th
             <span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">MODE_NIGHT_YES</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="o">==</span> <span class="n">MODE_NIGHT_YES</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">nav_view</span><span class="p">.</span><span class="n">itemTextColor</span> <span class="p">=</span> <span class="n">colorListText</span>
             <span class="n">nav_view</span><span class="p">.</span><span class="n">itemIconTintList</span> <span class="p">=</span> <span class="n">colorListItems</span>
         <span class="p">}</span>
@@ -174,7 +175,7 @@ There is two options in this part of the problem. Well, my background colors or 
 <p><strong>The toolbar:</strong><br>
 Yes. We should be careful with the toolbar. Once you implement the dark theme, you may not want your toolbar to have a black text as well. So you just change it&rsquo;s behavior to:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">fun</span> <span class="nf">checkToolbar</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="p">==</span> <span class="n">MODE_NIGHT_YES</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">AppCompatDelegate</span><span class="p">.</span><span class="n">getDefaultNightMode</span><span class="p">()</span> <span class="o">==</span> <span class="n">MODE_NIGHT_YES</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">toolbar</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">setTheme</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">ThemeOverlay_MaterialComponents_Dark</span><span class="p">)</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
             <span class="n">toolbar</span><span class="p">.</span><span class="n">context</span><span class="p">.</span><span class="n">setTheme</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">ThemeOverlay_MaterialComponents_Light</span><span class="p">)</span>
@@ -213,8 +214,8 @@ Perhaps yes. You may try to code all this from the theme tag on the styles.xml. 
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

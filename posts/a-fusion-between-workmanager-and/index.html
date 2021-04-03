@@ -6,16 +6,17 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>A fusion between WorkManager and AlarmManager - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="A fusion between WorkManager and AlarmManager" />
-<meta property="og:description" content="Androids&rsquo; WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to respect doze mode, I should respect that too. That means that if the phone is idle, the WorkManager wont run.
+<meta property="og:description" content="Androids&#39; WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to respect doze mode, I should respect that too. That means that if the phone is idle, the WorkManager wont run.
 **Lets explore my case: **
 Once the user logs into my app, I need to schedule 5 alarms for him." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/a-fusion-between-workmanager-and/" />
-<meta property="article:published_time" content="2019-07-04T16:50:00+02:00" />
-<meta property="article:modified_time" content="2019-07-04T16:50:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/a-fusion-between-workmanager-and/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-07-04T16:50:00&#43;02:00" />
+<meta property="article:modified_time" content="2019-07-04T16:50:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="A fusion between WorkManager and AlarmManager"/>
-<meta name="twitter:description" content="Androids&rsquo; WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to respect doze mode, I should respect that too. That means that if the phone is idle, the WorkManager wont run.
+<meta name="twitter:description" content="Androids&#39; WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to respect doze mode, I should respect that too. That means that if the phone is idle, the WorkManager wont run.
 **Lets explore my case: **
 Once the user logs into my app, I need to schedule 5 alarms for him."/>
 <meta name="application-name" content="LoveIt">
@@ -96,7 +97,7 @@ Once the user logs into my app, I need to schedule 5 alarms for him."/>
         data-sizes="auto"
         alt="https://1.bp.blogspot.com/-cBmyvI9l1KE/XR33JLsEfuI/AAAAAAAAOQI/2bhkhV83w80kQFDBB1YfluauNsQaA_yCACLcBGAs/s1600/brooke-campbell-Rw2-Y0nSIKQ-unsplash.jpg"
         title="https://1.bp.blogspot.com/-cBmyvI9l1KE/XR33JLsEfuI/AAAAAAAAOQI/2bhkhV83w80kQFDBB1YfluauNsQaA_yCACLcBGAs/s1600/brooke-campbell-Rw2-Y0nSIKQ-unsplash.jpg" /></a></p>
-<p>Androids&rsquo; WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to <a href="https://issuetracker.google.com/issues/110312013" target="_blank" rel="noopener noreffer">respect doze mode</a>, I should respect that too. That means that if the phone is idle, the WorkManager wont run.</p>
+<p>Androids' WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to <a href="https://issuetracker.google.com/issues/110312013" target="_blank" rel="noopener noreffer">respect doze mode</a>, I should respect that too. That means that if the phone is idle, the WorkManager wont run.</p>
 <p>**Lets explore my case: **<br>
 Once the user logs into my app, I need to schedule 5 alarms for him. But the alarm times come from a server and not locally. So basically I need some background work to do: <br>
 Sync timing -&gt; Save to database -&gt; Schedule Alarms. (btw on the time alarm will fire, it&rsquo;s just a notification to be shown)<br>
@@ -142,7 +143,7 @@ First of all, if anyone is curious why I chose WorkManagerover JobScheduleror ev
 <span class="p">}</span>
 </code></pre></div><p>Since I love coroutines and I am using them everywhere, I am using the WorkManagerby extending CoroutineWorker. So the method where all my sync happens is named doWork which btw is a suspending method handled by the Android framework itself. By the way is hell lot of data.</p>
 <p>And now, lets jump into my OfflineScheduler:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">OfflineScheduler</span> <span class="n">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">OfflineScheduler</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
     <span class="k">val</span> <span class="py">sharedPrefs</span><span class="p">:</span> <span class="n">MSharedPref</span><span class="p">,</span>
     <span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Application</span><span class="p">,</span>
     <span class="k">val</span> <span class="py">dao</span><span class="p">:</span> <span class="n">MyDao</span>
@@ -150,7 +151,7 @@ First of all, if anyone is curious why I chose WorkManagerover JobScheduleror ev
 
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">initScheduler</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">currentDaySelection</span> <span class="p">=</span> <span class="n">dao</span><span class="p">.</span><span class="n">seletAllSavedData</span><span class="p">()</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">currentDaySelection</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">currentDaySelection</span> <span class="o">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">scheduleNotificationTimes</span><span class="p">(</span><span class="n">currentDaySelection</span><span class="p">)</span>
             <span class="n">invokeTomorrowAlarm</span><span class="p">()</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -167,7 +168,7 @@ First of all, if anyone is curious why I chose WorkManagerover JobScheduleror ev
 </code></pre></div><p>Once the alarm has been set, Android &ldquo;waits&rdquo; until the time comes and brings my code here:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">NotificationReceiver</span> <span class="p">:</span> <span class="n">BroadcastReceiver</span><span class="p">()</span> <span class="p">{</span>
 
-    <span class="k">private</span> <span class="k">val</span> <span class="py">CHANNEL_ID</span> <span class="p">=</span> <span class="s">&#34;daily_notification&#34;</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">CHANNEL_ID</span> <span class="p">=</span> <span class="s2">&#34;daily_notification&#34;</span>
 
     <span class="k">override</span> <span class="k">fun</span> <span class="nf">onReceive</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">?,</span> <span class="n">intent</span><span class="p">:</span> <span class="n">Intent</span><span class="p">?)</span> <span class="p">{</span>
         <span class="n">showNotifications</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">intent</span><span class="p">)</span>
@@ -192,7 +193,7 @@ And second of all how do I schedule my notifications whem the phone reboots? �
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">AlarmRebootReceiver</span> <span class="p">:</span> <span class="n">BroadcastReceiver</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="k">override</span> <span class="k">fun</span> <span class="nf">onReceive</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">?,</span> <span class="n">intent</span><span class="p">:</span> <span class="n">Intent</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">intent</span><span class="o">?.</span><span class="n">action</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="s">&#34;android.intent.action.BOOT_COMPLETED&#34;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">intent</span><span class="o">?.</span><span class="n">action</span><span class="p">.</span><span class="n">equals</span><span class="p">(</span><span class="s2">&#34;android.intent.action.BOOT_COMPLETED&#34;</span><span class="p">))</span> <span class="p">{</span>
         <span class="c1">//phone has rebooted
 </span><span class="c1"></span>        <span class="k">val</span> <span class="py">offlineScheduler</span> <span class="p">=</span> <span class="n">SingletonInstance</span><span class="p">.</span><span class="n">getOfflineScheduler</span><span class="p">()</span>
         <span class="n">GlobalScope</span><span class="p">.</span><span class="n">launch</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span> <span class="p">{</span>
@@ -232,8 +233,8 @@ And second of all how do I schedule my notifications whem the phone reboots? �
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

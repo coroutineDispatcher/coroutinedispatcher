@@ -9,9 +9,10 @@
 <meta property="og:description" content="While the Android architecture made development simpler, we should always be aware of the Lifecycle and with that, the right way to provide ViewModels. Creating one ViewModel factory for each Fragment and ViewModel you have is really expensive, bad architecture, and too much unnecessary code. Not to mention the fact that you should care about scopes, dependencies, components modules when using Dagger for DI.
 You can have a simple &ldquo;generic&rdquo; ViewModel factory for all your app as a Singleton, with the help of Kotlin Reflection and Daggers Multibinding." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/dagger-multibindings-saved-my-time/" />
-<meta property="article:published_time" content="2019-08-08T14:03:00+02:00" />
-<meta property="article:modified_time" content="2019-08-08T14:03:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/dagger-multibindings-saved-my-time/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-08-08T14:03:00&#43;02:00" />
+<meta property="article:modified_time" content="2019-08-08T14:03:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Dagger Multibindings saved my time"/>
 <meta name="twitter:description" content="While the Android architecture made development simpler, we should always be aware of the Lifecycle and with that, the right way to provide ViewModels. Creating one ViewModel factory for each Fragment and ViewModel you have is really expensive, bad architecture, and too much unnecessary code. Not to mention the fact that you should care about scopes, dependencies, components modules when using Dagger for DI.
@@ -96,16 +97,16 @@ You can have a simple &ldquo;generic&rdquo; ViewModel factory for all your app a
         title="https://1.bp.blogspot.com/-SBLyu47iAJ4/XUwNvy21LDI/AAAAAAAAOwQ/l8KVGYZMkiAVyLUgKHYy0h81nHVEjPECACLcBGAs/s1600/capturing-the-human-heart-TrhLCn1abMU-unsplash.jpg" /></a></p>
 <p>While the Android architecture made development simpler, we should always be aware of the Lifecycle and with that, the right way to provide ViewModels. Creating one ViewModel factory for each Fragment and ViewModel you have is really expensive, bad architecture, and too much unnecessary code.  Not to mention the fact that you should care about scopes, dependencies, components modules when using Dagger for DI.</p>
 <p>You can have a simple &ldquo;generic&rdquo; ViewModel factory for all your app as a Singleton, with the help of Kotlin Reflection and Daggers Multibinding.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ApplicationScope</span> <span class="c1">//this is my singleton
-</span><span class="c1"></span><span class="k">class</span> <span class="nc">MySingletonViewModelFactory</span> <span class="n">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
-    <span class="k">private</span> <span class="k">val</span> <span class="py">creators</span><span class="p">:</span> <span class="n">Map</span><span class="p">&lt;</span><span class="n">Class</span><span class="p">&lt;</span><span class="k">out</span> <span class="n">ViewModel</span><span class="p">&gt;,</span> <span class="n">@JvmSuppressWildcards</span> <span class="n">Provider</span><span class="p">&lt;</span><span class="n">ViewModel</span><span class="p">&gt;&gt;</span> <span class="c1">//dagger multibinding
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@ApplicationScope</span> <span class="c1">//this is my singleton
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">MySingletonViewModelFactory</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">creators</span><span class="p">:</span> <span class="n">Map</span><span class="p">&lt;</span><span class="n">Class</span><span class="p">&lt;</span><span class="k">out</span> <span class="n">ViewModel</span><span class="p">&gt;,</span> <span class="nd">@JvmSuppressWildcards</span> <span class="n">Provider</span><span class="p">&lt;</span><span class="n">ViewModel</span><span class="p">&gt;&gt;</span> <span class="c1">//dagger multibinding
 </span><span class="c1"></span><span class="p">)</span> <span class="p">:</span> <span class="n">ViewModelProvider</span><span class="p">.</span><span class="n">Factory</span> <span class="p">{</span>
-    <span class="k">override</span> <span class="k">fun</span> &lt;T : ViewModel&gt; <span class="nf">create</span><span class="p">(</span><span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;):</span> <span class="n">T</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">&gt;</span> <span class="nf">create</span><span class="p">(</span><span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;):</span> <span class="n">T</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">creator</span> <span class="p">=</span> <span class="n">creators</span><span class="p">[</span><span class="n">modelClass</span><span class="p">]</span> <span class="o">?:</span> <span class="n">creators</span><span class="p">.</span><span class="n">entries</span><span class="p">.</span><span class="n">firstOrNull</span> <span class="p">{</span>
-            <span class="n">modelClass</span><span class="p">.</span><span class="n">isAssignableFrom</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="n">key</span><span class="p">)</span> <span class="c1">//which means: does it extend a ViewModel or what?
-</span><span class="c1"></span>        <span class="p">}</span><span class="o">?.</span><span class="n">value</span> <span class="o">?:</span> <span class="k">throw</span> <span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;unknown model class $modelClass&#34;</span><span class="p">)</span>
+            <span class="n">modelClass</span><span class="p">.</span><span class="n">isAssignableFrom</span><span class="p">(</span><span class="k">it</span><span class="p">.</span><span class="n">key</span><span class="p">)</span> <span class="c1">//which means: does it extend a ViewModel or what?
+</span><span class="c1"></span>        <span class="p">}</span><span class="o">?.</span><span class="n">value</span> <span class="o">?:</span> <span class="k">throw</span> <span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s2">&#34;unknown model class </span><span class="si">$modelClass</span><span class="s2">&#34;</span><span class="p">)</span>
         <span class="k">try</span> <span class="p">{</span>
-            <span class="n">@Suppress</span><span class="p">(</span><span class="s">&#34;UNCHECKED_CAST&#34;</span><span class="p">)</span>
+            <span class="nd">@Suppress</span><span class="p">(</span><span class="s2">&#34;UNCHECKED_CAST&#34;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">creator</span><span class="p">.</span><span class="k">get</span><span class="p">()</span> <span class="k">as</span> <span class="n">T</span>
         <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Exception</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
@@ -114,58 +115,58 @@ You can have a simple &ldquo;generic&rdquo; ViewModel factory for all your app a
 <span class="p">}</span>
 </code></pre></div><p>What is provided here is a class, which has a Map in the constructor and extending the ViewModelProvider.Factory. On the only method it has, we are just going to provide our own instance of the ViewModel we need, which is the key of the map, and when that dependency is available we are going to require its particular dependencies which are &ldquo;stored&rdquo; in the value of that map. We can place as many ViewModels as we need, and this will be achieved by Dagger Multibinding. So it&rsquo;s just a Map&lt;SomeViewModels, AndSomeViewModeldependencies&gt;. The dependencies cannot just appear directly, so with the help of Provider<!-- raw HTML omitted --> they arrive on the moment the ViewModel has just started. The @JvmSuppressWildcards is just making sure that the explicit Provider<!-- raw HTML omitted --> will be on the Java generated files.</p>
 <p>To put what we need on that map, Dagger has a nice way of doing it. First, you need to create an annotation which will pass the key to the map:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Target</span><span class="p">(</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Target</span><span class="p">(</span>
     <span class="n">AnnotationTarget</span><span class="p">.</span><span class="n">FUNCTION</span><span class="p">,</span>
     <span class="n">AnnotationTarget</span><span class="p">.</span><span class="n">PROPERTY_GETTER</span><span class="p">,</span>
     <span class="n">AnnotationTarget</span><span class="p">.</span><span class="n">PROPERTY_SETTER</span>
 <span class="p">)</span>
-<span class="n">@Retention</span><span class="p">(</span><span class="n">AnnotationRetention</span><span class="p">.</span><span class="n">RUNTIME</span><span class="p">)</span>
-<span class="n">@MapKey</span>
+<span class="nd">@Retention</span><span class="p">(</span><span class="n">AnnotationRetention</span><span class="p">.</span><span class="n">RUNTIME</span><span class="p">)</span>
+<span class="nd">@MapKey</span>
 <span class="k">annotation</span> <span class="k">class</span> <span class="nc">ViewModelKey</span><span class="p">(</span><span class="k">val</span> <span class="py">value</span><span class="p">:</span> <span class="n">KClass</span><span class="p">&lt;</span><span class="k">out</span> <span class="n">ViewModel</span><span class="p">&gt;)</span>
 </code></pre></div><p>For example: To access HomeViewModel dependencies, we need a key, which happens to be the class itself. After that, what is needed is just to &ldquo;put&rdquo; those ViewModels in the map:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Suppress</span><span class="p">(</span><span class="s">&#34;unused&#34;</span><span class="p">)</span>
-<span class="n">@Module</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Suppress</span><span class="p">(</span><span class="s2">&#34;unused&#34;</span><span class="p">)</span>
+<span class="nd">@Module</span>
 <span class="k">abstract</span> <span class="k">class</span> <span class="nc">ViewModelModule</span> <span class="p">{</span>
-    <span class="n">@Binds</span> <span class="c1">//provides the &#34;generic&#34; ViewModel factory created
+    <span class="nd">@Binds</span> <span class="c1">//provides the &#34;generic&#34; ViewModel factory created
 </span><span class="c1"></span>    <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">bindsViewModelFactory</span><span class="p">(</span><span class="n">factory</span><span class="p">:</span> <span class="n">MySingletonViewModelFactory</span><span class="p">):</span> <span class="n">ViewModelProvider</span><span class="p">.</span><span class="n">Factory</span>
 
-    <span class="n">@Binds</span>
-    <span class="n">@IntoMap</span> <span class="c1">//puts our viewmodels into the map
-</span><span class="c1"></span>    <span class="n">@ViewModelKey</span><span class="p">(</span><span class="n">GalleryViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+    <span class="nd">@Binds</span>
+    <span class="nd">@IntoMap</span> <span class="c1">//puts our viewmodels into the map
+</span><span class="c1"></span>    <span class="nd">@ViewModelKey</span><span class="p">(</span><span class="n">GalleryViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
     <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">bindsGalleryViewModel</span><span class="p">(</span><span class="n">viewModel</span><span class="p">:</span> <span class="n">GalleryViewModel</span><span class="p">):</span> <span class="n">ViewModel</span>
 
-    <span class="n">@Binds</span>
-    <span class="n">@IntoMap</span>
-    <span class="n">@ViewModelKey</span><span class="p">(</span><span class="n">HomeViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+    <span class="nd">@Binds</span>
+    <span class="nd">@IntoMap</span>
+    <span class="nd">@ViewModelKey</span><span class="p">(</span><span class="n">HomeViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
     <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">bindsHomeViewModel</span><span class="p">(</span><span class="n">viewModel</span><span class="p">:</span> <span class="n">HomeViewModel</span><span class="p">):</span> <span class="n">ViewModel</span>
 
-    <span class="n">@Binds</span>
-    <span class="n">@IntoMap</span>
-    <span class="n">@ViewModelKey</span><span class="p">(</span><span class="n">MapViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+    <span class="nd">@Binds</span>
+    <span class="nd">@IntoMap</span>
+    <span class="nd">@ViewModelKey</span><span class="p">(</span><span class="n">MapViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
     <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">bindsMapViewModel</span><span class="p">(</span><span class="n">viewModel</span><span class="p">:</span> <span class="n">MapViewModel</span><span class="p">):</span> <span class="n">ViewModel</span>
 
-    <span class="n">@Binds</span>
-    <span class="n">@IntoMap</span>
-    <span class="n">@ViewModelKey</span><span class="p">(</span><span class="n">NamesViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+    <span class="nd">@Binds</span>
+    <span class="nd">@IntoMap</span>
+    <span class="nd">@ViewModelKey</span><span class="p">(</span><span class="n">NamesViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
     <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">bindsNamesViewModel</span><span class="p">(</span><span class="n">viewModel</span><span class="p">:</span> <span class="n">NamesViewModel</span><span class="p">):</span> <span class="n">ViewModel</span>
 
     <span class="c1">//....Lot of other ViewModels
 </span><span class="c1"></span>
     <span class="p">}</span>
 </code></pre></div><p>Remember, we are in @Singleton scope (although in the example using a custom annotation, personal preference). So, where are the values (dependencies) for each key provided? They just appear when the ViewModel is instantiated. And that&rsquo;s amazing about how Dagger solves DI problem in the Java/Kotlin/Android world:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">HomeViewModel</span> <span class="n">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">HomeViewModel</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
     <span class="k">private</span> <span class="k">val</span> <span class="py">homeRepository</span><span class="p">:</span> <span class="n">HomeRepository</span>
 <span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{</span>
 <span class="p">}</span>
 </code></pre></div><p>And when injecting a ViewModel factory:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">HomeFragment</span> <span class="p">:</span> <span class="n">BaseFragment</span><span class="p">()</span> <span class="p">{</span>
 
-    <span class="n">@Inject</span>
+    <span class="nd">@Inject</span>
     <span class="k">lateinit</span> <span class="k">var</span> <span class="py">factory</span><span class="p">:</span> <span class="n">ViewModelProvider</span><span class="p">.</span><span class="n">Factory</span>
     <span class="k">private</span> <span class="k">val</span> <span class="py">homeViewModel</span> <span class="k">by</span> <span class="n">viewModels</span><span class="p">&lt;</span><span class="n">HomeViewModel</span><span class="p">&gt;</span> <span class="p">{</span> <span class="n">factory</span> <span class="p">}</span>
 
 
-<span class="p">.....</span> <span class="n">other</span> <span class="n">stuff</span>
+<span class="o">....</span><span class="p">.</span> <span class="n">other</span> <span class="n">stuff</span>
 <span class="p">}</span>
 </code></pre></div><p>Remember, all this work is not done just for a Repository, each ViewModel implementation might have different dependencies.</p>
 <p><strong>Conclusion:</strong></p>
@@ -198,8 +199,8 @@ You can have a simple &ldquo;generic&rdquo; ViewModel factory for all your app a
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

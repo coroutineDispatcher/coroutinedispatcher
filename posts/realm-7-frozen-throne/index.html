@@ -11,9 +11,10 @@ A lot of us might have faced this issue:
 Realm access from incorrect thread. Realm objects can only be accessed on the thread they were created. I believe the error speaks for itself.
 Realm &lt; 7.0: When you call Realm." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/realm-7-frozen-throne/" />
-<meta property="article:published_time" content="2020-05-30T19:52:00+02:00" />
-<meta property="article:modified_time" content="2020-05-30T19:52:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/realm-7-frozen-throne/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-30T19:52:00&#43;02:00" />
+<meta property="article:modified_time" content="2020-05-30T19:52:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Realm 7, the frozen throne"/>
 <meta name="twitter:description" content="onCreate As many of us might know, Realm has already introduced freezing objects. Personally, I have been waiting for long time for such feature. So, what actual problem does this solve?
@@ -124,32 +125,32 @@ Realm &lt; 7.0: When you call Realm."/>
 <p>When you call <code>Realm.getDefaultInstance()</code> you are not creating a new object every time you call this method. However, having it on every method is somehow ugly. In cases when you need the object in another thread, it is impossible to use it without a DTO helper data class.</p>
 <p>Let&rsquo;s consider the following case:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">realm</span><span class="p">:</span> <span class="n">Realm</span>  
-<span class="p">...</span>  
+<span class="o">..</span><span class="p">.</span>  
 <span class="k">override</span> <span class="k">var</span> <span class="py">onCreate</span><span class="p">(){</span>  
- <span class="p">...</span>  
+ <span class="o">..</span><span class="p">.</span>  
  <span class="n">realm</span> <span class="p">=</span> <span class="n">Realm</span><span class="p">.</span><span class="n">getDefaultInstance</span><span class="p">()</span> <span class="c1">// Main thread  
 </span><span class="c1"></span><span class="p">}</span>  
    
 <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="p">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">){</span>  
     <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="n">realm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">MyRealmObject</span><span class="p">&gt;().</span><span class="n">findFirst</span><span class="p">()</span> <span class="c1">//Crash  
 </span><span class="c1"></span>    <span class="n">result</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>  
-        <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&#34;${it.id}&#34;</span><span class="p">)</span>  
+        <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${it.id}</span><span class="s2">&#34;</span><span class="p">)</span>  
   	<span class="p">}</span>  
  <span class="p">}</span>
 </code></pre></div><p>Every time we have to start a realm interaction, we have to call <code>Realm.getDefaultInstance()</code> before, every time you are in a new thread. Otherwise, it would bring the error mentioned above. If you want a sinlge, app-scope <code>Realm</code> instance, you have to make <a href="https://stackoverflow.com/questions/46334631/dagger-2-should-i-use-a-singleton-realm-instance" target="_blank" rel="noopener noreffer">some workaround</a>.</p>
 <p>Same would have happened if you were to read an <code>RealmObject</code> or a <code>RealmResults&lt;T&gt;</code>:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">realm</span><span class="p">:</span> <span class="n">Realm</span>  
 <span class="k">private</span> <span class="k">var</span> <span class="py">myObject</span><span class="p">:</span> <span class="n">MyRealmObject</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>  
-<span class="p">...</span>  
+<span class="o">..</span><span class="p">.</span>  
 <span class="k">override</span> <span class="k">var</span> <span class="py">onCreate</span><span class="p">(){</span>  
- <span class="p">...</span>  
+ <span class="o">..</span><span class="p">.</span>  
  <span class="n">realm</span> <span class="p">=</span> <span class="n">Realm</span><span class="p">.</span><span class="n">getDefaultInstance</span><span class="p">()</span> <span class="c1">// Main thread  
 </span><span class="c1"></span> <span class="n">myObject</span> <span class="p">=</span> <span class="n">realm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">MyRealmObject</span><span class="p">&gt;().</span><span class="n">findFirst</span><span class="p">()</span>  
 <span class="p">}</span>  
   
 <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="p">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">){</span>  
     <span class="n">result</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>  
-        <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&#34;${it.id}&#34;</span><span class="p">)</span> <span class="c1">// Crash  
+        <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${it.id}</span><span class="s2">&#34;</span><span class="p">)</span> <span class="c1">// Crash  
 </span><span class="c1"></span>    <span class="p">}</span>  
  <span class="p">}</span>
 </code></pre></div><h3 id="realm--70-1">Realm &gt;= 7.0:</h3>
@@ -158,7 +159,7 @@ Realm &lt; 7.0: When you call Realm."/>
 <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">frozenRealm</span><span class="p">:</span> <span class="n">Realm</span>  
    
 <span class="k">override</span> <span class="k">var</span> <span class="py">onCreate</span><span class="p">(){</span>  
-<span class="p">...</span>  
+<span class="o">..</span><span class="p">.</span>  
   <span class="n">realm</span> <span class="p">=</span> <span class="n">Realm</span><span class="p">.</span><span class="n">getDefaultInstance</span><span class="p">()</span> <span class="c1">// Main thread  
 </span><span class="c1"></span>  <span class="n">frozenRealm</span> <span class="p">=</span> <span class="n">realm</span><span class="p">.</span><span class="n">freeze</span><span class="p">()</span>   
 <span class="p">}</span>  
@@ -166,7 +167,7 @@ Realm &lt; 7.0: When you call Realm."/>
 <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="p">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">){</span>  
   <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="n">frozenRealm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">MyRealmObject</span><span class="p">&gt;().</span><span class="n">findFirst</span><span class="p">()</span>  
   <span class="n">result</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>  
-    <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&#34;${it.id}&#34;</span><span class="p">)</span> <span class="c1">// Works  
+    <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${it.id}</span><span class="s2">&#34;</span><span class="p">)</span> <span class="c1">// Works  
 </span><span class="c1"></span>  <span class="p">}</span>  
 <span class="p">}</span>  
 
@@ -175,7 +176,7 @@ Realm &lt; 7.0: When you call Realm."/>
 <span class="k">private</span> <span class="k">var</span> <span class="py">myObject</span><span class="p">:</span> <span class="n">RealmResults</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>  
    
 <span class="k">override</span> <span class="k">var</span> <span class="py">onCreate</span><span class="p">(){</span>  
- <span class="p">...</span>  
+ <span class="o">..</span><span class="p">.</span>  
  <span class="n">realm</span> <span class="p">=</span> <span class="n">Realm</span><span class="p">.</span><span class="n">getDefaultInstance</span><span class="p">()</span> <span class="c1">// Main thread  
 </span><span class="c1"></span> <span class="n">myObject</span> <span class="p">=</span> <span class="n">realm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">MyRealmObject</span><span class="p">&gt;().</span><span class="n">findAll</span><span class="p">().</span><span class="n">freeze</span><span class="p">()</span>  
    
@@ -183,7 +184,7 @@ Realm &lt; 7.0: When you call Realm."/>
    
 <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="p">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">){</span>  
     <span class="n">myObject</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>  
-        <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&#34;${it.id}&#34;</span><span class="p">)</span> <span class="c1">// Works  
+        <span class="n">Timber</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${it.id}</span><span class="s2">&#34;</span><span class="p">)</span> <span class="c1">// Works  
 </span><span class="c1"></span>    <span class="p">}</span>  
 <span class="p">}</span>
 </code></pre></div><p>There are a few more additions to this new feature, but the docs are already perfect for that.</p>
@@ -195,7 +196,7 @@ Realm &lt; 7.0: When you call Realm."/>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// In a ViewModel  
 </span><span class="c1"></span><span class="k">fun</span> <span class="nf">getData</span><span class="p">(){</span>  
   <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="n">realm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">MyRealmObject</span><span class="p">&gt;().</span><span class="n">findAllAsync</span><span class="p">()</span>  
-  <span class="n">result</span><span class="p">.</span><span class="n">addChangeListener</span><span class="p">{</span> <span class="n">result</span> <span class="p">-&gt;</span>  
+  <span class="n">result</span><span class="p">.</span><span class="n">addChangeListener</span><span class="p">{</span> <span class="n">result</span> <span class="o">-&gt;</span>  
       <span class="n">_toastLiveData</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">ShowToastFlag</span>  
   <span class="p">}</span>  
 <span class="p">}</span>
@@ -203,12 +204,12 @@ Realm &lt; 7.0: When you call Realm."/>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">sendListToNetwork</span><span class="p">()</span> <span class="p">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">){</span>  
    <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="n">frozenRealm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">MyRealmObject</span><span class="p">&gt;().</span><span class="n">findAll</span><span class="p">()</span>  
    <span class="c1">// We are in another thread because of the Network Request and not because of Realm  
-</span><span class="c1"></span>   <span class="n">result</span><span class="p">.</span><span class="n">addChangeListener</span><span class="p">{</span> <span class="n">mResult</span> <span class="p">-&gt;</span>  
+</span><span class="c1"></span>   <span class="n">result</span><span class="p">.</span><span class="n">addChangeListener</span><span class="p">{</span> <span class="n">mResult</span> <span class="o">-&gt;</span>  
    <span class="k">val</span> <span class="py">jsonStringResultObject</span> <span class="p">=</span> <span class="n">serialize</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">toList</span><span class="p">())</span>  
    <span class="k">val</span> <span class="py">response</span> <span class="p">=</span> <span class="n">request</span><span class="p">().</span><span class="n">postRequest</span><span class="p">(</span><span class="n">jsonStringResult</span><span class="p">).</span><span class="n">execute</span><span class="p">()</span>  
    <span class="k">when</span><span class="p">(</span><span class="n">response</span><span class="p">){</span>  
-      <span class="k">is</span> <span class="n">Success</span> <span class="p">-&gt;</span> <span class="n">doSomething</span><span class="p">()</span>  
-      <span class="k">else</span> <span class="p">-&gt;</span> <span class="n">doSomethingElse</span><span class="p">()</span>  
+      <span class="k">is</span> <span class="n">Success</span> <span class="o">-&gt;</span> <span class="n">doSomething</span><span class="p">()</span>  
+      <span class="k">else</span> <span class="o">-&gt;</span> <span class="n">doSomethingElse</span><span class="p">()</span>  
    <span class="p">}</span>  
 <span class="p">}</span>
 </code></pre></div><p>If the case would have been longer, we would have had a more difficult code to read.</p>
@@ -216,7 +217,7 @@ Realm &lt; 7.0: When you call Realm."/>
 <p>Let&rsquo;s make a generic method for all Realm objects that are going to be selected as a list:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">inline</span> <span class="k">fun</span>  <span class="nf">observeData</span><span class="p">():</span> <span class="n">Flow</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">callbackFlow</span><span class="p">{</span>  
    <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="n">frozenRealm</span><span class="p">.</span><span class="k">where</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;().</span><span class="n">findAllAsync</span><span class="p">()</span>  
-   <span class="n">result</span><span class="p">.</span><span class="n">addChangeListener</span><span class="p">{</span> <span class="n">mResult</span> <span class="p">-&gt;</span>  
+   <span class="n">result</span><span class="p">.</span><span class="n">addChangeListener</span><span class="p">{</span> <span class="n">mResult</span> <span class="o">-&gt;</span>  
     <span class="n">offer</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">toList</span><span class="p">())</span>  
    <span class="p">}</span>  
    <span class="n">awaitClose</span> <span class="p">{</span><span class="n">result</span><span class="p">.</span><span class="n">removeAllChangeListeners</span><span class="p">()}</span>  
@@ -226,12 +227,12 @@ Realm &lt; 7.0: When you call Realm."/>
 </span><span class="c1"></span><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">sendDataToNetwork</span><span class="p">(){</span>  
   <span class="n">observeData</span><span class="p">().</span><span class="n">flowOn</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span>  
   <span class="p">.</span><span class="n">map</span> <span class="p">{</span>  
-    <span class="k">return</span><span class="n">@map</span> <span class="n">serialize</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>  
+    <span class="k">return</span><span class="nd">@map</span> <span class="n">serialize</span><span class="p">(</span><span class="k">it</span><span class="p">)</span>  
   <span class="p">}.</span><span class="n">flowOn</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">Default</span><span class="p">)</span> <span class="c1">// same Realm object, different threads  
 </span><span class="c1"></span>  <span class="p">.</span><span class="n">map</span> <span class="p">{</span>  
-      <span class="k">return</span><span class="n">@map</span> <span class="n">postRequest</span><span class="p">(</span><span class="n">it</span><span class="p">).</span><span class="n">execute</span><span class="p">()</span>  
+      <span class="k">return</span><span class="nd">@map</span> <span class="n">postRequest</span><span class="p">(</span><span class="k">it</span><span class="p">).</span><span class="n">execute</span><span class="p">()</span>  
   <span class="p">}.</span><span class="n">flowOn</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span>  
-  <span class="p">.</span><span class="n">collect</span> <span class="p">{</span> <span class="n">networkResult</span> <span class="p">-&gt;</span>  
+  <span class="p">.</span><span class="n">collect</span> <span class="p">{</span> <span class="n">networkResult</span> <span class="o">-&gt;</span>  
       <span class="n">handleResult</span><span class="p">(</span><span class="n">networkResult</span><span class="p">)</span>  
   <span class="p">}</span>  
 <span class="p">}</span>
@@ -267,8 +268,8 @@ Realm &lt; 7.0: When you call Realm."/>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

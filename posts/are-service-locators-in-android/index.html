@@ -11,9 +11,10 @@ The app is pretty simple, just retrieves some data from a Cat API, saves them to
 
 The screen renders just a the list of cats retrieved by the database after the data are fetched from a remote API." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/are-service-locators-in-android/" />
-<meta property="article:published_time" content="2019-12-02T09:06:00+01:00" />
-<meta property="article:modified_time" content="2019-12-02T09:06:00+01:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/are-service-locators-in-android/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-12-02T09:06:00&#43;01:00" />
+<meta property="article:modified_time" content="2019-12-02T09:06:00&#43;01:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Are service locators in Android actually simple?"/>
 <meta name="twitter:description" content="This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
@@ -123,7 +124,7 @@ The screen renders just a the list of cats retrieved by the database after the d
 <h2 id="koinhttpsinsert-koinio"><a href="https://insert-koin.io/" target="_blank" rel="noopener noreffer">Koin</a></h2>
 <p>Koin as a service locator is the easiest to get in with. The docs are pretty simple and it provides a lot of features, making it the perfect tool for Android in particular. However, it has some things I don&rsquo;t really like. Something I like to call the <em>pre-declaration of the constructor</em>. Notice this code here:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">myModule</span> <span class="p">=</span> <span class="n">module</span><span class="p">{</span>  
-      <span class="p">...</span>  
+      <span class="o">..</span><span class="p">.</span>  
       <span class="n">single</span> <span class="p">{</span>  
             <span class="n">CoroutineDispatchers</span><span class="p">(</span>  
                 <span class="n">Dispatchers</span><span class="p">.</span><span class="n">Main</span><span class="p">,</span>  
@@ -138,7 +139,7 @@ The screen renders just a the list of cats retrieved by the database after the d
         <span class="n">viewModel</span> <span class="p">{</span>  
             <span class="n">EntranceFragmentViewModel</span><span class="p">(</span><span class="k">get</span><span class="p">(),</span> <span class="k">get</span><span class="p">())</span>  
         <span class="p">}</span>  
-      <span class="p">...</span>  
+      <span class="o">..</span><span class="p">.</span>  
     <span class="p">}</span>
 </code></pre></div><p>These lines are what I love and what I hate about Koin. First of all, I really love that it provides it&rsquo;s own feature about the ViewModel factory. But it has some perks, IMO:</p>
 <p>1- First of all when it comes to naming, if you think about it, one keyword is single (so it&rsquo;s a scope), and the other is a factory (doesn&rsquo;t give a message about the scope, but it&rsquo;s a factory), and the other is a viewmodel (definitely not a scope). This makes it a little bit chaotic, mixing the concept of scopes with factory patterns.</p>
@@ -152,40 +153,40 @@ I&rsquo;m pretty sure not many would agree to do that, and <a href="https://medi
 <p>Otherwise, you would need to keep your ViewModelFactory pattern, and KodeIn hasn&rsquo;t a pre-built feature for that, you have to do it manually. The pre declaration of constructor problem, does apply for KodeIn too.</p>
 <p>2- Another thing I noticed in KodeIn field injection, was the by kodein() delegation which does create a little bit of confusion because the kodein() method is a different extension method for Activities, Fragments etc.</p>
 <p><strong>My own idea of a service locator in Android:</strong><br>
-Must note that this is only an idea and it&rsquo;s totally immature, but I find compile time safer than runtime. Therefore, annotations are perfectly solving a case of DI in the JVM world. If we forget Dagger for a moment, the next best example would be Spring framework with its&rsquo; @Autowire injection keyword.<br>
+Must note that this is only an idea and it&rsquo;s totally immature, but I find compile time safer than runtime. Therefore, annotations are perfectly solving a case of DI in the JVM world. If we forget Dagger for a moment, the next best example would be Spring framework with its' @Autowire injection keyword.<br>
 Anyways, there could be library which could be a mix between Dagger and other service locators. I still imagine something like this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Holder</span>  
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Holder</span>  
 <span class="k">class</span> <span class="nc">MyApplication</span><span class="p">:</span> <span class="n">Application</span><span class="p">(){</span>  
    
   <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(){</span>  
-   <span class="p">..</span>  
-   <span class="n">MyApplicationHolder</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">//after compilation  
+   <span class="o">..</span>  
+   <span class="n">MyApplicationHolder</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">//after compilation  
 </span><span class="c1"></span>  <span class="p">}</span>  
     
-  <span class="n">@Single</span>  
+  <span class="nd">@Single</span>  
   <span class="k">fun</span> <span class="nf">provideDependency1</span><span class="p">()</span> <span class="p">:</span> <span class="n">Dependency1</span><span class="p">{</span>  
     <span class="k">return</span> <span class="n">Dependency1</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">setItsThings</span><span class="p">(</span><span class="n">things</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>   
   <span class="p">}</span>  
     
-  <span class="n">@SomeScoped</span>  
+  <span class="nd">@SomeScoped</span>  
   <span class="k">fun</span> <span class="nf">provideDependency3</span><span class="p">():</span> <span class="n">Dependency3</span><span class="p">{</span>  
     <span class="k">return</span> <span class="n">Dependency3</span><span class="p">.</span><span class="n">builder</span><span class="p">().</span><span class="n">setItsThings3</span><span class="p">(</span><span class="n">things3</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>  
   <span class="p">}</span>  
     
-  <span class="n">@Single</span>  
-  <span class="n">@ByFactory</span>  
+  <span class="nd">@Single</span>  
+  <span class="nd">@ByFactory</span>  
   <span class="k">fun</span> <span class="nf">provideViewModel</span><span class="p">()</span> <span class="p">:</span> <span class="n">MyViewModel</span><span class="p">{</span>  
     <span class="k">return</span> <span class="n">MyViewModel</span><span class="p">(</span><span class="n">dependency1</span><span class="p">,</span> <span class="n">dependency2</span><span class="p">)</span>  
   <span class="p">}</span>  
 <span class="p">}</span>  
   
-<span class="n">@Single</span> <span class="c1">//which would be just a @Inject + @Singleton equivalent  
+<span class="nd">@Single</span> <span class="c1">//which would be just a @Inject + @Singleton equivalent  
 </span><span class="c1"></span><span class="k">class</span> <span class="nc">Dependency2</span><span class="p">(){</span>  
 <span class="p">}</span>  
   
 <span class="c1">//ViewModels  
 </span><span class="c1"></span>  
-<span class="n">@Single</span> <span class="c1">//A ViewModel factory would be generated for you by the &#34;framework&#34;  
+<span class="nd">@Single</span> <span class="c1">//A ViewModel factory would be generated for you by the &#34;framework&#34;  
 </span><span class="c1"></span><span class="k">class</span> <span class="nc">MyViewModel</span><span class="p">(</span><span class="n">d1</span><span class="p">:</span> <span class="n">D1</span><span class="p">,</span> <span class="n">d2</span><span class="p">:</span> <span class="n">D2</span><span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">(){</span>  
     
 <span class="p">}</span>
@@ -223,8 +224,8 @@ Using KodeIn or Koin in your codebase is pretty reasonable thing to do, if it so
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

@@ -9,9 +9,10 @@
 <meta property="og:description" content="This is part 2 of a series of articles about modularizing Android app. If you haven&rsquo;t yet read the first article, you may find it here.
 On our first article we just moved some classes outside the application and applied as an independent module. But what if we have dependencies pulled from the application level? This could be a small challenge. First of all, we want to clarify on how are we going to modularize the app." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/modularizing-your-android-app-breaking_11/" />
-<meta property="article:published_time" content="2019-11-11T09:15:00+01:00" />
-<meta property="article:modified_time" content="2019-11-11T09:15:00+01:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/modularizing-your-android-app-breaking_11/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-11-11T09:15:00&#43;01:00" />
+<meta property="article:modified_time" content="2019-11-11T09:15:00&#43;01:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Modularizing your Android app, breaking the monolith (Part 2)"/>
 <meta name="twitter:description" content="This is part 2 of a series of articles about modularizing Android app. If you haven&rsquo;t yet read the first article, you may find it here.
@@ -134,12 +135,12 @@ _Small clarification: the capitalized letter **Module** refers to Dagger modul
 <em>TL;DR of the documentation: You need more than one scope.</em></p>
 <p>So now, let&rsquo;s provide a ViewModel for every feature:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">//pretending we are inside a module called :gallery_module
-</span><span class="c1"></span><span class="n">@Component</span><span class="p">(</span><span class="n">dependencies</span> <span class="p">=</span> <span class="p">[</span><span class="n">CoreComponent</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>
-<span class="n">@FragmentScoped</span>
+</span><span class="c1"></span><span class="nd">@Component</span><span class="p">(</span><span class="n">dependencies</span> <span class="p">=</span> <span class="p">[</span><span class="n">CoreComponent</span><span class="o">::</span><span class="k">class</span><span class="p">])</span>
+<span class="nd">@FragmentScoped</span>
 <span class="k">interface</span> <span class="nc">GalleryComponent</span> <span class="p">{</span>
     <span class="k">val</span> <span class="py">galleryViewModelFactory</span><span class="p">:</span> <span class="n">GalleryViewModel</span><span class="p">.</span><span class="n">Factory</span>
 
-    <span class="n">@Component</span><span class="p">.</span><span class="n">Factory</span>
+    <span class="nd">@Component</span><span class="p">.</span><span class="n">Factory</span>
     <span class="n">inteface</span> <span class="n">Factory</span><span class="p">{</span>
       <span class="k">fun</span> <span class="nf">create</span><span class="p">(</span><span class="n">coreComponent</span><span class="p">:</span> <span class="n">CoreComponent</span><span class="p">):</span> <span class="n">GalleryComponent</span>
     <span class="p">}</span>
@@ -152,7 +153,7 @@ _Small clarification: the capitalized letter **Module** refers to Dagger modul
 
 <span class="c1">//in the variable declaration
 </span><span class="c1"></span><span class="k">val</span> <span class="py">galleryViewModel</span> <span class="k">by</span> <span class="n">savedStateViewModel</span><span class="p">{</span>
-  <span class="n">galleryComponent</span><span class="p">.</span><span class="n">galleryViewModelFactory</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+  <span class="n">galleryComponent</span><span class="p">.</span><span class="n">galleryViewModelFactory</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="k">it</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div><p>To know how I end up in details to this solution about my ViewModel (and why I am providing a Factory like that), please refer to this article <a href="https://www.coroutinedispatcher.com/2019/08/how-to-produce-savedstatehandle-in-your.html" target="_blank" rel="noopener noreffer">here</a>. The only unclear thing is how we brought that applicationComponent. Well, it&rsquo;s just brought from an abstract class from the :core_module which extends Fragment and holds this variable which has a reference to the CoreComponent. Therefore, every fragment will extend a BaseFragment abstract class.</p>
 <p><strong>We are not done yet.</strong></p>
@@ -186,8 +187,8 @@ _Small clarification: the capitalized letter **Module** refers to Dagger modul
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

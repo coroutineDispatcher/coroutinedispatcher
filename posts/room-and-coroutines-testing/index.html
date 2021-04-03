@@ -8,9 +8,10 @@
         <title>Room and coroutines testing - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="Room and coroutines testing" />
 <meta property="og:description" content="My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/room-and-coroutines-testing/" />
-<meta property="article:published_time" content="2019-10-14T10:00:00+02:00" />
-<meta property="article:modified_time" content="2019-10-14T10:00:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/room-and-coroutines-testing/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-10-14T10:00:00&#43;02:00" />
+<meta property="article:modified_time" content="2019-10-14T10:00:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Room and coroutines testing"/>
 <meta name="twitter:description" content="My last article covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have great support in unit testing even though todays topic has nothing to do with it. What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited."/>
@@ -94,25 +95,25 @@
         title="https://1.bp.blogspot.com/-gA4cTTnwpNI/XaLzaqvjzsI/AAAAAAAAPuc/97mlWXrOHGcuQBNagNWrGK3f8hsn3fNqACLcBGAsYHQ/s1600/artur-tumasjan--ebp8HkKtrc-unsplash.jpg" /></a></p>
 <p>My <a href="https://www.coroutinedispatcher.com/2019/10/room-and-rxjava-testing.html" target="_blank" rel="noopener noreffer">last article</a> covered some simple example about Room and RxJava instrumentation testing code. Coroutines also have <a href="https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-test" target="_blank" rel="noopener noreffer">great support</a> in <em>unit testing</em> even though todays topic has nothing to do with it.  What I mean is that we are not going to cover runBlockingTest this time. Android doesn&rsquo;t support that (correct me if I&rsquo;m wrong please) yet. However, I could schedule a topic about that because it really makes me excited. You can also check <a href="https://www.droidcon.com/media-detail?video=352671106" target="_blank" rel="noopener noreffer">this awesome talk</a> from Sean McQuillan, which I found pretty helpful.</p>
 <p>Comparing to the last gists, we will try to jump from Rx to coroutines (without implementation) and write test class about it.  Instead of RxJava components, we can just mark methods as <code>suspend</code>ed:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Dao</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Dao</span>
 <span class="k">interface</span> <span class="nc">HabitDao</span> <span class="p">{</span>
-    <span class="n">@Insert</span>
+    <span class="nd">@Insert</span>
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">insertHabit</span><span class="p">(</span><span class="n">habit</span><span class="p">:</span> <span class="n">Habit</span><span class="p">)</span> <span class="c1">//used to return Completable
 </span><span class="c1"></span>
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM user_habits WHERE end_date &gt;= :todaysDate&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM user_habits WHERE end_date &gt;= :todaysDate&#34;</span><span class="p">)</span>
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">selectAllActiveHabits</span><span class="p">(</span><span class="n">todaysDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Habit</span><span class="p">&gt;</span> <span class="c1">//used to return Flowable&lt;List&lt;Habit&gt;&gt;
 </span><span class="c1"></span>
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM user_habits WHERE end_date &lt; :todaysDate&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM user_habits WHERE end_date &lt; :todaysDate&#34;</span><span class="p">)</span>
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">selectAllInactiveHabits</span><span class="p">(</span><span class="n">todaysDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Habit</span><span class="p">&gt;</span> <span class="c1">//used to return Flowable&lt;List&lt;Habit&gt;&gt;
 </span><span class="c1"></span>
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;DELETE FROM user_habits WHERE id = :id&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;DELETE FROM user_habits WHERE id = :id&#34;</span><span class="p">)</span>
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">deleteHabit</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span> <span class="c1">//used to return Completable
 </span><span class="c1"></span>
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;UPDATE user_habits SET start_date = :startDate, end_date = :endDate , receive_notification = :notification WHERE id = :id&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;UPDATE user_habits SET start_date = :startDate, end_date = :endDate , receive_notification = :notification WHERE id = :id&#34;</span><span class="p">)</span>
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">updateWhereId</span><span class="p">(</span><span class="n">startDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">,</span> <span class="n">endDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">,</span> <span class="n">notification</span><span class="p">:</span> <span class="n">Boolean</span><span class="p">,</span> <span class="n">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">)</span> <span class="c1">//used to return Completable
 </span><span class="c1"></span>
-    <span class="n">@VisibleForTesting</span>
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM user_habits&#34;</span><span class="p">)</span>
+    <span class="nd">@VisibleForTesting</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM user_habits&#34;</span><span class="p">)</span>
     <span class="k">suspend</span> <span class="k">fun</span> <span class="nf">selectAll</span><span class="p">():</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Habit</span><span class="p">&gt;</span> <span class="c1">//used to return Flowable&lt;List&lt;Habit&gt;&gt;
 </span><span class="c1"></span><span class="p">}</span>
 </code></pre></div><p>This looks easier (or better say less confusing).</p>
@@ -125,12 +126,12 @@
         </div>
     </div>
 <p>Let&rsquo;s start testing:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@RunWith</span><span class="p">(</span><span class="n">AndroidJUnit4</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@RunWith</span><span class="p">(</span><span class="n">AndroidJUnit4</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">HabitDaoTest</span><span class="p">{</span>
     <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">careFlectDatabase</span><span class="p">:</span> <span class="n">CareFlectDatabase</span> <span class="c1">//the db instance
 </span><span class="c1"></span>    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">habitDao</span><span class="p">:</span> <span class="n">HabitDao</span> <span class="c1">//the dao
 </span><span class="c1"></span>
-    <span class="n">@Before</span>
+    <span class="nd">@Before</span>
     <span class="k">fun</span> <span class="nf">setUp</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">context</span> <span class="p">=</span> <span class="n">ApplicationProvider</span><span class="p">.</span><span class="n">getApplicationContext</span><span class="p">&lt;</span><span class="n">Context</span><span class="p">&gt;()</span>
         <span class="n">careFlectDatabase</span> <span class="p">=</span> <span class="n">Room</span><span class="p">.</span><span class="n">inMemoryDatabaseBuilder</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">CareFlectDatabase</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
@@ -139,14 +140,14 @@
         <span class="n">habitDao</span> <span class="p">=</span> <span class="n">careFlectDatabase</span><span class="p">.</span><span class="n">habitDao</span><span class="p">()</span>
     <span class="p">}</span>
 
-    <span class="n">@After</span>
+    <span class="nd">@After</span>
     <span class="k">fun</span> <span class="nf">tearDown</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">careFlectDatabase</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p>Notice that we dropped the allowMainThreadQueries().</p>
 <p>And now the queries:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="n">@Test</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="nd">@Test</span>
     <span class="k">fun</span> <span class="nf">presentDateShouldReturnInsertion</span><span class="p">()</span> <span class="p">=</span> <span class="n">runBlocking</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">today</span> <span class="p">=</span> <span class="n">getInstance</span><span class="p">().</span><span class="n">apply</span> <span class="p">{</span>
             <span class="k">set</span><span class="p">(</span><span class="n">MONTH</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
@@ -160,7 +161,7 @@
             <span class="k">set</span><span class="p">(</span><span class="n">DAY_OF_MONTH</span><span class="p">,</span> <span class="m">30</span><span class="p">)</span>
         <span class="p">}</span>
 
-        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">yesterday</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="n">today</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s2">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">yesterday</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="n">today</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">insertHabit</span><span class="p">(</span><span class="n">habit</span><span class="p">)</span>
 
@@ -203,8 +204,8 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

@@ -19,6 +19,6 @@
     <guid>http://coroutinedispatcher.com/posts/what-i-learned-from-unit-testing/</guid>
     <description><![CDATA[Testing, testing testing. I was getting inside the &ldquo;Fear of getting behind&rdquo; every time I heard that word. So I decided to react quickly. I knew nothing about testing and this is my experience getting my hands dirty with it. Please feel free to correct anywhere I&rsquo;m wrong. This is a reason why I&rsquo;m writing blogs.
 So what the hell is testing?
-Testing is just a piece of code where you invoke your written production code and check its&rsquo; behavior.]]></description>
+Testing is just a piece of code where you invoke your written production code and check its' behavior.]]></description>
 </item></channel>
 </rss>

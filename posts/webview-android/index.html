@@ -9,9 +9,10 @@
 <meta property="og:description" content="onCreate Let&rsquo;s face it, getting a NaN in Android is more frustrating than a (Kotlin)NullPointerException. Well, as a Native Android developer, I actually never touched the web professionally, except playing around with Vue js when people seemed pretty hyped for it. I tried to be a web developer only once in my life, but even then, I cheated, I used KotlinJS.
 Anyways, many mobile developers have been in situations when they had to write a WebViewFragment and load an URL." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/webview-android/" />
-<meta property="article:published_time" content="2020-08-07T21:06:25+02:00" />
-<meta property="article:modified_time" content="2020-08-07T21:06:25+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/webview-android/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-07T21:06:25&#43;02:00" />
+<meta property="article:modified_time" content="2020-08-07T21:06:25&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="The Great Wall of China was originally created to keep WebView out. It failed miserably."/>
 <meta name="twitter:description" content="onCreate Let&rsquo;s face it, getting a NaN in Android is more frustrating than a (Kotlin)NullPointerException. Well, as a Native Android developer, I actually never touched the web professionally, except playing around with Vue js when people seemed pretty hyped for it. I tried to be a web developer only once in my life, but even then, I cheated, I used KotlinJS.
@@ -136,7 +137,7 @@ Anyways, many mobile developers have been in situations when they had to write a
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">url</span> <span class="p">=</span> <span class="n">MyAwesomeUrl</span>
 <span class="k">val</span> <span class="py">cookieManager</span> <span class="p">=</span> <span class="n">CookieManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">().</span><span class="n">apply</span><span class="p">{</span>
     <span class="n">setAcceptThirdPartyCookies</span><span class="p">(</span><span class="n">webView</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
-    <span class="n">setCookie</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cookie</span><span class="p">)</span> <span class="p">{</span> <span class="n">cookieSet</span> <span class="p">-&gt;</span>
+    <span class="n">setCookie</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cookie</span><span class="p">)</span> <span class="p">{</span> <span class="n">cookieSet</span> <span class="o">-&gt;</span>
         <span class="k">if</span><span class="p">(</span><span class="n">cookieSet</span><span class="p">)</span>  <span class="n">webView</span><span class="o">?.</span><span class="n">loadUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -146,12 +147,12 @@ Anyways, many mobile developers have been in situations when they had to write a
 <p>This is another &ldquo;special&rdquo; case that I faced (even though not so confusing). Well, I had a couple of HTML files which I had to download from the server. In case they fail to download, had to load a default one, which is supposed to be based in the <code>assets</code> folder. So, let&rsquo;s quickly show the code for both of them:</p>
 <p> </p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// loading from internal app storage
-</span><span class="c1"></span><span class="k">val</span> <span class="py">directory</span> <span class="p">=</span> <span class="s">&#34;${MyApp.component().filesDir.absoluteFile}/someDir&#34;</span>
-<span class="k">val</span> <span class="py">htmlFile</span> <span class="p">=</span> <span class="n">File</span><span class="p">(</span> <span class="s">&#34;$directory/my_downloaded_html_file.html&#34;</span><span class="p">).</span><span class="n">readText</span><span class="p">()</span>
+</span><span class="c1"></span><span class="k">val</span> <span class="py">directory</span> <span class="p">=</span> <span class="s2">&#34;</span><span class="si">${MyApp.component().filesDir.absoluteFile}</span><span class="s2">/someDir&#34;</span>
+<span class="k">val</span> <span class="py">htmlFile</span> <span class="p">=</span> <span class="n">File</span><span class="p">(</span> <span class="s2">&#34;</span><span class="si">$directory</span><span class="s2">/my_downloaded_html_file.html&#34;</span><span class="p">).</span><span class="n">readText</span><span class="p">()</span>
 
 <span class="n">mWebView</span><span class="p">.</span><span class="n">apply</span><span class="p">{</span>
     <span class="n">settings</span><span class="p">.</span><span class="n">javascriptEnabled</span> <span class="p">=</span> <span class="k">true</span>
-    <span class="n">loadDataWithBaseUrl</span><span class="p">(</span><span class="s">&#34;file://$directory&#34;</span><span class="p">,</span> <span class="n">htmlFile</span><span class="p">,</span><span class="s">&#34;text/html&#34;</span><span class="p">,</span><span class="s">&#34;base64&#34;</span><span class="p">,</span><span class="k">null</span><span class="p">)</span>
+    <span class="n">loadDataWithBaseUrl</span><span class="p">(</span><span class="s2">&#34;file://</span><span class="si">$directory</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">htmlFile</span><span class="p">,</span><span class="s2">&#34;text/html&#34;</span><span class="p">,</span><span class="s2">&#34;base64&#34;</span><span class="p">,</span><span class="k">null</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div><p> </p>
 <p>For <code>assets</code> folder, it&rsquo;s exactly the same logic, but instead of the internal app storage, the <code>requireActivity().assets.open(&quot;htmle_file_name.html&quot;)</code> is required.</p>
@@ -162,7 +163,7 @@ Anyways, many mobile developers have been in situations when they had to write a
 <p> </p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="n">mWebView</span><span class="p">.</span><span class="n">webViewClient</span> <span class="p">=</span> <span class="k">object</span> <span class="err">: </span><span class="nc">WebViewClient</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">override</span> <span class="k">fun</span> <span class="nf">onPageFinished</span><span class="p">(</span><span class="n">view</span><span class="p">:</span> <span class="n">WebView</span><span class="p">?,</span> <span class="n">url</span><span class="p">:</span> <span class="n">String</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="n">view</span><span class="o">?.</span><span class="n">evaluateJavascript</span><span class="p">(</span><span class="s">&#34;javascript:doSomething()&#34;</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
+        <span class="n">view</span><span class="o">?.</span><span class="n">evaluateJavascript</span><span class="p">(</span><span class="s2">&#34;javascript:doSomething()&#34;</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p> </p>
@@ -171,19 +172,19 @@ Anyways, many mobile developers have been in situations when they had to write a
 <p>Let&rsquo;s consider this problem: Extract the <code>WebView</code> content, if it&rsquo;s a JSON, serialize and save it, then proceed to the next fragment. Otherwise, take the user one step back. For our scope, the only important part, would be: Extract the content from the <code>WebView</code>. Let&rsquo;s suppose we loaded some url and the content is rendered.</p>
 <p> </p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">webView</span><span class="p">.</span><span class="n">apply</span><span class="p">{</span>
-    <span class="n">addJavascriptInterface</span><span class="p">(</span><span class="n">WebContentJavascriptInterface</span><span class="p">(</span><span class="n">requireActivity</span><span class="p">()),</span> <span class="s">&#34;ContentReader&#34;</span><span class="p">)</span>
+    <span class="n">addJavascriptInterface</span><span class="p">(</span><span class="n">WebContentJavascriptInterface</span><span class="p">(</span><span class="n">requireActivity</span><span class="p">()),</span> <span class="s2">&#34;ContentReader&#34;</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div><p> </p>
 <p>In this case, the <code>&quot;ContentReader&quot;</code>, is just a name to expose the object in JavaScript. So then, I can do:</p>
 <p> </p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// inside the webView context
-</span><span class="c1"></span><span class="n">addJavascriptInterface</span><span class="p">(</span><span class="n">WebContentJavascriptInterface</span><span class="p">(</span><span class="n">requireActivity</span><span class="p">()),</span> <span class="s">&#34;ContentReader&#34;</span><span class="p">)</span>
+</span><span class="c1"></span><span class="n">addJavascriptInterface</span><span class="p">(</span><span class="n">WebContentJavascriptInterface</span><span class="p">(</span><span class="n">requireActivity</span><span class="p">()),</span> <span class="s2">&#34;ContentReader&#34;</span><span class="p">)</span>
 <span class="n">webViewClient</span> <span class="p">=</span> <span class="k">object</span> <span class="err">: </span><span class="nc">WebViewClient</span><span class="p">()</span> <span class="p">{</span>
                 <span class="k">override</span> <span class="k">fun</span> <span class="nf">onPageFinished</span><span class="p">(</span><span class="n">view</span><span class="p">:</span> <span class="n">WebView</span><span class="p">?,</span> <span class="n">url</span><span class="p">:</span> <span class="n">String</span><span class="p">?)</span> <span class="p">{</span>
                     <span class="n">loadUrl</span><span class="p">(</span>
-                        <span class="s">&#34;javascript:ContentReader.showWebViewContent&#34;</span> <span class="p">+</span>
-                                <span class="s">&#34;(&#39;&lt;html&gt;&#39;+document.getElementsByTagName(&#39;html&#39;)[0].innerHTML+&#39;&#34;</span> <span class="p">+</span>
-                                <span class="s">&#34;&lt;/html&gt;&#39;);&#34;</span>
+                        <span class="s2">&#34;javascript:ContentReader.showWebViewContent&#34;</span> <span class="p">+</span>
+                                <span class="s2">&#34;(&#39;&lt;html&gt;&#39;+document.getElementsByTagName(&#39;html&#39;)[0].innerHTML+&#39;&#34;</span> <span class="p">+</span>
+                                <span class="s2">&#34;&lt;/html&gt;&#39;);&#34;</span>
                     <span class="p">)</span>
                     <span class="k">super</span><span class="p">.</span><span class="n">onPageFinished</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
                 <span class="p">}</span>
@@ -192,7 +193,7 @@ Anyways, many mobile developers have been in situations when they had to write a
 <p>So the method is executed, but we still have no clue where our <code>showWebViewContent</code> is. Our JavascriptInterface is still missing:</p>
 <p> </p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">inner</span> <span class="k">class</span> <span class="nc">WebContentJavascriptInterface</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// you need a context for this case
-</span><span class="c1"></span>        <span class="n">@JavascriptInterface</span>
+</span><span class="c1"></span>        <span class="nd">@JavascriptInterface</span>
         <span class="k">fun</span> <span class="nf">showWebViewContent</span><span class="p">(</span><span class="n">webViewContent</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">val</span> <span class="py">extractedTextFromHtml</span> <span class="p">=</span> <span class="n">HtmlCompat</span><span class="p">.</span><span class="n">fromHtml</span><span class="p">(</span>
                 <span class="n">webViewContent</span><span class="p">,</span>
@@ -234,8 +235,8 @@ Anyways, many mobile developers have been in situations when they had to write a
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

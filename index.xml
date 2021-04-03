@@ -4,9 +4,17 @@
         <link>http://coroutinedispatcher.com/</link>
         <description>A blog with kotlins&#39; suspend modifier</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 13 Dec 2020 18:15:51 &#43;0100</lastBuildDate>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 03 Apr 2021 12:15:57 &#43;0200</lastBuildDate>
             <atom:link href="http://coroutinedispatcher.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Git me baby one more time</title>
+    <link>http://coroutinedispatcher.com/posts/git_me_baby_one_more_time/</link>
+    <pubDate>Sat, 03 Apr 2021 12:15:57 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/git_me_baby_one_more_time/</guid>
+    <description><![CDATA[Long time no see. Nothing new on Android from my side this days. I have mostly been focused in learning some new tech stack and some automation. But today I would like to talk about some basic git commands/concepts and situations.
+Let&rsquo;s immediately jump to some ancient debate: Rebase vs Merge For any reader who doesn&rsquo;t know the difference, I am trying to illustrate it in the below diagram.]]></description>
+</item><item>
     <title>Stateful MVVM across process death using SharedFlow</title>
     <link>http://coroutinedispatcher.com/posts/decorate_stateful_mvvm/</link>
     <pubDate>Sun, 13 Dec 2020 18:15:51 &#43;0100</pubDate>
@@ -83,13 +91,5 @@ Let&rsquo;s think of a very simple use case:]]></description>
     <guid>http://coroutinedispatcher.com/posts/my-first-remote-experience/</guid>
     <description><![CDATA[typealias Coroutine = Quarantine I hope you get the joke&hellip;.
 Well, it has been a very rough year for me, &ldquo;motion-ally&rdquo; and emotionally. I moved to Germany just when all these corona fear started. Luckily I got time to get introduced to the team and the project and got ready to start fresh . And then, since the situation with the epidemic wasn&rsquo;t getting any better, the company decided to switch to home office.]]></description>
-</item><item>
-    <title>Getting rid of the white screen on the app start up</title>
-    <link>http://coroutinedispatcher.com/posts/getting-rid-of-white-screen-on-app/</link>
-    <pubDate>Wed, 04 Mar 2020 21:58:00 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/getting-rid-of-white-screen-on-app/</guid>
-    <description><![CDATA[Details matter especially when it comes to making users happy. We have all kinds of users, those who don&rsquo;t care how the app is designed (just do what he/she needs), those who care, and those who are developers themselves. I have met people who don&rsquo;t use a single app just because it has some strange animation, and they hate it.
-For me, it&rsquo;s a little from both. I Like seeing a minimalist design (like Airbnb Android app, which is one of my favorites, for instance), but it is also important to fulfill your needs also.]]></description>
 </item></channel>
 </rss>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<meta name="generator" content="Hugo 0.73.0" />
+	<meta name="generator" content="Hugo 0.82.0" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -10,7 +10,7 @@
 <meta property="og:description" content="A blog with kotlins&#39; suspend modifier" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://coroutinedispatcher.com/" />
-<meta property="og:updated_time" content="2020-12-13T18:15:51+01:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Coroutinedispatchers&#39; blog"/>
 <meta name="twitter:description" content="A blog with kotlins&#39; suspend modifier"/>
@@ -73,6 +73,13 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/how-to-produce-savedstatehandle-in-your/">How to produce the SavedStateHandle in your ViewModel using AssistedInject</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-08-27">2019-08-27</time></span></div><div class="content">One of my previous article Dagger Multibinding Saved My Time &ldquo;claimed&rdquo; to have found the right practice for providing ViewModels without producing a ViewModel Factory for each ViewModel. Apparently, I was wrong. There are 2 main problems with that approach:
+1 - I might forget to add a ViewModel in the Map graph.
+2 - With the new SavedStateHandle which stays uniqely in each ViewModel I can&rsquo;t use a generic ViewModel Factory.</div><div class="post-footer">
+        <a href="/posts/how-to-produce-savedstatehandle-in-your/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/dagger-2/">Dagger 2</a>,&nbsp;<a href="/tags/savedstatehandle/">SavedStateHandle</a>,&nbsp;<a href="/tags/viewmodel-factory/">ViewModel Factory</a>,&nbsp;<a href="/tags/viewmodel/">ViewModel</a>,&nbsp;<a href="/tags/assistedinject/">AssistedInject</a>,&nbsp;<a href="/tags/kotlin-delegation/">Kotlin Delegation</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/solving-room-cannot-find-setter-for/">Solving Room &#34;cannot find setter for field&#34; error in build time</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-08-20">2019-08-20</time></span></div><div class="content">Room persistence library is one of the easiest one to set up. However, when using data classes for your Room entities, you might face some small problem, which on the first look doesn&rsquo;t really make any sense.
 Let&rsquo;s try to compile this class:
@@ -100,17 +107,10 @@ First of all, you start with a new project in your IntelliJ and choose Kotlin -&
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/html/">Html</a>,&nbsp;<a href="/tags/web-development/">Web development</a>,&nbsp;<a href="/tags/kotlinjs/">KotlinJs</a>,&nbsp;<a href="/tags/javascript/">Javascript</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/kotlinxhtml/">Kotlinxhtml</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/a-fusion-between-workmanager-and/">A fusion between WorkManager and AlarmManager</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-07-04">2019-07-04</time></span></div><div class="content">Androids&rsquo; WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to respect doze mode, I should respect that too. That means that if the phone is idle, the WorkManager wont run.
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-07-04">2019-07-04</time></span></div><div class="content">Androids' WorkManager has been around for a while. However my own expectations about it were a little higher. I wished that the WorkManagercould fire events at exact timing. But since it was made to respect doze mode, I should respect that too. That means that if the phone is idle, the WorkManager wont run.
 **Lets explore my case: **
 Once the user logs into my app, I need to schedule 5 alarms for him.</div><div class="post-footer">
         <a href="/posts/a-fusion-between-workmanager-and/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/what-i-learned-from-unit-testing/">What I learned from unit testing</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-06-20">2019-06-20</time></span></div><div class="content">Testing, testing testing. I was getting inside the &ldquo;Fear of getting behind&rdquo; every time I heard that word. So I decided to react quickly. I knew nothing about testing and this is my experience getting my hands dirty with it. Please feel free to correct anywhere I&rsquo;m wrong. This is a reason why I&rsquo;m writing blogs.
-So what the hell is testing?
-Testing is just a piece of code where you invoke your written production code and check its&rsquo; behavior.</div><div class="post-footer">
-        <a href="/posts/what-i-learned-from-unit-testing/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/unit-testing/">Unit testing</a>,&nbsp;<a href="/tags/android-development/">Android Development</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -139,8 +139,8 @@ Testing is just a piece of code where you invoke your written production code an
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

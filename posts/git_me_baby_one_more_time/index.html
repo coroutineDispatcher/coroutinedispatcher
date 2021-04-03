@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Git me baby one more time - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="Git me baby one more time" />
+<meta property="og:description" content="Long time no see. Nothing new on Android from my side this days. I have mostly been focused in learning some new tech stack and some automation. But today I would like to talk about some basic git commands/concepts and situations.
+Let&rsquo;s immediately jump to some ancient debate: Rebase vs Merge For any reader who doesn&rsquo;t know the difference, I am trying to illustrate it in the below diagram." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/git_me_baby_one_more_time/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-03T12:15:57&#43;02:00" />
+<meta property="article:modified_time" content="2021-04-03T12:15:57&#43;02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Git me baby one more time"/>
+<meta name="twitter:description" content="Long time no see. Nothing new on Android from my side this days. I have mostly been focused in learning some new tech stack and some automation. But today I would like to talk about some basic git commands/concepts and situations.
+Let&rsquo;s immediately jump to some ancient debate: Rebase vs Merge For any reader who doesn&rsquo;t know the difference, I am trying to illustrate it in the below diagram."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://coroutinedispatcher.com/posts/git_me_baby_one_more_time/" /><link rel="prev" href="http://coroutinedispatcher.com/posts/decorate_stateful_mvvm/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Git me baby one more time",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/coroutinedispatcher.com\/posts\/git_me_baby_one_more_time\/"
+        },"genre": "posts","wordcount":  1063 ,
+        "url": "http:\/\/coroutinedispatcher.com\/posts\/git_me_baby_one_more_time\/","datePublished": "2021-04-03T12:15:57+02:00","dateModified": "2021-04-03T12:15:57+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts"> Posts </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts" title="">Posts</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Git me baby one more time</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-03">2021-04-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1063 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-immediately-jump-to-some-ancient-debate-rebase-vs-merge">Let&rsquo;s immediately jump to some ancient debate: Rebase vs Merge</a>
+      <ul>
+        <li><a href="#git-merge">git merge</a></li>
+        <li><a href="#git-rebase">git rebase</a></li>
+      </ul>
+    </li>
+    <li><a href="#git-reset">git reset</a></li>
+    <li><a href="#git-cherry-pick">git cherry pick</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p> </p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/git_me_baby.jpg"
+        data-srcset="/images/git_me_baby.jpg, /images/git_me_baby.jpg 1.5x, /images/git_me_baby.jpg 2x"
+        data-sizes="auto"
+        alt="/images/git_me_baby.jpg"
+        title="Photo by Yancy Min @Unsplash" /></p>
+<p> </p>
+<p>Long time no see. Nothing new on Android from my side this days. I have mostly been focused in learning some new tech stack and some automation. But today I would like to talk about some basic git commands/concepts and situations.</p>
+<h2 id="lets-immediately-jump-to-some-ancient-debate-rebase-vs-merge">Let&rsquo;s immediately jump to some ancient debate: Rebase vs Merge</h2>
+<p>For any reader who doesn&rsquo;t know the difference, I am trying to illustrate it in the below diagram. Let&rsquo;s consider these 2 branches:</p>
+<p> </p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/git_rebase_vs_merge.png"
+        data-srcset="/images/git_rebase_vs_merge.png, /images/git_rebase_vs_merge.png 1.5x, /images/git_rebase_vs_merge.png 2x"
+        data-sizes="auto"
+        alt="/images/git_rebase_vs_merge.png"
+        title="Branch_A_B_Illustration" /></p>
+<p> </p>
+<h3 id="git-merge">git merge</h3>
+<p>Let&rsquo;s start with merge first. From the official git documentation:</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Name<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">git-merge - Join two or more development histories together</div>
+        </div>
+    </div>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Description<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.</div>
+        </div>
+    </div>
+<p>In other words, you don&rsquo;t care what happened to previous commits of branch B. You just take the last one, and put it together with the current one, as a whole:</p>
+<p> </p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/git_merge.png"
+        data-srcset="/images/git_merge.png, /images/git_merge.png 1.5x, /images/git_merge.png 2x"
+        data-sizes="auto"
+        alt="/images/git_merge.png"
+        title="git_merge" /></p>
+<p> </p>
+<p>Think of the merging point as a huge commit that has basically everything, your current work, including the one you merged. If you think further, that&rsquo;s what happens after merging a Pull Request (or a Merge Request).</p>
+<p>For more information, you can refer to the official <a href="https://git-scm.com/docs/git-merge" target="_blank" rel="noopener noreffer">documentation</a>.</p>
+<h3 id="git-rebase">git rebase</h3>
+<p>Let&rsquo;s try the same scenario, but now talking about rebase. From the official docs:</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Name<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">git-rebase - Reapply commits on top of another base tip</div>
+        </div>
+    </div>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Description<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">If &lt;branch&gt; is specified, git rebase will perform an automatic <em>git switch</em> &lt;branch&gt; before doing anything else. Otherwise it remains on the current branch.</div>
+        </div>
+    </div>
+<p>It is practically vague, from only those two short notations. Therefore, a longer description available can be found <a href="https://git-scm.com/docs/git-rebase" target="_blank" rel="noopener noreffer">here</a>.</p>
+<p>How I understand it: Every single commit of the history of your current branch, is put on the top of the branch (latest commit) you are rebasing on. In other words, you have every commit in the stack:</p>
+<p> </p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/git_rebase.png"
+        data-srcset="/images/git_rebase.png, /images/git_rebase.png 1.5x, /images/git_rebase.png 2x"
+        data-sizes="auto"
+        alt="/images/git_rebase.png"
+        title="git_rebase" /></p>
+<p> </p>
+<div class="details admonition hint open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Hint<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">When rebase is finished, make sure to force push.
+This is not necessary in merging strategy though.</div>
+        </div>
+    </div>
+<p>Now the debate: when to use what? Frankly I don&rsquo;t see any huge difference. However, I personally prefer rebasing, since I can track history while if we use merge, we have no idea who did what and how many small other merges might be inside your own merge. <em>Merge can be super confusing sometimes.</em></p>
+<h2 id="git-reset">git reset</h2>
+<p>In situations where I know exactly the commit(s) that I screwed up and the last commit that the project was working all right, git reset helps a lot. Let&rsquo;s first see what it does:</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Name<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">git-reset - Reset current HEAD to the specified state</div>
+        </div>
+    </div>
+<p>I think this one doesn&rsquo;t need additional description. Wait? What is the HEAD? HEAD is just the current state. When you pull from remote, the HEAD is already in the same place as develop, when you commit from a new branch, checked out from it, the head shows you exactly where you are. HEAD is the pointer of git (if you want to make a very nerdish comparison).</p>
+<p>So, you added a commit that failed your project to build. Good! Pick up the command line and start resetting:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git reset --hard HEAD^
+</code></pre></div><p>What this one does, is resets your HEAD 1 commit before. Thus now we basically &ldquo;revert&rdquo; the previous commit and your project builds again.
+Great. But what the git is <code>--hard</code> ? <code>--hard</code> means uncommit + unstage + delete the changes. Basically, reset everything from that desired commit. This command is not alone, but I will leave you to explore the rest. A very short and nice explanation can be found <a href="https://stackoverflow.com/a/50022436/8914336" target="_blank" rel="noopener noreffer">here</a>.</p>
+<p>Ok, but what if we screwed 4 commits &ldquo;ago&rdquo;. We can either do <code>git reset --hard HEAD~4</code> or if we are unsure to count backwards, we can always reset to the desired commit just by knowing the commit hash:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git reset --hard 9ece14fdfdeb44ac95fecd8f8abe4bb639100b9d
+</code></pre></div><p><strong>Every commit has a hash.</strong></p>
+<p>More information on <code>git reset</code> can be found <a href="https://git-scm.com/docs/git-reset" target="_blank" rel="noopener noreffer">here</a>.</p>
+<h2 id="git-cherry-pick">git cherry pick</h2>
+<p>Cool. Now I&rsquo;m going to talk about my favorite git command: cherry pick. How cool it is to pick some cherries now that spring is here. But that has nothing to do with real cherries. Although the concept is pretty similar. Once you are eating a plate of apples and kiwis, you might also want to sweaten your taste, very little. So you pick a cherry. First let&rsquo;s clarify the concept:</p>
+<p> </p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Name<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">git-cherry-pick - Apply the changes introduced by some existing commits</div>
+        </div>
+    </div>
+<p>Well, to me, the name isn&rsquo;t telling too much. Let&rsquo;s see the description as well.</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Description<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Given one or more existing commits, apply the change each one introduces, recording a new commit for each. This requires your working tree to be clean (no modifications from the HEAD commit).</div>
+        </div>
+    </div>
+<p> </p>
+<p>Two are the basic scenarios where I use cherry pick:</p>
+<p>1 - I need some unmerged-to-main work from some other branch (Let&rsquo;s say that my teammate just created a data class that I also need).</p>
+<p> </p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/cherry_pick.png"
+        data-srcset="/images/cherry_pick.png, /images/cherry_pick.png 1.5x, /images/cherry_pick.png 2x"
+        data-sizes="auto"
+        alt="/images/cherry_pick.png"
+        title="git_cherry_pick" /></p>
+<p> </p>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">That data class commit we picked must be the only change made in it, otherwise you might get other stuff flying around in your HEAD.</div>
+        </div>
+    </div>
+<p>2 - When the branch is too old, and rebasing gives you a headache.</p>
+<p>Of course that in that scenario, cherry pick is far easier than just struggling and struggling to solve and resolve conflicts quick. Therefore, renaming the old branch, creating a new one on top of <code>main</code>/<code>develop</code> and cherry-picking commits from the old one is a real life hack.</p>
+<p> </p>
+<p>When you learn how easy git is, you learn how endless it is. Learning some git tricks would neve hurt and will save you a lot of time. Principal advice: Learn git by command line. This will help you understand every UI tool built for git, and if you switch your company one day, you won&rsquo;t need to learn another git client tool to use it. However, if you are already experienced on git, probably it doesn&rsquo;t make too much sense remembering those commands all the time, but rather use a client for that. Anyways, I always combine it. I still commit, add and push from the command line, but when it comes to making a longer command, rather than remembering the syntax, I just open source tree and let it do the magic for me.</p>
+<p>Compliments of <a href="https://twitter.com/kofse" target="_blank" rel="noopener noreffer">@kofse</a>, who has been so patient in teaching me a lot about git, and <a href="https://github.com/KlausNie" target="_blank" rel="noopener noreffer">KlausNie</a> who saves my a** most of the time during git screw ups.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-04-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/decorate_stateful_mvvm/" class="prev" rel="prev" title="Stateful MVVM across process death using SharedFlow"><i class="fas fa-angle-left fa-fw"></i>Stateful MVVM across process death using SharedFlow</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

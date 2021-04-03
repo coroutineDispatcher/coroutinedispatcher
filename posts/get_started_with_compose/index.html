@@ -9,9 +9,10 @@
 <meta property="og:description" content="onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
  Joe Birch&rsquo;s blog. Stack Overflow A quick read through the Google Codelabs Jetpack sample apps from Google&rsquo;s repository (Mostly looking at JetNews)  Note  This posts code example is not a best practice example." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/get_started_with_compose/" />
-<meta property="article:published_time" content="2020-09-11T18:23:50+02:00" />
-<meta property="article:modified_time" content="2020-09-11T18:23:50+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/get_started_with_compose/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-09-11T18:23:50&#43;02:00" />
+<meta property="article:modified_time" content="2020-09-11T18:23:50&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="First experience with Jetpack Compose"/>
 <meta name="twitter:description" content="onCreate It&rsquo;s been a couple of weeks since Jetpack Compose reached in alpha state. So, I thought I should start giving it a try. Getting started with it is not that hard. There are a lot of options, but I will render what worked for me:
@@ -190,14 +191,14 @@ Getting started with it is not that hard. There are a lot of options, but I will
 <h3 id="the-entry-point-to-a-compose-app">The entry point to a Compose app</h3>
 <p>As in single activity apps, the Activity is the entry point for a Compose app as well. However, instead of calling <code>setContentView(R.layout.activity_main)</code> you have to construct the <code>setContent</code> method:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="n">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
-<span class="p">...</span>
+<span class="o">..</span><span class="p">.</span>
     <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>
         <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
         <span class="k">val</span> <span class="py">injector</span> <span class="p">=</span> <span class="p">(</span><span class="n">application</span> <span class="k">as</span> <span class="n">CatsApplication</span><span class="p">).</span><span class="n">injector</span>
         <span class="n">setContent</span> <span class="p">{</span>
             <span class="n">CatsTheme</span> <span class="p">{</span>
                 <span class="n">Surface</span><span class="p">(</span><span class="n">color</span> <span class="p">=</span> <span class="n">MaterialTheme</span><span class="p">.</span><span class="n">colors</span><span class="p">.</span><span class="n">background</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">CatsAppScafold</span><span class="p">(...)</span>
+                    <span class="n">CatsAppScafold</span><span class="p">(</span><span class="o">..</span><span class="p">.)</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
@@ -208,8 +209,8 @@ Getting started with it is not that hard. There are a lot of options, but I will
 <p><code>@Composable</code> annotation is the way to make a function composable. That way, Android will know how to use it, and what to draw on the screen. If a Composable component requires a composable function, a normal method (without <code>@Composable</code> annotation) is not correctly constructed.</p>
 <p>Now, let&rsquo;s check what is inside our <code>CatsAppScafold</code>:</p>
 <p>Our entire app, is in this block:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ExperimentalCoroutinesApi</span>
-<span class="n">@Composable</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@ExperimentalCoroutinesApi</span>
+<span class="nd">@Composable</span>
 <span class="k">fun</span> <span class="nf">CatsAppScaffold</span><span class="p">(</span>
     <span class="n">navigationViewModel</span><span class="p">:</span> <span class="n">NavigationViewModel</span><span class="p">,</span>
     <span class="n">networkClient</span><span class="p">:</span> <span class="n">NetworkClient</span>
@@ -218,19 +219,19 @@ Getting started with it is not that hard. There are a lot of options, but I will
     
     <span class="n">Scaffold</span><span class="p">(</span>
         <span class="n">backgroundColor</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">White</span><span class="p">,</span>
-        <span class="n">topBar</span> <span class="p">=</span> <span class="n">TopAppBar</span><span class="p">(</span><span class="n">title</span> <span class="p">=</span> <span class="p">{</span> <span class="n">Text</span><span class="p">(</span><span class="n">text</span> <span class="p">=</span> <span class="s">&#34;Cats &lt;3&#34;</span><span class="p">)</span> <span class="p">}),</span>
+        <span class="n">topBar</span> <span class="p">=</span> <span class="n">TopAppBar</span><span class="p">(</span><span class="n">title</span> <span class="p">=</span> <span class="p">{</span> <span class="n">Text</span><span class="p">(</span><span class="n">text</span> <span class="p">=</span> <span class="s2">&#34;Cats &lt;3&#34;</span><span class="p">)</span> <span class="p">}),</span>
         <span class="n">bodyContent</span> <span class="p">=</span> <span class="p">{</span>
             <span class="n">Crossfade</span><span class="p">(</span>
                 <span class="n">current</span> <span class="p">=</span> <span class="n">currentState</span>
-            <span class="p">)</span> <span class="p">{</span> <span class="n">screenState</span> <span class="p">-&gt;</span>
+            <span class="p">)</span> <span class="p">{</span> <span class="n">screenState</span> <span class="o">-&gt;</span>
                 <span class="k">when</span> <span class="p">(</span><span class="k">val</span> <span class="py">screenStateValue</span> <span class="p">=</span> <span class="n">screenState</span><span class="p">.</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">Home</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                    <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">Home</span> <span class="o">-&gt;</span> <span class="p">{</span>
                         <span class="n">HomeScreen</span><span class="p">(</span>
                             <span class="n">navigateTo</span> <span class="p">=</span> <span class="n">navigationViewModel</span><span class="o">::</span><span class="n">navigateTo</span><span class="p">,</span>
                             <span class="n">networkClient</span> <span class="p">=</span> <span class="n">networkClient</span>
                         <span class="p">)</span>
                     <span class="p">}</span>
-                    <span class="k">is</span> <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">BreedDetails</span> <span class="p">-&gt;</span> <span class="p">{</span>
+                    <span class="k">is</span> <span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">BreedDetails</span> <span class="o">-&gt;</span> <span class="p">{</span>
                         <span class="n">WebPageScreen</span><span class="p">(</span><span class="n">screenStateValue</span><span class="p">.</span><span class="n">urlToRender</span><span class="p">)</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
@@ -249,7 +250,7 @@ Getting started with it is not that hard. There are a lot of options, but I will
         </div>
     </div>
 <p>This is how the <code>NavigationViewModel</code> looks:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ExperimentalCoroutinesApi</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@ExperimentalCoroutinesApi</span>
 <span class="k">class</span> <span class="nc">NavigationViewModel</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">private</span> <span class="k">val</span> <span class="py">_state</span><span class="p">:</span> <span class="n">MutableStateFlow</span><span class="p">&lt;</span><span class="n">NavigationState</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">MutableStateFlow</span><span class="p">(</span><span class="n">NavigationState</span><span class="p">.</span><span class="n">Home</span><span class="p">)</span>
     <span class="k">val</span> <span class="py">state</span><span class="p">:</span> <span class="n">StateFlow</span><span class="p">&lt;</span><span class="n">NavigationState</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">_state</span>
@@ -285,27 +286,27 @@ The <code>bodyContent</code> block, is the part where our views are going to be 
 <code>Crossfade</code> is a component used to perform a cross-fade animation when switching between two views. For this approach, we use it&rsquo;s <code>current</code> property to pass our latest state, and here is where the magic of navigation happens. I hope the block inside, is self-explanatory.</p>
 <h3 id="viewmodels">ViewModels</h3>
 <p>The problem with the above navigation approach is that when you create <code>viewModels</code>, in lower scoped composables, they are attached to the only Activity alive in this case, which might be total overkill if one has a lot of screens and <code>ViewModel</code>s. Example:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@ExperimentalCoroutinesApi</span>
-<span class="n">@Composable</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@ExperimentalCoroutinesApi</span>
+<span class="nd">@Composable</span>
 <span class="k">fun</span> <span class="nf">HomeScreen</span><span class="p">(</span>
-    <span class="n">navigateTo</span><span class="p">:</span> <span class="p">(</span><span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Unit</span><span class="p">,</span>
+    <span class="n">navigateTo</span><span class="p">:</span> <span class="p">(</span><span class="n">NavigationViewModel</span><span class="p">.</span><span class="n">NavigationState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Unit</span><span class="p">,</span>
     <span class="n">networkClient</span><span class="p">:</span> <span class="n">NetworkClient</span>
 <span class="p">)</span> <span class="p">{</span>
     <span class="k">val</span> <span class="py">homeViewModel</span><span class="p">:</span> <span class="n">HomeViewModel</span> <span class="p">=</span> <span class="n">viewModel</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="k">object</span> <span class="err">: </span><span class="nc">ViewModelProvider</span><span class="p">.</span><span class="n">Factory</span> <span class="p">{</span>
-        <span class="k">override</span> <span class="k">fun</span> &lt;T : ViewModel?&gt; <span class="nf">create</span><span class="p">(</span><span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;):</span> <span class="n">T</span> <span class="p">=</span>
+        <span class="k">override</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span> <span class="p">:</span> <span class="nc">ViewModel</span><span class="p">?&gt;</span> <span class="nf">create</span><span class="p">(</span><span class="n">modelClass</span><span class="p">:</span> <span class="n">Class</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;):</span> <span class="n">T</span> <span class="p">=</span>
             <span class="n">HomeViewModel</span><span class="p">(</span><span class="n">networkClient</span><span class="p">)</span> <span class="k">as</span> <span class="n">T</span>
     <span class="p">})</span>
 
     <span class="k">val</span> <span class="py">state</span> <span class="p">=</span> <span class="n">homeViewModel</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">collectAsState</span><span class="p">()</span>
 
     <span class="k">when</span> <span class="p">(</span><span class="k">val</span> <span class="py">statesValue</span> <span class="p">=</span> <span class="n">state</span><span class="p">.</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Idle</span> <span class="p">-&gt;</span> <span class="n">homeViewModel</span><span class="p">.</span><span class="n">getCatBreeds</span><span class="p">()</span>
-        <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Loading</span> <span class="p">-&gt;</span> <span class="n">CenterLoadingIndicator</span><span class="p">()</span>
-        <span class="k">is</span> <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Success</span> <span class="p">-&gt;</span> <span class="n">CatBreedsList</span><span class="p">(</span>
+        <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Idle</span> <span class="o">-&gt;</span> <span class="n">homeViewModel</span><span class="p">.</span><span class="n">getCatBreeds</span><span class="p">()</span>
+        <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Loading</span> <span class="o">-&gt;</span> <span class="n">CenterLoadingIndicator</span><span class="p">()</span>
+        <span class="k">is</span> <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Success</span> <span class="o">-&gt;</span> <span class="n">CatBreedsList</span><span class="p">(</span>
             <span class="n">breedsList</span> <span class="p">=</span> <span class="n">statesValue</span><span class="p">.</span><span class="n">breedsList</span><span class="p">,</span>
             <span class="n">itemClickAction</span> <span class="p">=</span> <span class="n">navigateTo</span>
         <span class="p">)</span>
-        <span class="k">is</span> <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Error</span> <span class="p">-&gt;</span> <span class="n">ErrorView</span><span class="p">(</span><span class="n">retryAction</span> <span class="p">=</span> <span class="p">{</span>
+        <span class="k">is</span> <span class="n">HomeViewModel</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">Error</span> <span class="o">-&gt;</span> <span class="n">ErrorView</span><span class="p">(</span><span class="n">retryAction</span> <span class="p">=</span> <span class="p">{</span>
              <span class="n">homeViewModel</span><span class="p">.</span><span class="n">getCatBreeds</span><span class="p">()</span> 
              <span class="p">}</span>
         <span class="p">)</span>
@@ -315,13 +316,13 @@ The <code>bodyContent</code> block, is the part where our views are going to be 
 <h3 id="challenges-compared-to-getting-started-with-flutter">Challenges compared to (getting started with) Flutter</h3>
 <p>It would not hurt if the developer trying Compose, has already tried Flutter. Flutter uses the same logic as Compose (only the API changes a little), but since Compose is less mature than Flutter, mastering Compose after knowing a little Flutter would be a piece of cake.</p>
 <p>Jetpack Compose is not that intuitive as Flutter. A very good example, would be this block:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">LazyColumnFor</span><span class="p">(</span><span class="n">breedsList</span><span class="p">)</span> <span class="p">{</span> <span class="n">breed</span> <span class="p">-&gt;</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">LazyColumnFor</span><span class="p">(</span><span class="n">breedsList</span><span class="p">)</span> <span class="p">{</span> <span class="n">breed</span> <span class="o">-&gt;</span>
         <span class="n">RippleIndication</span><span class="p">()</span>
-        <span class="n">Card</span><span class="p">(...){...}</span>
+        <span class="n">Card</span><span class="p">(</span><span class="o">..</span><span class="p">.){</span><span class="o">..</span><span class="p">.}</span>
     <span class="p">}</span>
 </code></pre></div><p>To make the <code>Card</code> element do a ripple effect when you click it, you have to call the <code>RippleIndication()</code> constructor, and below it the element having the ripple effect (or vice versa?). In Flutter it would definitely be something like this:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">RippleIndication</span><span class="p">(</span>
-    <span class="n">child</span><span class="p">:</span> <span class="n">Card</span><span class="p">(...)</span>
+    <span class="n">child</span><span class="p">:</span> <span class="n">Card</span><span class="p">(</span><span class="o">..</span><span class="p">.)</span>
 <span class="p">)</span>
 </code></pre></div><p>Which IMO, it&rsquo;s far more intuitive.</p>
 <h4 id="snackbars">Snackbars</h4>
@@ -331,10 +332,10 @@ The <code>bodyContent</code> block, is the part where our views are going to be 
 <h2 id="more-notes">More notes</h2>
 <h3 id="webviews">WebViews</h3>
 <p>Using WebViews in Jetpack Compose, is same as using the <code>WebView</code> class in the current status. However, there is a nice <code>AndroidView</code> wrapper for every tool that is either not ready yet, or not planning to be released a new one, ever. It took me some time to figure out how to do it, so I&rsquo;ll just paste the code here:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@SuppressLint</span><span class="p">(</span><span class="s">&#34;SetJavaScriptEnabled&#34;</span><span class="p">)</span>
-<span class="n">@Composable</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@SuppressLint</span><span class="p">(</span><span class="s2">&#34;SetJavaScriptEnabled&#34;</span><span class="p">)</span>
+<span class="nd">@Composable</span>
 <span class="k">fun</span> <span class="nf">WebPageScreen</span><span class="p">(</span><span class="n">urlToRender</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">AndroidView</span><span class="p">(</span><span class="n">viewBlock</span> <span class="p">=</span> <span class="o">::</span><span class="n">WebView</span><span class="p">)</span> <span class="p">{</span> <span class="n">webView</span> <span class="p">-&gt;</span>
+    <span class="n">AndroidView</span><span class="p">(</span><span class="n">viewBlock</span> <span class="p">=</span> <span class="o">::</span><span class="n">WebView</span><span class="p">)</span> <span class="p">{</span> <span class="n">webView</span> <span class="o">-&gt;</span>
         <span class="n">with</span><span class="p">(</span><span class="n">webView</span><span class="p">){</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">javaScriptEnabled</span> <span class="p">=</span> <span class="k">true</span>
             <span class="n">webViewClient</span> <span class="p">=</span> <span class="n">WebViewClient</span><span class="p">()</span>
@@ -380,8 +381,8 @@ The <code>bodyContent</code> block, is the part where our views are going to be 
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 

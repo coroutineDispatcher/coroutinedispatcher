@@ -9,9 +9,10 @@
 <meta property="og:description" content="When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing &#43; Room pretty amusing, I thought I should share it with you.
 Room has already a great support for RxJava or Coroutines. I have used both ways to access the data layer and I was really satisfied with both. So I decided to make a 2-series blog posts with testing in Room with RxJava and testing Room with coroutines." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://coroutinedispatcher.com/posts/room-and-rxjava-testing/" />
-<meta property="article:published_time" content="2019-10-07T09:30:00+02:00" />
-<meta property="article:modified_time" content="2019-10-07T09:30:00+02:00" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/room-and-rxjava-testing/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-10-07T09:30:00&#43;02:00" />
+<meta property="article:modified_time" content="2019-10-07T09:30:00&#43;02:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Room and RxJava testing"/>
 <meta name="twitter:description" content="When it comes to testing the data layer, we should always have time for that. It&rsquo;s very important. You lose data, you lose users. Since I really found testing &#43; Room pretty amusing, I thought I should share it with you.
@@ -100,25 +101,25 @@ Room has already a great support for RxJava or Coroutines. I have used both ways
 <p>I will start with Rx first. First of all this is the dependency for Rx support:</p>
 <div class="highlight"><pre class="chroma"><code class="language-groovy" data-lang="groovy"><span class="n">androidTestImplementation</span> <span class="err">“</span><span class="n">android</span><span class="o">.</span><span class="na">arch</span><span class="o">.</span><span class="na">core</span><span class="o">:</span><span class="n">core</span><span class="o">-</span><span class="nl">testing:</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">alpha5</span><span class="err">”</span>
 </code></pre></div><p>So let&rsquo;s suppose we have this DAO:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Dao</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Dao</span>
 <span class="k">interface</span> <span class="nc">HabitDao</span> <span class="p">{</span>
-    <span class="n">@Insert</span>
+    <span class="nd">@Insert</span>
     <span class="k">fun</span> <span class="nf">insertHabit</span><span class="p">(</span><span class="n">habit</span><span class="p">:</span> <span class="n">Habit</span><span class="p">):</span> <span class="n">Completable</span>
 
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM user_habits WHERE end_date &gt;= :todaysDate&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM user_habits WHERE end_date &gt;= :todaysDate&#34;</span><span class="p">)</span>
     <span class="k">fun</span> <span class="nf">selectAllActiveHabits</span><span class="p">(</span><span class="n">todaysDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">):</span> <span class="n">Flowable</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Habit</span><span class="p">&gt;&gt;</span>
 
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM user_habits WHERE end_date &lt; :todaysDate&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM user_habits WHERE end_date &lt; :todaysDate&#34;</span><span class="p">)</span>
     <span class="k">fun</span> <span class="nf">selectAllInactiveHabits</span><span class="p">(</span><span class="n">todaysDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">):</span> <span class="n">Flowable</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Habit</span><span class="p">&gt;&gt;</span>
 
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;DELETE FROM user_habits WHERE id = :id&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;DELETE FROM user_habits WHERE id = :id&#34;</span><span class="p">)</span>
     <span class="k">fun</span> <span class="nf">deleteHabit</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">):</span> <span class="n">Completable</span>
 
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;UPDATE user_habits SET start_date = :startDate, end_date = :endDate , receive_notification = :notification WHERE id = :id&#34;</span><span class="p">)</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;UPDATE user_habits SET start_date = :startDate, end_date = :endDate , receive_notification = :notification WHERE id = :id&#34;</span><span class="p">)</span>
     <span class="k">fun</span> <span class="nf">updateWhereId</span><span class="p">(</span><span class="n">startDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">,</span> <span class="n">endDate</span><span class="p">:</span> <span class="n">Date</span><span class="p">,</span> <span class="n">notification</span><span class="p">:</span> <span class="n">Boolean</span><span class="p">,</span> <span class="n">id</span><span class="p">:</span> <span class="n">Long</span><span class="p">):</span> <span class="n">Completable</span>
 
-    <span class="n">@VisibleForTesting</span>
-    <span class="n">@Query</span><span class="p">(</span><span class="s">&#34;SELECT * FROM user_habits&#34;</span><span class="p">)</span>
+    <span class="nd">@VisibleForTesting</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM user_habits&#34;</span><span class="p">)</span>
     <span class="k">fun</span> <span class="nf">selectAll</span><span class="p">():</span> <span class="n">Flowable</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Habit</span><span class="p">&gt;&gt;</span>
 <span class="p">}</span>
 </code></pre></div><p>I will skip the implementation of TypeConverters, but the important part is to notice that Room supports Date() objects as part of table column. Notice also that the annotation @VisibleForTesting is a pretty cool one. If I use that method outside my testing environment, the IDE will yell at me.</p>
@@ -129,12 +130,12 @@ Room has already a great support for RxJava or Coroutines. I have used both ways
 Now the tests. The first thing to keep in mind is that we don&rsquo;t really want to use our real database because that would be a total disaster. So, Room provides an <em>in-memory</em> database helper for you to run your tests:</p>
 <div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">HabitDaoTest</span> <span class="p">{</span>
 
-    <span class="n">@get</span><span class="p">:</span><span class="n">Rule</span>
+    <span class="nd">@get</span><span class="p">:</span><span class="n">Rule</span>
     <span class="k">var</span> <span class="py">instantTaskExecutorRule</span> <span class="p">=</span> <span class="n">InstantTaskExecutorRule</span><span class="p">()</span> <span class="c1">//it&#39;s just for Junit to execute tasks synchronously
 </span><span class="c1"></span>    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">careFlectDatabase</span><span class="p">:</span> <span class="n">CareFlectDatabase</span> <span class="c1">//the db instance
 </span><span class="c1"></span>    <span class="k">private</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">habitDao</span><span class="p">:</span> <span class="n">HabitDao</span> <span class="c1">//the dao
 </span><span class="c1"></span>
-    <span class="n">@Before</span>
+    <span class="nd">@Before</span>
     <span class="k">fun</span> <span class="nf">setUp</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">context</span> <span class="p">=</span> <span class="n">ApplicationProvider</span><span class="p">.</span><span class="n">getApplicationContext</span><span class="p">&lt;</span><span class="n">Context</span><span class="p">&gt;()</span>
         <span class="n">careFlectDatabase</span> <span class="p">=</span> <span class="n">Room</span><span class="p">.</span><span class="n">inMemoryDatabaseBuilder</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">CareFlectDatabase</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
@@ -144,13 +145,13 @@ Now the tests. The first thing to keep in mind is that we don&rsquo;t really wan
         <span class="n">habitDao</span> <span class="p">=</span> <span class="n">careFlectDatabase</span><span class="p">.</span><span class="n">habitDao</span><span class="p">()</span>
     <span class="p">}</span>
 
-    <span class="n">@After</span>
+    <span class="nd">@After</span>
     <span class="k">fun</span> <span class="nf">tearDown</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">careFlectDatabase</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p>Since we are done with the configuration. First let&rsquo;s test the insertion:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="n">@Test</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"> <span class="nd">@Test</span>
     <span class="k">fun</span> <span class="nf">presentDateShouldReturnInsertion</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">today</span> <span class="p">=</span> <span class="n">getInstance</span><span class="p">().</span><span class="n">apply</span> <span class="p">{</span>
             <span class="k">set</span><span class="p">(</span><span class="n">MONTH</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
@@ -164,59 +165,59 @@ Now the tests. The first thing to keep in mind is that we don&rsquo;t really wan
             <span class="k">set</span><span class="p">(</span><span class="n">DAY_OF_MONTH</span><span class="p">,</span> <span class="m">30</span><span class="p">)</span>
         <span class="p">}</span>
 
-        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">yesterday</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="n">today</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s2">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">yesterday</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="n">today</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">insertHabit</span><span class="p">(</span><span class="n">habit</span><span class="p">).</span><span class="n">blockingAwait</span><span class="p">()</span>
 
-        <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">().</span><span class="n">test</span><span class="p">().</span><span class="n">assertValue</span> <span class="p">{</span> <span class="n">list</span> <span class="p">-&gt;</span>
+        <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">().</span><span class="n">test</span><span class="p">().</span><span class="n">assertValue</span> <span class="p">{</span> <span class="n">list</span> <span class="o">-&gt;</span>
             <span class="n">list</span><span class="p">.</span><span class="n">isNotEmpty</span><span class="p">()</span>
         <span class="p">}</span>
     <span class="p">}</span>
 </code></pre></div><p>Notice that we should add the blockingAwait() method behind the completable execution otherwise the selection might execute before insertion. And that&rsquo;s the only tricky part for testing Room queries with RxJava. Same logic applies to Update, Delete.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">    <span class="n">@Test</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">    <span class="nd">@Test</span>
     <span class="k">fun</span> <span class="nf">updateTest</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">val</span> <span class="py">valueToUpdate</span> <span class="p">=</span> <span class="n">getInstance</span><span class="p">().</span><span class="n">apply</span> <span class="p">{</span>
             <span class="k">set</span><span class="p">(</span><span class="n">MONTH</span><span class="p">,</span> <span class="m">6</span><span class="p">)</span>
         <span class="p">}</span>
 
-        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">Date</span><span class="p">(),</span> <span class="n">valueToUpdate</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s2">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">Date</span><span class="p">(),</span> <span class="n">valueToUpdate</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">insertHabit</span><span class="p">(</span><span class="n">habit</span><span class="p">).</span><span class="n">blockingAwait</span><span class="p">()</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">()</span>
-            <span class="p">.</span><span class="n">doOnError</span> <span class="p">{</span> <span class="n">throwable</span> <span class="p">-&gt;</span>
+            <span class="p">.</span><span class="n">doOnError</span> <span class="p">{</span> <span class="n">throwable</span> <span class="o">-&gt;</span>
                 <span class="n">throwable</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span>
             <span class="p">}</span>
-            <span class="p">.</span><span class="n">doOnNext</span> <span class="p">{</span> <span class="n">habits</span> <span class="p">-&gt;</span>
+            <span class="p">.</span><span class="n">doOnNext</span> <span class="p">{</span> <span class="n">habits</span> <span class="o">-&gt;</span>
                 <span class="k">val</span> <span class="py">calendar</span> <span class="p">=</span> <span class="n">getInstance</span><span class="p">().</span><span class="n">apply</span> <span class="p">{</span>
                     <span class="k">set</span><span class="p">(</span><span class="n">MONTH</span><span class="p">,</span> <span class="m">11</span><span class="p">)</span>
                 <span class="p">}</span>
 
                 <span class="n">habitDao</span><span class="p">.</span><span class="n">updateWhereId</span><span class="p">(</span><span class="n">Date</span><span class="p">(),</span> <span class="n">calendar</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="n">habits</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">id</span><span class="o">!!</span><span class="p">).</span><span class="n">blockingAwait</span><span class="p">()</span>
 
-                <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">().</span><span class="n">test</span><span class="p">().</span><span class="n">assertValue</span> <span class="p">{</span> <span class="n">updatedValues</span> <span class="p">-&gt;</span>
+                <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">().</span><span class="n">test</span><span class="p">().</span><span class="n">assertValue</span> <span class="p">{</span> <span class="n">updatedValues</span> <span class="o">-&gt;</span>
                     <span class="k">val</span> <span class="py">updatedDate</span><span class="p">:</span> <span class="n">Calendar</span> <span class="p">=</span> <span class="n">getInstance</span><span class="p">()</span>
 
                     <span class="n">updatedDate</span><span class="p">.</span><span class="n">time</span> <span class="p">=</span> <span class="n">updatedValues</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">endDate</span><span class="o">!!</span>
 
-                    <span class="n">updatedDate</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="n">MONTH</span><span class="p">)</span> <span class="p">==</span> <span class="m">9</span>
+                    <span class="n">updatedDate</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="n">MONTH</span><span class="p">)</span> <span class="o">==</span> <span class="m">9</span>
                 <span class="p">}</span>
             <span class="p">}</span>
     <span class="p">}</span>
 </code></pre></div><p>Check how RxJava has some awesome support for asserting values only by adding the test() method behind.</p>
 <p>And the delete part:</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">@Test</span>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="nd">@Test</span>
     <span class="k">fun</span> <span class="nf">deleteTest</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">Date</span><span class="p">(),</span> <span class="n">Date</span><span class="p">(),</span> <span class="k">true</span><span class="p">)</span>
+        <span class="k">val</span> <span class="py">habit</span> <span class="p">=</span> <span class="n">Habit</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="s2">&#34;Quit Smoking&#34;</span><span class="p">,</span> <span class="n">Date</span><span class="p">(),</span> <span class="n">Date</span><span class="p">(),</span> <span class="k">true</span><span class="p">)</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">insertHabit</span><span class="p">(</span><span class="n">habit</span><span class="p">).</span><span class="n">blockingAwait</span><span class="p">()</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">().</span><span class="n">subscribe</span><span class="p">({</span>
-            <span class="n">habitDao</span><span class="p">.</span><span class="n">deleteHabit</span><span class="p">(</span><span class="n">it</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">id</span><span class="o">!!</span><span class="p">).</span><span class="n">blockingAwait</span><span class="p">()</span>
-        <span class="p">},</span> <span class="p">{</span> <span class="n">throwable</span> <span class="p">-&gt;</span> <span class="n">throwable</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">})</span>
+            <span class="n">habitDao</span><span class="p">.</span><span class="n">deleteHabit</span><span class="p">(</span><span class="k">it</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">id</span><span class="o">!!</span><span class="p">).</span><span class="n">blockingAwait</span><span class="p">()</span>
+        <span class="p">},</span> <span class="p">{</span> <span class="n">throwable</span> <span class="o">-&gt;</span> <span class="n">throwable</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span> <span class="p">})</span>
 
         <span class="n">habitDao</span><span class="p">.</span><span class="n">selectAll</span><span class="p">().</span><span class="n">test</span><span class="p">().</span><span class="n">assertValue</span> <span class="p">{</span>
-            <span class="n">it</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">()</span>
+            <span class="k">it</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">()</span>
         <span class="p">}</span>
     <span class="p">}</span>
 </code></pre></div><p><strong>Conclusion</strong><br>
@@ -251,8 +252,8 @@ The one and only thing I don&rsquo;t really like about Google is that they sudde
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>
 
