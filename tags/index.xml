@@ -4,19 +4,33 @@
         <link>http://coroutinedispatcher.com/tags/</link>
         <description>Tags - Tag - Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Kotlin</title>
+    <link>http://coroutinedispatcher.com/tags/kotlin/</link>
+    <pubDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/kotlin/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>ktor</title>
+    <link>http://coroutinedispatcher.com/tags/ktor/</link>
+    <pubDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/ktor/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>server-side</title>
+    <link>http://coroutinedispatcher.com/tags/server-side/</link>
+    <pubDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/tags/server-side/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>EventBus</title>
     <link>http://coroutinedispatcher.com/tags/eventbus/</link>
     <pubDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</pubDate>
     <author>Author</author>
     <guid>http://coroutinedispatcher.com/tags/eventbus/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Kotlin</title>
-    <link>http://coroutinedispatcher.com/tags/kotlin/</link>
-    <pubDate>Tue, 27 Oct 2020 14:24:48 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/kotlin/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Kotlin Coroutines</title>
@@ -59,20 +73,6 @@
     <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
     <author>Author</author>
     <guid>http://coroutinedispatcher.com/tags/android-ui/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>AndroidX</title>
-    <link>http://coroutinedispatcher.com/tags/androidx/</link>
-    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/androidx/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Composable</title>
-    <link>http://coroutinedispatcher.com/tags/composable/</link>
-    <pubDate>Fri, 11 Sep 2020 18:23:50 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/tags/composable/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.83.1" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -73,6 +73,13 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/from-gson-to-moshi-what-i-learned/">From Gson to Moshi, what I learned</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-10-28">2019-10-28</time></span></div><div class="content">There is no doubt that people are getting away from GSON and I agree with those reasons too. The only advantage GSON has over other parsing libraries is that it takes a really short amount of time to set up. Furthermore, the most important thing is that Moshi is embracing Kotlin support.
+First let&rsquo;s implement the dependency:
+implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a struggle to migrate to Moshi. It&rsquo;s really Gson look-a-like.</div><div class="post-footer">
+        <a href="/posts/from-gson-to-moshi-what-i-learned/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/pojo/">POJO</a>,&nbsp;<a href="/tags/gson/">Gson</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/json/">Json</a>,&nbsp;<a href="/tags/moshi/">Moshi</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/json-parsing/">Json Parsing</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/unit-testing-with-coroutines/">Unit testing with coroutines</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-10-21">2019-10-21</time></span></div><div class="content">The coroutines API has already brought some innovation in the Android and Kotlin world. I always loved the idea of keeping it as simple as we all can. There is a saying around here that &ldquo;Whoever talks to much, makes too much mistakes&rdquo; and I see this a little bit related to Java&rsquo;s verbosity and also in the world of concurrency. It&rsquo;s said over and over again that concurrency is not simple and I couldn&rsquo;t agree more: You have to care about context, jobs running in parallel, cancelation, returning values etc.</div><div class="post-footer">
         <a href="/posts/unit-testing-with-coroutines/">Read More</a><div class="post-tags">
@@ -101,17 +108,6 @@ To solve this problem, Dagger-Reflect was written.</div><div class="post-footer"
 With the JitPack, you won&rsquo;t be suffering at all. So how do you do it? For the sake of this tutorial, I&rsquo;m just gonna make a logging library.</div><div class="post-footer">
         <a href="/posts/publish-your-library-to-jitpack/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-module/">Android Module</a>,&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/kotlin-module/">Kotlin Module</a>,&nbsp;<a href="/tags/github/">Github</a>,&nbsp;<a href="/tags/git/">Git</a>,&nbsp;<a href="/tags/java-library/">Java Library</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/jitpack/">JitPack</a>,&nbsp;<a href="/tags/java-module/">Java Module</a>,&nbsp;<a href="/tags/kotlin-library/">Kotlin Library</a>,&nbsp;<a href="/tags/android-library/">Android Library</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/some-quick-notes-on-dark-mode/">Some quick notes on Dark Mode</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-09-09">2019-09-09</time></span></div><div class="content">The dark mode, perhaps is one of the easiest functionality to implement without breaking literally anything in existing project. However, it has it&rsquo;s own hidden costs, tricks. Before implementing the Dark mode, what is most important is that your project must be ready for dark mode.
-What I had:
-
-What I wanted to achieve:
-
-The setup:
-The only thing you need to do to get your app ready for dark mode is the themes tag and the AppCompatDelegate class.</div><div class="post-footer">
-        <a href="/posts/some-quick-notes-on-dark-mode/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-architecture-components./">Android Architecture Components.</a>,&nbsp;<a href="/tags/dark-theme-android/">Dark theme Android</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/dark-mode/">Dark Mode</a>,&nbsp;<a href="/tags/android-development/">Android Development</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -144,7 +140,7 @@ The only thing you need to do to get your app ready for dark mode is the themes 
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Server side kotlin using Ktor. An authentication example. - Coroutinedispatchers&#39; blog</title><meta name="Description" content="A blog with kotlins&#39; suspend modifier"><meta property="og:title" content="Server side kotlin using Ktor. An authentication example." />
+<meta property="og:description" content="Let’s be honest, I didn’t enjoy Ktor in the beginning. It seemed pretty confusing, different, immature, and difficult to start with. Watching it grow from away was a little simpler. However, I returned to ktor since I was interested more in server-side Kotlin. Kotlin is doing great, by the way, lots of improvements and new exciting features came up with 1.5.0 release, which makes it the perfect time to consider using it not only on Android but also server side, desktop etc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://coroutinedispatcher.com/posts/ktor/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-03T18:35:09&#43;02:00" />
+<meta property="article:modified_time" content="2021-06-03T18:35:09&#43;02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Server side kotlin using Ktor. An authentication example."/>
+<meta name="twitter:description" content="Let’s be honest, I didn’t enjoy Ktor in the beginning. It seemed pretty confusing, different, immature, and difficult to start with. Watching it grow from away was a little simpler. However, I returned to ktor since I was interested more in server-side Kotlin. Kotlin is doing great, by the way, lots of improvements and new exciting features came up with 1.5.0 release, which makes it the perfect time to consider using it not only on Android but also server side, desktop etc."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://coroutinedispatcher.com/posts/ktor/" /><link rel="prev" href="http://coroutinedispatcher.com/posts/git_me_baby_one_more_time/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Server side kotlin using Ktor. An authentication example.",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/coroutinedispatcher.com\/posts\/ktor\/"
+        },"genre": "posts","keywords": "kotlin, server-side, ktor","wordcount":  1808 ,
+        "url": "http:\/\/coroutinedispatcher.com\/posts\/ktor\/","datePublished": "2021-06-03T18:35:09+02:00","dateModified": "2021-06-03T18:35:09+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "Stavro Xhardha"},"author": {
+                "@type": "Person",
+                "name": "Stavro Xhardha"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts"> Posts </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="https://speakerdeck.com/stavro96" rel="noopener noreffer" target="_blank"> Presentation Slides </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Coroutinedispatchers&#39; blog">Coroutinedispatchers&#39; blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts" title="">Posts</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://speakerdeck.com/stavro96" title="" rel="noopener noreffer" target="_blank">Presentation Slides</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Server side kotlin using Ktor. An authentication example.</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-03">2021-06-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1808 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#persistence">Persistence</a></li>
+    <li><a href="#business-logic">Business logic</a></li>
+    <li><a href="#graphql--i-dont-need-a-waiter-ill-get-my-own-drink-in-the-bar">Graphql : I don&rsquo;t need a waiter, I&rsquo;ll get my own drink in the bar!</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/server_side_kotlin.jpg"
+        data-srcset="/images/server_side_kotlin.jpg, /images/server_side_kotlin.jpg 1.5x, /images/server_side_kotlin.jpg 2x"
+        data-sizes="auto"
+        alt="/images/server_side_kotlin.jpg"
+        title="Photo by scienceinhd @ Unsplash" /></p>
+<p>Let’s be honest, I didn’t enjoy Ktor in the beginning. It seemed pretty confusing, different, immature, and difficult to start with. Watching it grow from away was a little simpler. However, I returned to ktor since I was interested more in server-side Kotlin. Kotlin is doing great, by the way, lots of improvements and new exciting features came up with <a href="https://kotlinlang.org/docs/whatsnew15.html" target="_blank" rel="noopener noreffer">1.5.0 release</a>, which makes it the perfect time to consider using it not only on Android but also server side, desktop etc.</p>
+<h1 id="getting-started">Getting started</h1>
+<p>Before starting with Ktor, please note that I have no huge expertise on the platform, therefore, I might be killing flies with Bazookas. But let’s see if I get some nice feedback for this, which would be also valuable.</p>
+<p>The first thing to do is to visit <a href="https://start.ktor.io/#" target="_blank" rel="noopener noreffer">start.ktor.io</a> , which is not different from the concept of creating a new spring (boot) project. For anyone not familiar with start.ktor.io, it’s a web form that generates your project according to your dependency requirements and technologies you want to use for each layer. As far as I know, you can do it from the IDE as well, but since it’s not the first project I create for Ktor, this one works pretty well for me. The screenshot below would help you even more:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/ktor_start.png"
+        data-srcset="/images/ktor_start.png, /images/ktor_start.png 1.5x, /images/ktor_start.png 2x"
+        data-sizes="auto"
+        alt="/images/ktor_start.png"
+        title="/images/ktor_start.png" /></p>
+<p>After configuring your project, let it download and then open it from IntelliJ IDEA (probably possible with Android Studio as well, but never tried it). The cool advantage is that a Ktor project <em>by default</em> now starts with kts gradle files instead of groovy. Now let’s talk about what we are using for this plain example:</p>
+<p><strong>Graphql as a technology (kgraphql):</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">    <span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;com.apurebase:kgraphql:</span><span class="si">$kgraphql_version</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;com.apurebase:kgraphql-ktor:</span><span class="si">$kgraphql_version</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></div><p><strong>Mongo DB for presistence (kmongo):</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">    <span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;org.litote.kmongo:kmongo:</span><span class="si">$kmongo_version</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></div><p><strong>Ktor authentication and JWT dependency for the token (since our example will consist in an authentication schema):</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">    <span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;io.ktor:ktor-auth:</span><span class="si">$ktor_version</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;io.ktor:ktor-auth-jwt:</span><span class="si">$ktor_version</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></div><p><strong>Not going much in detail, but Bcrypt for password encryption/decryption:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;at.favre.lib:bcrypt:</span><span class="si">$bcrypt_version</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></div><p><strong>Koin for DI:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">implementation</span><span class="p">(</span><span class="s2">&#34;org.koin:koin-ktor:</span><span class="si">$koin_version</span><span class="s2">&#34;</span><span class="p">)</span>
+</code></pre></div><h1 id="implementation">Implementation</h1>
+<p>Before starting don&rsquo;t forget to add a configuration to run the server, as described in the picture below:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/configuration.png"
+        data-srcset="/images/configuration.png, /images/configuration.png 1.5x, /images/configuration.png 2x"
+        data-sizes="auto"
+        alt="/images/configuration.png"
+        title="/images/configuration.png" /></p>
+<p>The environment variable is MongoDB connection string which is unique for every application/mongo db user.</p>
+<h2 id="persistence">Persistence</h2>
+<p>Let&rsquo;s start with the data layer and model setup first. Basically, we need a <code>User</code> to be saved in the database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="k">override</span> <span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">email</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">hashedPassword</span><span class="p">:</span> <span class="n">ByteArray</span><span class="p">)</span> <span class="p">:</span> <span class="n">Model</span>
+</code></pre></div><p>Where <code>Model</code>, is just an abstract model which has one common property for every future model, like <code>id</code>. This also helps not to forget to implement such property for next
+future models:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">interface</span> <span class="nc">Model</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="n">String</span>
+<span class="p">}</span>
+</code></pre></div><p>However, let’s keep two more models for the user format, one for the graphql mutation input, and one for the response, which would hold token:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">data</span> <span class="k">class</span> <span class="nc">UserInput</span><span class="p">(</span><span class="k">val</span> <span class="py">email</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">password</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+<span class="k">data</span> <span class="k">class</span> <span class="nc">UserResponse</span><span class="p">(</span><span class="k">val</span> <span class="py">token</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">user</span><span class="p">:</span> <span class="n">User</span><span class="p">)</span>
+</code></pre></div><p>With the model setup, we can now move to persistence logic. It would be also awesome to have some abstraction for a <code>Repository</code> since the logic to get item(s) by id would be the same for any database property, just like:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">interface</span> <span class="nc">Repository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="py">mongoCollection</span><span class="p">:</span> <span class="n">MongoCollection</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+
+    <span class="k">fun</span> <span class="nf">getById</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">T</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="n">mongoCollection</span><span class="p">.</span><span class="n">findOne</span><span class="p">(</span><span class="n">Model</span><span class="o">::</span><span class="n">id</span> <span class="n">eq</span> <span class="n">id</span><span class="p">)</span> <span class="o">?:</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;No item with that ID exists&#34;</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">PropertyNotFoundException</span><span class="p">(</span><span class="s2">&#34;Cannot find item&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">getAll</span><span class="p">():</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="n">mongoCollection</span><span class="p">.</span><span class="n">find</span><span class="p">()</span>
+            <span class="n">result</span><span class="p">.</span><span class="n">asIterable</span><span class="p">().</span><span class="n">map</span> <span class="p">{</span> <span class="k">it</span> <span class="p">}</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;Cannot get all items&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">delete</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">Boolean</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="n">mongoCollection</span><span class="p">.</span><span class="n">findOneAndDelete</span><span class="p">(</span><span class="n">Model</span><span class="o">::</span><span class="n">id</span> <span class="n">eq</span> <span class="n">id</span><span class="p">)</span> <span class="o">?:</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;No item with that Id exists&#34;</span><span class="p">)</span>
+            <span class="k">true</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;Cannot delete item or item not found&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">add</span><span class="p">(</span><span class="n">entry</span><span class="p">:</span> <span class="n">T</span><span class="p">):</span> <span class="n">T</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="n">mongoCollection</span><span class="p">.</span><span class="n">insertOne</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="n">entry</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;Cannot add item&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">update</span><span class="p">(</span><span class="n">entry</span><span class="p">:</span> <span class="n">Model</span><span class="p">):</span> <span class="n">T</span><span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="n">mongoCollection</span><span class="p">.</span><span class="n">updateOne</span><span class="p">(</span><span class="n">Model</span><span class="o">::</span><span class="n">id</span> <span class="n">eq</span> <span class="n">entry</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="n">mongoCollection</span><span class="p">.</span><span class="n">findOne</span><span class="p">(</span><span class="n">Model</span><span class="o">::</span><span class="n">id</span> <span class="n">eq</span> <span class="n">entry</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="o">?:</span> <span class="k">throw</span> <span class="n">PropertyNotFoundException</span><span class="p">(</span><span class="s2">&#34;No item with that id exists&#34;</span><span class="p">)</span>
+        <span class="p">}</span><span class="k">catch</span> <span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">){</span>
+            <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;Cannot update item&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>This would help to have a very simple user repository:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">UserRepository</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">MongoClient</span><span class="p">)</span> <span class="p">:</span> <span class="n">Repository</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">lateinit</span> <span class="k">var</span> <span class="py">mongoCollection</span><span class="p">:</span> <span class="n">MongoCollection</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+
+    <span class="k">init</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">database</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="n">getDatabase</span><span class="p">(</span><span class="s2">&#34;databaseName&#34;</span><span class="p">)</span>
+        <span class="n">mongoCollection</span> <span class="p">=</span> <span class="n">database</span><span class="p">.</span><span class="n">getCollection</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;(</span><span class="s2">&#34;User&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">getUserByEmail</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">String</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span><span class="p">):</span> <span class="n">User</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="n">mongoCollection</span><span class="p">.</span><span class="n">findOne</span><span class="p">(</span><span class="n">User</span><span class="o">::</span><span class="n">email</span> <span class="n">eq</span> <span class="n">email</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;Cannot get user with that email&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>The method <code>getUserByEmail()</code> is added extra for this <code>User</code> databse property since in the generic Repository has nothing to do with an <code>email</code> property, but it&rsquo;s helpful to check if the user is already registered/can be logged in.</p>
+<p><em>Notice the nice Kotlin DSL being used by <code>KMongo</code>: <code>User::email eq email</code>.</em></p>
+<h2 id="business-logic">Business logic</h2>
+<p>Let&rsquo;s now implement the data layer methods into an <code>AuthService</code> which would make our lives easier and we would also see after this step how easy it is to make queries or mutations after having such service:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">AuthService</span> <span class="p">:</span> <span class="n">KoinComponent</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">client</span><span class="p">:</span> <span class="n">MongoClient</span> <span class="k">by</span> <span class="n">inject</span><span class="p">()</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">repository</span><span class="p">:</span> <span class="n">UserRepository</span> <span class="p">=</span> <span class="n">UserRepository</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">secret</span><span class="p">:</span> <span class="n">String</span> <span class="p">=</span> <span class="s2">&#34;someHashedValueNobodyIsAbleToGuess&#34;</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">algorithm</span><span class="p">:</span> <span class="n">Algorithm</span> <span class="p">=</span> <span class="n">Algorithm</span><span class="p">.</span><span class="n">HMAC256</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">verifier</span><span class="p">:</span> <span class="n">JWTVerifier</span> <span class="p">=</span> <span class="n">JWT</span><span class="p">.</span><span class="n">require</span><span class="p">(</span><span class="n">algorithm</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="k">fun</span> <span class="nf">signIn</span><span class="p">(</span><span class="n">userInput</span><span class="p">:</span> <span class="n">UserInput</span><span class="p">):</span> <span class="n">UserResponse</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">user</span> <span class="p">=</span> <span class="n">repository</span><span class="p">.</span><span class="n">getUserByEmail</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="n">email</span><span class="p">)</span> <span class="o">?:</span> <span class="n">error</span><span class="p">(</span><span class="s2">&#34;No such user by that email&#34;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">BCrypt</span><span class="p">.</span><span class="n">verifyer</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">verify</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="n">password</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">(</span><span class="n">StandardCharsets</span><span class="p">.</span><span class="n">UTF_8</span><span class="p">),</span> <span class="n">user</span><span class="p">.</span><span class="n">hashedPassword</span><span class="p">).</span><span class="n">verified</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">token</span> <span class="p">=</span> <span class="n">signAccessToken</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">UserResponse</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">error</span><span class="p">(</span><span class="s2">&#34;Password is incorrect&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">signUp</span><span class="p">(</span><span class="n">userInput</span><span class="p">:</span> <span class="n">UserInput</span><span class="p">):</span> <span class="n">UserResponse</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">hashedPassword</span> <span class="p">=</span> <span class="n">BCrypt</span><span class="p">.</span><span class="n">withDefaults</span><span class="p">().</span><span class="n">hash</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="n">userInput</span><span class="p">.</span><span class="n">password</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">(</span><span class="n">StandardCharsets</span><span class="p">.</span><span class="n">UTF_8</span><span class="p">))</span>
+        <span class="k">val</span> <span class="py">id</span> <span class="p">=</span> <span class="n">UUID</span><span class="p">.</span><span class="n">randomUUID</span><span class="p">().</span><span class="n">toString</span><span class="p">()</span>
+        <span class="k">val</span> <span class="py">emailUser</span> <span class="p">=</span> <span class="n">repository</span><span class="p">.</span><span class="n">getUserByEmail</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="n">email</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">emailUser</span> <span class="o">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">error</span><span class="p">(</span><span class="s2">&#34;Email already in use&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">val</span> <span class="py">newUser</span> <span class="p">=</span> <span class="n">repository</span><span class="p">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">User</span><span class="p">(</span>
+                <span class="n">id</span> <span class="p">=</span> <span class="n">id</span><span class="p">,</span>
+                <span class="n">email</span> <span class="p">=</span> <span class="n">userInput</span><span class="p">.</span><span class="n">email</span><span class="p">,</span>
+                <span class="n">hashedPassword</span> <span class="p">=</span> <span class="n">hashedPassword</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">val</span> <span class="py">token</span> <span class="p">=</span> <span class="n">signAccessToken</span><span class="p">(</span><span class="n">newUser</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">UserResponse</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">newUser</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">fun</span> <span class="nf">verifyToken</span><span class="p">(</span><span class="n">call</span><span class="p">:</span> <span class="n">ApplicationCall</span><span class="p">):</span> <span class="n">User</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">authHeader</span> <span class="p">=</span> <span class="n">call</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&#34;Authorization&#34;</span><span class="p">]</span> <span class="o">?:</span> <span class="s2">&#34;&#34;</span>
+            <span class="k">val</span> <span class="py">token</span> <span class="p">=</span> <span class="n">authHeader</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;Bearer &#34;</span><span class="p">).</span><span class="n">last</span><span class="p">()</span>
+            <span class="k">val</span> <span class="py">accessToken</span> <span class="p">=</span> <span class="n">verifier</span><span class="p">.</span><span class="n">verify</span><span class="p">(</span><span class="n">JWT</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+            <span class="k">val</span> <span class="py">userId</span> <span class="p">=</span> <span class="n">accessToken</span><span class="p">.</span><span class="n">getClaim</span><span class="p">(</span><span class="s2">&#34;userId&#34;</span><span class="p">).</span><span class="n">asString</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="n">userId</span><span class="p">,</span> <span class="n">email</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="n">hashedPassword</span> <span class="p">=</span> <span class="n">byteArrayOf</span><span class="p">())</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Exception</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">null</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">signAccessToken</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">String</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">JWT</span><span class="p">.</span><span class="n">create</span><span class="p">().</span><span class="n">withIssuer</span><span class="p">(</span><span class="s2">&#34;example&#34;</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">withClaim</span><span class="p">(</span><span class="s2">&#34;userId&#34;</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">sign</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>JWT needs an algorithm by choice, where you pass it as a setup when you <code>signAccessToken</code> for every new <code>User</code>. A <code>verifytoken</code> also is needed as an extra security check on each call.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">In case you are not familliar with JWT, <a href="https://jwt.io/introduction]" target="_blank" rel="noopener noreffer">here</a> is a quick intro for it. The article assumes the reader already knows the concept.</div>
+        </div>
+    </div>
+<p>If you notice, <code>signIn</code> and <code>signUp</code> have nothing different from usual such methods. The only thing worth mentioning is that in case you don&rsquo;t enjoy 3rd party security libraries, it might be fun to write your own security layer for it. However as far as I know, BCrypt is well trusted.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Also note that nothing has to do with Ktor as a technology in particular yet.</div>
+        </div>
+    </div>
+<h2 id="graphql--i-dont-need-a-waiter-ill-get-my-own-drink-in-the-bar">Graphql : I don&rsquo;t need a waiter, I&rsquo;ll get my own drink in the bar!</h2>
+<p>I have been striving a lot to find a very simple example to explain Graphql to a 5-year-old. Needed to go back to when my career started, a few years ago, when I learned about REST with a simple example: The client orders a Pepsi. Then the waiter comes back and either give a Pepsi, or he responds: &ldquo;Sorry sir, no Pepsi found, we have only Coke or if you like, we can offer you something else&rdquo;. Well, that&rsquo;s REST.</p>
+<p>But you know what? Who needs a waiter, I&rsquo;ll go to the bar myself and take a look at all the articles but I will be able to get one only after I order it. Great, that&rsquo;s graphql in a very basic 5-year-old example. For more technical explanation, please visit <a href="https://graphql.org/" target="_blank" rel="noopener noreffer">here</a>.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">We won&rsquo;t check Graphql in details either. Please visit the link above.</div>
+        </div>
+    </div>
+<p>Let&rsquo;s now implement the <code>Authentication</code> schema:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">SchemaBuilder</span><span class="p">.</span><span class="n">authSchema</span><span class="p">(</span><span class="n">authService</span><span class="p">:</span> <span class="n">AuthService</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">type</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span> <span class="p">{</span>
+        <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;User details&#34;</span>
+        <span class="n">User</span><span class="o">::</span><span class="n">hashedPassword</span><span class="p">.</span><span class="n">ignore</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="n">inputType</span><span class="p">&lt;</span><span class="n">UserInput</span><span class="p">&gt;</span> <span class="p">{</span>
+        <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;User credentials&#34;</span>
+    <span class="p">}</span>
+
+    <span class="n">mutation</span><span class="p">(</span><span class="s2">&#34;signIn&#34;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;Authenticate an existing user&#34;</span>
+
+        <span class="n">resolver</span> <span class="p">{</span> <span class="n">userInput</span><span class="p">:</span> <span class="n">UserInput</span> <span class="o">-&gt;</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="n">authService</span><span class="p">.</span><span class="n">signIn</span><span class="p">(</span><span class="n">userInput</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Exception</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">null</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">mutation</span><span class="p">(</span><span class="s2">&#34;signUp&#34;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;Authenticate a new user&#34;</span>
+
+        <span class="n">resolver</span> <span class="p">{</span> <span class="n">userInput</span><span class="p">:</span> <span class="n">UserInput</span> <span class="o">-&gt;</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="n">authService</span><span class="p">.</span><span class="n">signUp</span><span class="p">(</span><span class="n">userInput</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Exception</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">null</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Grphql is more straightforward than REST. You can read the code as a book: We are talking about a <code>User</code> <code>type</code> in this case which has a description and will never expose its password on responses. Then we have an <code>inputType</code> holding a <code>UserInput</code> which describes what we are expecting from the requests (practically, the bartender gives the client a menu, and he doesn&rsquo;t expect them to order a Pepsi when there is no Pepsi on the menu. The menu is the documentation which btw in graphql is generated automatically.)</p>
+<p>Unfortunately, there are no <code>queries</code> for this use case, however, note that queries, from their name, are used to access properties, while mutation(s) is used to modify properties. Some might argue that we are not doing any mutation for the <code>signIn</code> resolver, however, we are signing a token for this new login therefore a mutation is more suitable.</p>
+<p>A <code>resolver</code> is just a function used for the response values, the lambda defined is the input on the request.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">The above structure is pure Kotlin DSL and it&rsquo;s very nicely achieved by KGraphql.</div>
+        </div>
+    </div>
+<p>Now that the setup is almost done, let&rsquo;s connect the dots&hellip;</p>
+<h1 id="ktor">KTOR</h1>
+<p>If this was long, and now you are thinking that we just got started with KTOR, you are mistaken. Ktor is the simplest thing ever. All it has is just a few lines of code:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// Application.kt
+</span><span class="c1"></span><span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;):</span> <span class="n">Unit</span> <span class="p">=</span> <span class="n">io</span><span class="p">.</span><span class="n">ktor</span><span class="p">.</span><span class="n">server</span><span class="p">.</span><span class="n">netty</span><span class="p">.</span><span class="n">EngineMain</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nd">@kotlin</span><span class="p">.</span><span class="n">jvm</span><span class="p">.</span><span class="n">JvmOverloads</span>
+<span class="k">fun</span> <span class="nf">Application</span><span class="p">.</span><span class="n">module</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">// set up
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><p>But what do we set up? All we have to do is instantiate our dependency injection tool (koin-ktor) and install the GraphQL feature and all is done:</p>
+<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;):</span> <span class="n">Unit</span> <span class="p">=</span> <span class="n">io</span><span class="p">.</span><span class="n">ktor</span><span class="p">.</span><span class="n">server</span><span class="p">.</span><span class="n">netty</span><span class="p">.</span><span class="n">EngineMain</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nd">@kotlin</span><span class="p">.</span><span class="n">jvm</span><span class="p">.</span><span class="n">JvmOverloads</span>
+<span class="k">fun</span> <span class="nf">Application</span><span class="p">.</span><span class="n">module</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">startKoin</span> <span class="p">{</span>
+        <span class="n">modules</span><span class="p">(</span><span class="n">mainModule</span><span class="p">)</span> <span class="c1">// not important to show the implementation of mainModule
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="n">install</span><span class="p">(</span><span class="n">GraphQL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">authService</span> <span class="p">=</span> <span class="n">AuthService</span><span class="p">()</span>
+        <span class="n">playground</span> <span class="p">=</span> <span class="k">true</span> <span class="c1">// This adds support for opening the graphql route within the browser
+</span><span class="c1"></span>        <span class="n">context</span> <span class="p">{</span> <span class="n">call</span> <span class="o">-&gt;</span>
+            <span class="n">authService</span><span class="p">.</span><span class="n">verifyToken</span><span class="p">(</span><span class="n">call</span><span class="p">)</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span> <span class="p">+</span><span class="k">it</span> <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">schema</span> <span class="p">{</span>
+            <span class="n">authSchema</span><span class="p">(</span><span class="n">authService</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Oh yea, the context. Being an android developer that was not hard to understand. The context is&hellip; Well, the context. I would like to call it a not expirable session, but you can also think of the context as a scope in general, which in this case is the app itself except the authentication process.
+With the help of Kotlin DSL from KGraphql the library fits so much to the tech stack.</p>
+<p>Isn&rsquo;t Ktor awesome? It&rsquo;s just a function, where you install features, and as far as I know, it&rsquo;s all written in Kotlin on the background. I hope I made a quick and easy introduction to Ktor and an authentication process. This article was written thanks to a Udemy course that I took which can be found <a href="https://www.udemy.com/course/kotlin-multiplatform-mobile/" target="_blank" rel="noopener noreffer">here</a>.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-06-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/server-side/">server-side</a>,&nbsp;<a href="/tags/ktor/">ktor</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/git_me_baby_one_more_time/" class="prev" rel="prev" title="Git me baby one more time"><i class="fas fa-angle-left fa-fw"></i>Git me baby one more time</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

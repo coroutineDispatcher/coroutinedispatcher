@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.83.1" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -73,6 +73,12 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/generate-kotlin-docs-using-dokka/">Generate Kotlin Docs using Dokka</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-17">2020-02-17</time></span></div><div class="content">Have you ever generated Kotlin docs (Kdocs) for your library/project? I have. There is a tool for this called Dokka and you can find it here. It&rsquo;s not too hard to set up.
+I personally used Dokka for a small API i wrote for SharedPreferences. Anyways, the steps are pretty basic. One thing you must be careful though, is to know the syntax of the Kdocs pretty well (usually, if you know how to generate Javadoc, Kotlin docs don&rsquo;t have much difference).</div><div class="post-footer">
+        <a href="/posts/generate-kotlin-docs-using-dokka/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/dokka/">Dokka</a>,&nbsp;<a href="/tags/kotlin-dsl/">Kotlin DSL</a>,&nbsp;<a href="/tags/kotlin-documentation/">Kotlin Documentation</a>,&nbsp;<a href="/tags/gradle/">Gradle</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/groovy/">Groovy</a>,&nbsp;<a href="/tags/kdoc/">KDoc</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/java-doc/">Java Doc</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/what-i-learned-from-kotlin-flow-api/">What I learned from Kotlin Flow API</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-01-24">2020-01-24</time></span></div><div class="content">I used to check the docs and just read a lot about flows but didn&rsquo;t implement anything until yesterday. However, the API tasted really cool (even though some operations are still in Experimental state).
 Prerequisites: If you don&rsquo;t know RxJava it&rsquo;s fine. But a RxJava recognizer would read this faster.
@@ -105,13 +111,6 @@ Let&rsquo;s suppose we have this scenario: I have a list of data, which are show
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-12-16">2019-12-16</time></span></div><div class="content">Kotlin is a very a pretty nice adoptive language and user friendly. It really replaced Java from my everyday programming. However, it was not enough. We all know that groovy runs on JVM. So, why do I even need a new language just for my builds? Can&rsquo;t it be Java? So Java is the basic language for the JVM, Kotlin runs on JVM, Groovy runs on JVM and my build system has a separated language from my business logic system.</div><div class="post-footer">
         <a href="/posts/setting-up-gradle-with-kotlin-dsl/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kotlin-dsl/">Kotlin DSL</a>,&nbsp;<a href="/tags/gradle/">Gradle</a>,&nbsp;<a href="/tags/kotlin-delegation/">Kotlin Delegation</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/groovy/">Groovy</a>,&nbsp;<a href="/tags/migration/">Migration</a>,&nbsp;<a href="/tags/android/">Android</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/conditional-navigation-and-single-event/">Conditional navigation and single event LiveData</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-12-09">2019-12-09</time></span></div><div class="content">Conditional navigation is a little tricky when it comes to Navigation Architecture. There are plenty of nice articles and solutions about it, but I&rsquo;m sharing the way I solve this important problem. So let&rsquo;s consider this use case:
-
-If you don&rsquo;t put HomeFragment as a start destination, you will have some serious trouble with the fragment back stack and you would need to write the onBackPressDispatcher in every fragment.</div><div class="post-footer">
-        <a href="/posts/conditional-navigation-and-single-event/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/single-event/">Single Event</a>,&nbsp;<a href="/tags/android-architecture-components./">Android Architecture Components.</a>,&nbsp;<a href="/tags/android-lifecycle/">Android Lifecycle</a>,&nbsp;<a href="/tags/android-navigation/">Android Navigation</a>,&nbsp;<a href="/tags/livedata/">LiveData</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -140,7 +139,7 @@ If you don&rsquo;t put HomeFragment as a start destination, you will have some s
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<meta name="generator" content="Hugo 0.82.0" />
+	<meta name="generator" content="Hugo 0.83.1" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -73,6 +73,13 @@
         alt="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg"
         title="https://coroutinedispatcher.github.io/coroutinedispatcher/images/stavro.jpeg" /></a></div><h1 class="home-title">The Android guy</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/coroutinedispatcher" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://linkedin.com/in/stavro-xhardha-64b98a153" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href="https://twitter.com/suspendfunction" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.reddit.com/user/stavro24496" title="Reddit" target="_blank" rel="noopener noreffer me"><i class="fab fa-reddit fa-fw"></i></a><a href="https://stackoverflow.com/users/8914336/coroutinedispatcher" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-codepen fa-fw"></i></a><a href="https://www.xing.com/profile/Stavro_Xhardha" title="Xing" target="_blank" rel="noopener noreffer me"><i class="fab fa-xing fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/conditional-navigation-and-single-event/">Conditional navigation and single event LiveData</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-12-09">2019-12-09</time></span></div><div class="content">Conditional navigation is a little tricky when it comes to Navigation Architecture. There are plenty of nice articles and solutions about it, but I&rsquo;m sharing the way I solve this important problem. So let&rsquo;s consider this use case:
+
+If you don&rsquo;t put HomeFragment as a start destination, you will have some serious trouble with the fragment back stack and you would need to write the onBackPressDispatcher in every fragment.</div><div class="post-footer">
+        <a href="/posts/conditional-navigation-and-single-event/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/single-event/">Single Event</a>,&nbsp;<a href="/tags/android-architecture-components./">Android Architecture Components.</a>,&nbsp;<a href="/tags/android-lifecycle/">Android Lifecycle</a>,&nbsp;<a href="/tags/android-navigation/">Android Navigation</a>,&nbsp;<a href="/tags/livedata/">LiveData</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/are-service-locators-in-android/">Are service locators in Android actually simple?</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-12-02">2019-12-02</time></span></div><div class="content">This week, I&rsquo;ve been playing with service locators in Android. I made this repo with 3 different branches. One of them is using Dagger as a DI tool, the other branches are implementation with KodeIn and Koin.
 The app is pretty simple, just retrieves some data from a Cat API, saves them to a local Room persistence and then renders them to the screen:
@@ -103,13 +110,6 @@ On our first article we just moved some classes outside the application and appl
     </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-11-04">2019-11-04</time></span></div><div class="content">Inspired by a Martin Fowlers post about Micro Frontends, I decided to break my monolithic app into a modular app. I tried to read a little more about breaking monolithic apps in Android, and as far as I got, I felt confident to share my experience with you. This will be some series of blog posts where we actually try to break a simple app into a modularized Android app.</div><div class="post-footer">
         <a href="/posts/modularizing-your-android-app-breaking/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/android-module/">Android Module</a>,&nbsp;<a href="/tags/micro-frontend/">Micro Frontend</a>,&nbsp;<a href="/tags/android-architecture-components./">Android Architecture Components.</a>,&nbsp;<a href="/tags/android-multi-module/">Android Multi Module</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/from-gson-to-moshi-what-i-learned/">From Gson to Moshi, what I learned</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-10-28">2019-10-28</time></span></div><div class="content">There is no doubt that people are getting away from GSON and I agree with those reasons too. The only advantage GSON has over other parsing libraries is that it takes a really short amount of time to set up. Furthermore, the most important thing is that Moshi is embracing Kotlin support.
-First let&rsquo;s implement the dependency:
-implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a struggle to migrate to Moshi. It&rsquo;s really Gson look-a-like.</div><div class="post-footer">
-        <a href="/posts/from-gson-to-moshi-what-i-learned/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/pojo/">POJO</a>,&nbsp;<a href="/tags/gson/">Gson</a>,&nbsp;<a href="/tags/kotlin/">Kotlin</a>,&nbsp;<a href="/tags/json/">Json</a>,&nbsp;<a href="/tags/moshi/">Moshi</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/json-parsing/">Json Parsing</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -142,7 +142,7 @@ implementation(&#34;com.squareup.moshi:moshi:1.8.0&#34;) It&rsquo;s not a strugg
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Stavro Xhardha</a></span></div>
         </div>
     </footer></div>

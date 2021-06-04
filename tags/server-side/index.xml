@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>server-side - Tag - Coroutinedispatchers&#39; blog</title>
+        <link>http://coroutinedispatcher.com/tags/server-side/</link>
+        <description>server-side - Tag - Coroutinedispatchers&#39; blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/tags/server-side/" rel="self" type="application/rss+xml" /><item>
+    <title>Server side kotlin using Ktor. An authentication example.</title>
+    <link>http://coroutinedispatcher.com/posts/ktor/</link>
+    <pubDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/ktor/</guid>
+    <description><![CDATA[Let’s be honest, I didn’t enjoy Ktor in the beginning. It seemed pretty confusing, different, immature, and difficult to start with. Watching it grow from away was a little simpler. However, I returned to ktor since I was interested more in server-side Kotlin. Kotlin is doing great, by the way, lots of improvements and new exciting features came up with 1.5.0 release, which makes it the perfect time to consider using it not only on Android but also server side, desktop etc.]]></description>
+</item></channel>
+</rss>

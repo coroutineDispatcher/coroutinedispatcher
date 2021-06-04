@@ -4,7 +4,14 @@
         <link>http://coroutinedispatcher.com/posts/</link>
         <description>All Posts | Coroutinedispatchers&#39; blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>stavro96@gmail.com (Stavro Xhardha)</managingEditor>
-            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 03 Apr 2021 12:15:57 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>stavro96@gmail.com (Stavro Xhardha)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</lastBuildDate><atom:link href="http://coroutinedispatcher.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Server side kotlin using Ktor. An authentication example.</title>
+    <link>http://coroutinedispatcher.com/posts/ktor/</link>
+    <pubDate>Thu, 03 Jun 2021 18:35:09 &#43;0200</pubDate>
+    <author>Author</author>
+    <guid>http://coroutinedispatcher.com/posts/ktor/</guid>
+    <description><![CDATA[Let’s be honest, I didn’t enjoy Ktor in the beginning. It seemed pretty confusing, different, immature, and difficult to start with. Watching it grow from away was a little simpler. However, I returned to ktor since I was interested more in server-side Kotlin. Kotlin is doing great, by the way, lots of improvements and new exciting features came up with 1.5.0 release, which makes it the perfect time to consider using it not only on Android but also server side, desktop etc.]]></description>
+</item><item>
     <title>Git me baby one more time</title>
     <link>http://coroutinedispatcher.com/posts/git_me_baby_one_more_time/</link>
     <pubDate>Sat, 03 Apr 2021 12:15:57 &#43;0200</pubDate>
@@ -81,13 +88,5 @@ There might have been some small misconceptions regarding the usage of it, but, 
     <description><![CDATA[Callbacks in Java are probably the most basic way to perform executions/send actions between classes. If you have chosen to use coroutines in a project, you want to keep the same style everywhere. But what if some of the libraries you use, are still using callbacks?
 No worries, Kotlin coroutines are easily integrated with callbacks. It&rsquo;s just a small workaround to make.
 Let&rsquo;s think of a very simple use case:]]></description>
-</item><item>
-    <title>My first remote experience</title>
-    <link>http://coroutinedispatcher.com/posts/my-first-remote-experience/</link>
-    <pubDate>Fri, 20 Mar 2020 21:41:00 &#43;0100</pubDate>
-    <author>Author</author>
-    <guid>http://coroutinedispatcher.com/posts/my-first-remote-experience/</guid>
-    <description><![CDATA[typealias Coroutine = Quarantine I hope you get the joke&hellip;.
-Well, it has been a very rough year for me, &ldquo;motion-ally&rdquo; and emotionally. I moved to Germany just when all these corona fear started. Luckily I got time to get introduced to the team and the project and got ready to start fresh . And then, since the situation with the epidemic wasn&rsquo;t getting any better, the company decided to switch to home office.]]></description>
 </item></channel>
 </rss>
