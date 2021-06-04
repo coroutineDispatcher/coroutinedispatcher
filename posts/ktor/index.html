@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/coroutinedispatcher.com\/posts\/ktor\/"
-        },"genre": "posts","keywords": "kotlin, server-side, ktor","wordcount":  1808 ,
+        },"genre": "posts","keywords": "kotlin, server-side, ktor","wordcount":  1840 ,
         "url": "http:\/\/coroutinedispatcher.com\/posts\/ktor\/","datePublished": "2021-06-03T18:35:09+02:00","dateModified": "2021-06-03T18:35:09+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "Stavro Xhardha"},"author": {
@@ -77,7 +77,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Server side kotlin using Ktor. An authentication example.</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Stavro Xhardha</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-03">2021-06-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1808 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-03">2021-06-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1840 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -381,6 +381,15 @@ future models:</p>
 <span class="p">}</span>
 </code></pre></div><p>Oh yea, the context. Being an android developer that was not hard to understand. The context is&hellip; Well, the context. I would like to call it a not expirable session, but you can also think of the context as a scope in general, which in this case is the app itself except the authentication process.
 With the help of Kotlin DSL from KGraphql the library fits so much to the tech stack.</p>
+<p>You may now run the application and visit the address Ktor gives you on the logs (which usually is http://0.0.0.0:8080/) and see the magic yourselves in <code>http://0.0.0.0:8080/graphql</code>. Then you can start playing:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/graphql_view.png"
+        data-srcset="/images/graphql_view.png, /images/graphql_view.png 1.5x, /images/graphql_view.png 2x"
+        data-sizes="auto"
+        alt="/images/graphql_view.png"
+        title="/images/graphql_view.png" /></p>
 <p>Isn&rsquo;t Ktor awesome? It&rsquo;s just a function, where you install features, and as far as I know, it&rsquo;s all written in Kotlin on the background. I hope I made a quick and easy introduction to Ktor and an authentication process. This article was written thanks to a Udemy course that I took which can be found <a href="https://www.udemy.com/course/kotlin-multiplatform-mobile/" target="_blank" rel="noopener noreffer">here</a>.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
